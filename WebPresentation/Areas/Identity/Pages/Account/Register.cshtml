@@ -1,0 +1,107 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<style>
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    sectin * {
+        color: black !important;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+</style>
+<section class="page-section bg-primary text-black mb-0">
+
+    <h3 class="mb-5 text-uppercase text-center">Owner Registration</h3>
+    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
+                            <div class="col-xl-6 d-none d-xl-block">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                     alt="Sample photo" class="img-fluid"
+                                     style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card-body p-md-5 text-black">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group row">
+                                        <label asp-for="Input.Email"></label>
+                                        <input asp-for="Input.Email" class="form-control" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label asp-for="Input.Password"></label>
+                                        <input asp-for="Input.Password" class="form-control" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="Input.ConfirmPassword"></label>
+                                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group row mb-4">
+
+                                        <div data-mdb-input-init class="col form-outline">
+                                            <input type="text" asp-for="Input.Patient.FirstName" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="Input.Patient.FirstName">First name</label>
+                                        </div>
+                                        <div data-mdb-input-init class="col form-outline">
+                                            <input type="text" asp-for="Input.Patient.LastName" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="Input.Patient.LastName">Last name</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row mb-4">
+                                        <div data-mdb-input-init class="form-outline col">
+                                            <input type="text" asp-for="Input.Patient.BIO" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="Input.Patient.BIO">BIO</label>
+                                        </div>
+                                    </div>
+
+                                   
+
+                                    <div class="form-group row mb-4">
+                                        
+                                        <div data-mdb-input-init class="form-outline col">
+                                            <input type="text" asp-for="Input.Patient.Avatar" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="Input.Patient.Avatar">Image</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
