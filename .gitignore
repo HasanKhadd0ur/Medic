@@ -3,3 +3,13 @@
 ################################################################################
 
 /.vs/Medic/v16
+/.vs/Medic/config/applicationhost.config
+/ApplicationCore/bin/Debug/net5.0
+/Infrastructure/bin/Debug/net5.0
+/Infrastructure/obj/Debug/net5.0/ref
+/ApplicationCore/obj/Debug/net5.0/ref/ApplicationCore.dll
+/ApplicationCore/obj/Debug/net5.0/ApplicationCore.csproj.CoreCompileInputs.cache
+/ApplicationCore/obj/Debug/net5.0/ApplicationCore.pdb
+/ApplicationCore/obj/Debug/net5.0/ApplicationCore.genruntimeconfig.cache
+/ApplicationCore/obj/Debug/net5.0/ApplicationCore.dll
+/ApplicationCore/obj/Debug/net5.0/ApplicationCore.csproj.FileListAbsolute.txt
