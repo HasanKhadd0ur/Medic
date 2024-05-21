@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork<T> where T : Entities.EntityBase
     {
+
+        IGenericRepository<T> Entity { get; }
+        void Save();
+
     }
 }
