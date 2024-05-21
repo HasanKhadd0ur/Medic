@@ -16,6 +16,10 @@ namespace ApplicationCore.Entities
         public MedicineType MedicineType { get; set; }
         public ICollection<Ingredient> Ingredients { get; set; }
         public ICollection<MedicineIngredient> MedicineIngredients { get; set; }
+        public ICollection<Patient> Patients { get; set; }
+        public ICollection<PatientMedicine> PatientMedicines { get; set; }
+        
+
 
 
     }
