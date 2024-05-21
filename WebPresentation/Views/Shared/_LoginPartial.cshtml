@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item rounded js-scroll-trigger">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" aasp-area="Identity" aasp-page="/Account/Manage/Index" title="Manage"> @UserManager.GetUserName(User) </a>
+        </li>
+
+        <li class="nav-item rounded js-scroll-trigger">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" >Logout </a>
+        </li>
+       
+    }
+    else
+    {
+        <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+
+    }
+</ul>

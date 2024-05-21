@@ -1,0 +1,73 @@
+﻿@model Medicine
+
+@{
+    ViewData["Title"] = "Medicine Details ";
+}
+
+<section class="page-section" id="Details">
+    <div class="container">
+        <div class="  " id="item-@(Model.Id)" tabindex="-1" role="dialog" aria-labelledby="label-@Model.Id">
+
+            <div class="" role="document">
+                <div class="card-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </button>
+                    <div class=" text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title -->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@Model.Name </h2>
+                                    <!-- Icon Divider -->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Image -->
+                                    <img class="img-fluid rounded mb-5" src=@("/img/portfolio/" + "instagram.png" ) ) alt="">
+                                    <!-- Portfolio Modal - Text -->
+                                    <p class="mb-5"> Description : @Model.Description</p>
+                                    <p class="mb-5">Medicine Dosage : @Model.Dosage</p>
+
+                                    <div class="chip chip-sm chip-solid chip-input">
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+
+                                                    <td>Ingredinet name </td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var tag in Model.Ingredients)
+                                                {
+                                                    <tr>
+                                                        <td>@tag.Name</td>
+                                                        <td>@tag.Description</td>
+
+                                                    </tr>
+
+                                                }
+                                            </tbody>
+
+                                        </table>
+
+
+                                    </div>
+                                      </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
