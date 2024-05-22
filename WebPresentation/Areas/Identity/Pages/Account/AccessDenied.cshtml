@@ -3,8 +3,18 @@
 @{
     ViewData["Title"] = "Access denied";
 }
-
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<section class="page-section container">
+    <div class="blankslate col-6 offset-3 p-5">
+        <img class="blankslate-top-img"style="max-height:300px ; max-width:300px" src="/img/portfolio/Denide.png" />
+        <div class="blankslate-body">
+            <h4>You don't have access to this issue</h4>
+            <p>
+                Accessing the dashboard page required Admin permission.
+            </p>
+        </div>
+        <div class="blankslate-actions">
+            <button class="btn btn-default" type="button">Logout</button>
+            <a class="btn btn-primary" type="" role="button" asp-controller="Home">Go Home</a>
+        </div>
+    </div>
+</section>

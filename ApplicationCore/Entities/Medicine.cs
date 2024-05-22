@@ -11,6 +11,7 @@ namespace ApplicationCore.Entities
         public String Name { get; set; }
         public String Description { get; set; }
         public int Price { get; set; }
+        public String Image { get; set; }
         public int Dosage { get; set; }
         public Category Category { get; set; }
         public MedicineType MedicineType { get; set; }

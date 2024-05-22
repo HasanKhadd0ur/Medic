@@ -25,10 +25,10 @@ namespace ApplicationCore.Services.PatientService
             return _patientUnitOfWork.Entity.GetById(patientId, p => p.Medicines).Medicines.AsEnumerable();
 
         }
-        public Medicine GetMedicineDetails(int id)
+        public Medicine GetMedicineDetails(int id, params Expression<Func<Medicine, object>>[] includeProperties)
         {
 
-            return _medicineUnitOfWork.Entity.GetById(id, i => i.MedicineIngredients, i => i.Ingredients);
+            return _medicineUnitOfWork.Entity.GetById(id,includeProperties);
 
         }
         public IEnumerable<Patient> getAll(params Expression<Func<Patient, object>>[] includeProperties) {

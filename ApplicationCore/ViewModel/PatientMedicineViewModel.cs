@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.ViewModel
 {
-    public class PateintMedicineViewModel
+    public class PatientMedicineViewModel
     {
-        public Patient Patien { get; set; }
-
+        public IEnumerable<Patient> Patients { get; set; }
         public IEnumerable<Medicine> Medicines { get; set; }
 
     }

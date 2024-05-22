@@ -69,6 +69,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Dosage")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("MedicineTypeId")
                         .HasColumnType("int");
 
