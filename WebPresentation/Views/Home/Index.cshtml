@@ -43,46 +43,6 @@
 
     </div>
 </header>
-<section class="page-section bg-primary  text-white mb-0" id="topThree">
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @for (var j = 0; j < top.Count; j++)
-            {
-                <li data-target="#carouselExampleCaptions" data-slide-to="@j" class="@(j == 0 ?  "active" : "" )"></li>
-
-            }
-        </ol>
-
-        <div class="carousel-inner">
-            @foreach (var item in top)
-            {
-
-                <div class="carousel-item @(i ==1 ? "active" :"" ) ">
-
-                    <img src=@("/img/portfolio/" +  "instagram.png" ) )
-                         class=" bd-placeholder-img bd-placeholder-img-lg d-block w-100 " alt="..." aria-label="placeHolder: @item.Name">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4>@item.Name</h4>
-
-                        <h5>@item.Dosage ml</h5>
-                        <p>@item.Description</p>
-                    </div>
-                </div>
-                @(i=0)
-            }
-
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
-</section>
 
 <!-- Portfolio Section -->
 <section class="page-section portfolio" id="portfolio">
@@ -91,7 +51,7 @@
         <!-- Portfolio Section Heading -->
         <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">Patient Medicine</h2>
         <!-- Icon Divider -->
-        
+
         <div class=" divider-custom">
             <div class="divider-custom-line"></div>
 
@@ -103,23 +63,33 @@
 
         <!-- Portfolio Grid Items -->
         <div class="row d-flex flex-wrap justify-content-sm-around">
-
-            @foreach (var item in Model.Medicines)
+            @if (Model.Medicines.Count() == 0)
             {
+                <h2 class="text-center">You dont have any  Medicine</h2>
+                <img src="~/img/portfolio/noData.jpg" class="figure-img" />
+            }
+            else
+                @foreach (var item in Model.Medicines)
+                {
 
 
-                <div class="card col-md-6 col-lg-4 m-1 " style="width: 18rem;">
-                    <img class=" card-img-top" src=@("/img/portfolio/" + "instagram.png" ) ) alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">project cost : @item.Price</p>
+                    <div class="card col-md-4 col-lg-4 m-1 " style="width: 10rem;">
+                        <img class=" card-img-top mw-30 mh-30 card-img-top" style="height:250px;max-width:270px ;" src=@("/img/portfolio/" +item.Image ) ) alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">project cost : @item.Price</p>
 
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
-                    </div>
-                </div>}
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
+                        </div>
+                    </div>}
         </div>
         <!-- /.row -->
 
+    </div>
+</section>
+<section class="page-section bg-primary  text-white mb-0" id="topThree">
+    <div >
+        <a class="text-white text-center" asp-controller="Home" asp-action="MedicinesGalary" asp-route-id="@Model.Id">Go to Add Medicine to your profile </a>
     </div>
 </section>
 
@@ -212,7 +182,7 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <!-- Portfolio Modal - Image -->
-                                <img class="img-fluid rounded mb-5" src=@("/img/portfolio/"+"instagram.png" ) ) alt="">
+                                <img class="img-fluid rounded mb-5" src=@("/img/portfolio/"+item.Image ) ) alt="">
                                 <!-- Portfolio Modal - Text -->
                                 <p class="mb-5">medicine Description : @item.Description</p>
                                 <p class="mb-5">medicine price : @item.Price</p>

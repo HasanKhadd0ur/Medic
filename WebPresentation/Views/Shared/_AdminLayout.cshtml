@@ -14,7 +14,7 @@
     <title>DashBoard - @ViewData["Title"]</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/favicon.png" / rel="icon">
+    <link href="/favicon.png"  rel="icon">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -60,25 +60,25 @@
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Projetc Managment
+                            Patients Managment
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Projects" asp-action="Create">Add Project </a>
-                                <a class="nav-link" asp-controller="Projects" asp-action="Index">ALL Projects </a>
+                                <a class="nav-link" asp-controller="Projects" asp-action="Create">Add Patient </a>
+                                <a class="nav-link" asp-controller="Projects" asp-action="Index">ALL Patients </a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Owner Managment
+                            Medicine Managment
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
 
                         <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Owners" asp-action="Create">Add Owner </a>
-                                <a class="nav-link" asp-controller="Owners" asp-action="Index">ALL Owners </a>
+                                <a class="nav-link" asp-controller="Medicine" asp-action="Create">Add Medicine </a>
+                                <a class="nav-link" asp-controller="Medicine" asp-action="Index">ALL Medicines </a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

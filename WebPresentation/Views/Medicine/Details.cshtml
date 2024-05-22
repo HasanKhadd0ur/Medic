@@ -1,11 +1,11 @@
-﻿@model Medicine
+﻿@model ApplicationCore.Entities.Medicine
 
 @{
-    ViewData["Title"] = "Medicine Details ";
-    var  a = 0;
-}
+    ViewData["Title"] = "Details";
+    Layout = "_AdminLayout";
 
-<section class="page-section" style="background-color: #f4f5f7;">
+}
+<section class="vh-100" style="background-color: #f4f5f7;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-6 mb-4 mb-lg-0">
@@ -13,20 +13,19 @@
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-black"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="~/img/portfolio/@Model.Image"
+                            <img src="~/img/portfolio/instagram.png"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.Name</h5>
-                            <p>For: @Model.Category.Name</p>
+                            <p>For: @Model.Patients.Count()</p>
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>
-                            </a>
-
+                             </a> 
+                            
                             <a asp-action="Index">
 
                                 <i class="far fa-backward">
 
                                 </i>
-                                Go Back
                             </a>
                         </div>
                         <div class="col-md-8">
@@ -39,23 +38,17 @@
                                         <p class="text-muted">@Model.Description</p>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <h6>Medicine Type:@Model.MedicineType</h6>
-                                        <p class="text-muted">Dosage : @Model.Dosage</p>
-                                        <p class="text-muted">Price : @Model.Price</p>
+                                        <h6>Price</h6>
+                                        <p class="text-muted">@Model.Price</p>
                                     </div>
                                 </div>
-                                <h6>Ingredients : </h6>
+                                <h6>Category</h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    @foreach (var ing in Model.Ingredients)
-                                    {
-                                    <div class=" mb-3">
-                                        <h6>@ing.Name   @ing.Description  </h6>
-
+                                    <div class="col-6 mb-3">
+                                        <h6>@Model.Category</h6>
+                                        <p class="text-muted">Lorem ipsum</p>
                                     </div>
-                                        }
-                                    </div>
-                                    <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>Go To list </h6>
                                         <a asp-action="Index">Back to List</a>
