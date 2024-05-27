@@ -17,7 +17,7 @@ namespace WebPresentation.Controllers
 {
 
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly PatientService _patientService;
         private readonly MedicineService _medicineService;
@@ -25,9 +25,10 @@ namespace WebPresentation.Controllers
         private readonly User _user;
         private readonly Patient _patient;
 
-        public HomeController(UserManager<User> userManager,IUnitOfWork<Patient> patientUnitOfWork, IUnitOfWork<Medicine> medicineUnitOfWork)
+        public HomeController(UserManager<User> userManager,IUnitOfWork<Patient> patientUnitOfWork, IUnitOfWork<Medicine> medicineUnitOfWork):base(userManager)
         {
             _userManager = userManager;
+
             _patientService = new PatientService(patientUnitOfWork,medicineUnitOfWork);
             //   var userid = _userManager.GetUserAsync(User);
             _medicineService = new MedicineService(medicineUnitOfWork);
@@ -38,10 +39,10 @@ namespace WebPresentation.Controllers
 
         public IActionResult Index()
         {
-            var userId = _userManager.GetUserId(User);
-            //      var s = User.Claims.Where(u => u.Type == "UserName");
+            var u = GetCurrentUser();
+            var userId = GetUserId();
+            
             var ownesr = _patientService.getAll(u=>u.User , u => u.Medicines).Where(u => u.User.Id == userId).FirstOrDefault();
-
 
             return View(ownesr);
         }
@@ -55,9 +56,22 @@ namespace WebPresentation.Controllers
             return View();
         }
 
-        public IActionResult MedicinesGalary(int id) {
+        public IActionResult AddMedicine(int id) {
+            var userId = _userManager.GetUserId(User);
+
+            var patient = _patientService.getAll(u => u.User, u => u.Medicines)
+                .Where(u => u.User.Id ==userId ).FirstOrDefault();
+            var m =_medicineService.GetMedicineDetails(id);
+            _patientService.AddMedicine(patient.Id, m);
+            
+            return RedirectToAction("Index","Home");
+                
+        }
+        public IActionResult MedicinesGalary() {
+
             return View(_medicineService.GetAllMedicines());
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

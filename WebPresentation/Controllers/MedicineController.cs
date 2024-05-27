@@ -1,9 +1,11 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Services.IngredientService;
 using ApplicationCore.Services.MedicineService;
 using ApplicationCore.Services.PatientService;
 using ApplicationCore.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,14 +17,18 @@ using System.Threading.Tasks;
 namespace WebPresentation.Controllers
 {
     [Authorize(Roles ="Admin")]
-    public class MedicineController : Controller
+    public class MedicineController : BaseController
     {
+        private readonly IngredientService _ingredientService;
         private readonly MedicineService _medicineService;
         private readonly PatientService _patientService;
 
-        public MedicineController(IUnitOfWork<Patient> patientUnitOfWork, IUnitOfWork<Medicine> medicineUnitOfWork)
+        public MedicineController(UserManager<User> userManager,
+            IUnitOfWork<Patient> patientUnitOfWork,
+            IUnitOfWork<Medicine> medicineUnitOfWork,
+            IUnitOfWork<Ingredient>ingredientUnitOfWork):base(userManager)
         {
-
+            _ingredientService =new IngredientService( ingredientUnitOfWork);
             _medicineService = new MedicineService( medicineUnitOfWork);
             _patientService = new PatientService(patientUnitOfWork,medicineUnitOfWork);
 
@@ -141,6 +147,20 @@ namespace WebPresentation.Controllers
             }
 
             return View(project);
+        }
+        public IActionResult AddIngredints(int id ) {
+            var s = _ingredientService.GetAllIngredients();
+            ViewBag.MedicineId = id;
+            return View(s);
+        
+        }
+        [HttpPost]
+        public IActionResult AddIngredints(int id , int med ,int ratio )
+        {
+            var s = _ingredientService.GetIngredientDetails(id);
+            _medicineService.AddIngredient(med, ratio, s);
+
+            return RedirectToAction("Details","Medicine", new { Id = med}) ;
         }
 
         // POST: Projects/Delete/5
