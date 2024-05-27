@@ -35,8 +35,11 @@ namespace ApplicationCore.Services.PatientService
             return _patientUnitOfWork.Entity.GetAll(includeProperties);
         }
         public void AddMedicine(int patientId, Medicine medicine) {
-            var ptient = _patientUnitOfWork.Entity.GetById(patientId, p => p.Medicines);
+            var ptient = _patientUnitOfWork.Entity.GetById(patientId);
+            
             ptient.Medicines.Add(medicine);
+            _patientUnitOfWork.Entity.Update(ptient);
+            _patientUnitOfWork.Save();
         }
         public Patient getById(int id, params Expression<Func<Patient, object>>[] includeProperties)
         {

@@ -24,6 +24,7 @@ namespace ApplicationCore.Services.MedicineService
                 );
         }
         public void AddMedicine(Medicine medicine) {
+          
             _medicineUnitOfWork.Entity.Insert(medicine);
             _medicineUnitOfWork.Save();
 
@@ -48,6 +49,20 @@ namespace ApplicationCore.Services.MedicineService
 
             return _medicineUnitOfWork.Entity.GetById(id , i => i.MedicineIngredients , i => i.Ingredients,c => c.Category );
             
+        }
+        public Medicine GetMedicineIngredentisDetails(int medicineId) {
+            return _medicineUnitOfWork.Entity
+                .GetById(medicineId ,
+                    i => i.MedicineIngredients,
+                    i => i.Ingredients,
+                    c => c.Category);
+
+        }
+        public void AddIngredient(int medicineId, int ratio ,Ingredient ingredient) {
+            var m = GetMedicineIngredentisDetails(medicineId);
+            m.AddIngredient(ingredient ,ratio );
+            _medicineUnitOfWork.Entity.Update(m);
+            _medicineUnitOfWork.Save();
         }
         public void Delete(int id) {
             _medicineUnitOfWork.Entity.Delete(id);
