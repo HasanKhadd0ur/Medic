@@ -16,7 +16,7 @@
                             <img src="~/img/portfolio/@Model.Image"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.Name</h5>
-                            <p>For: @Model.Category.Name</p>
+                            <p>For: @(Model.Category is null ? "":Model.Category.Name)</p>
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>
                             </a>
@@ -47,13 +47,25 @@
                                 <h6>Ingredients : </h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    @foreach (var ing in Model.Ingredients)
-                                    {
-                                    <div class=" mb-3">
-                                        <h6>@ing.Name   @ing.Description  </h6>
-
-                                    </div>
-                                        }
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>Name</td>
+                                                <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var ing in Model.Ingredients)
+                                            {
+                                                <tr class=" mb-3">
+                                                    <td>@(a+=1)</td>
+                                                    <td>@ing.Name</td>
+                                                    <td>@ing.Description</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                     </div>
                                     <div class="row pt-1">
                                     <div class="col-6 mb-3">
@@ -61,11 +73,6 @@
                                         <a asp-action="Index">Back to List</a>
 
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                    <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                    <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -16,7 +16,7 @@
                     <div class="col-lg-4">
                                     <div class="card m-3">
                                         <img src="/img/portfolio/@item.Image"
-                                             class="card-img-top "style="max-height:250px ; max-width:200px"
+                                             class="card-img-top img-fluid"style="max-height:250px "
                                              alt="Waterfall" />
                                         <div class="card-body">
                                             <h5 class="card-title">@item.Name</h5>
@@ -28,7 +28,7 @@
                                                     Type : @item.MedicineType
                                                 
                                             </p>
-                                            <a href="#!" data-mdb-ripple-init class="btn btn-primary">Add to my Profile</a>
+                                            <a asp-action="AddMedicine" asp-controller="Home" asp-route-id="@item.Id" data-mdb-ripple-init class="btn btn-primary">Add to my Profile</a>
                                         </div>
                                     </div>
                                 </div>

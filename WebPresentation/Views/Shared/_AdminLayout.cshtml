@@ -20,7 +20,6 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -65,38 +64,37 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Projects" asp-action="Create">Add Patient </a>
-                                <a class="nav-link" asp-controller="Projects" asp-action="Index">ALL Patients </a>
+                                <a class="nav-link" asp-controller="Patient" asp-action="Create">Add Patient </a>
+                                <a class="nav-link" asp-controller="Patient" asp-action="Index">ALL Patients </a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Ingredients Manage
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" asp-controller="Ingredient" asp-action="Create">Add Ingredient </a>
+                                <a class="nav-link" asp-controller="Ingredient" asp-action="Index">ALL Ingredients </a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#cPages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Medicine Managment
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
 
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="cPages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" asp-controller="Medicine" asp-action="Create">Add Medicine </a>
                                 <a class="nav-link" asp-controller="Medicine" asp-action="Index">ALL Medicines </a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            User Accounts
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Projects" asp-action="Create">Add User </a>
-                                <a class="nav-link" asp-controller="Projects" asp-action="Index">ALL Users </a>
-                            </nav>
-                        </div>
 
                         <div class="sb-sidenav-footer">
                             <div class="small">Logged in as:@UserManager.GetUserName(User)</div>
-                            Start Bootstrap
+                            
                         </div>
                     </div>
                     </div>
@@ -120,7 +118,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div class="text-muted">Copyright &copy; Hasan & Rawad &yacute; Website 2023</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;

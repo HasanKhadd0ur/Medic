@@ -62,7 +62,7 @@
         </div>
 
         <!-- Portfolio Grid Items -->
-        <div class="row d-flex flex-wrap justify-content-sm-around">
+        <div class="row d-flex flex-wrap justify-content-sm-center">
             @if (Model.Medicines.Count() == 0)
             {
                 <h2 class="text-center">You dont have any  Medicine</h2>
@@ -73,13 +73,23 @@
                 {
 
 
-                    <div class="card col-md-4 col-lg-4 m-1 " style="width: 10rem;">
-                        <img class=" card-img-top mw-30 mh-30 card-img-top" style="height:250px;max-width:270px ;" src=@("/img/portfolio/" +item.Image ) ) alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.Name</h5>
-                            <p class="card-text">project cost : @item.Price</p>
+                    <div class="col-lg-4">
+                        <div class="card m-3">
+                            <img src="/img/portfolio/@item.Image"
+                                 class="card-img-top img-fluid" style="max-height:250px "
+                                 alt="Waterfall" />
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text">
+                                    @item.Description
+                                    <br />
+                                    Price : @item.Price <br />
 
-                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
+                                    Type : @item.MedicineType
+
+                                </p>
+                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
+                            </div>
                         </div>
                     </div>}
         </div>
@@ -88,9 +98,14 @@
     </div>
 </section>
 <section class="page-section bg-primary  text-white mb-0" id="topThree">
-    <div >
-        <a class="text-white text-center" asp-controller="Home" asp-action="MedicinesGalary" asp-route-id="@Model.Id">Go to Add Medicine to your profile </a>
-    </div>
+    <div class="container-fluid">
+        <!-- Portfolio Section Heading -->
+        <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">For more Medicine</h2><br/>
+        <h2 class="page-section-heading text-center text-bg-info text-secondary mb-0r"><a>Go to Add Medicine to your profile</a> </h2>
+        <!-- Icon Divider -->
+
+    </div>   
+  
 </section>
 
 <!-- Contact Section -->

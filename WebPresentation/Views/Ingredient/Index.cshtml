@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ApplicationCore.Entities.Ingredient>
+
+@{
+    ViewData["Title"] = "Index";
+
+    Layout = "_AdminLayout";
+}
+
+
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">Ingredients Counts </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#"> @Model.Count()</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+ </div>
+<div>
+     <table id="datatablesSimple" class="table">
+        <thead>
+            <tr>
+                <th scope="col">
+
+
+                    @Html.DisplayNameFor(model => model.First().Id)
+
+                </th>
+                <th scope="col">
+
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.First().Description)
+
+                </th>
+                <th scope="col">
+                    Manage
+                </th>
+
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+
+                <th scope="row">ID</th>
+                <th>  name</th>
+                <th>Description</th>
+                
+                <th>Manage</th>
+            </tr>
+        </tfoot>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td scope="row">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    
+                    <td>
+                        <a asp-action="Edit" asp-controller="Ingredient" asp-route-id="@item.Id"><i class="far fa-pen-to-square text-bg-info"></i></a>
+                        <a asp-action="Details" asp-controller="Ingredient" asp-route-id="@item.Id"><i class="far fa-address-card"></i></a>
+                        <a asp-action="Delete" asp-controller="Ingredient" asp-route-id="@item.Id"><i class="far fa-trash-can text-bg-danger"></i></a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<hr />

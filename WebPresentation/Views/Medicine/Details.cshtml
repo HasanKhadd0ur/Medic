@@ -1,31 +1,33 @@
-﻿@model ApplicationCore.Entities.Medicine
+﻿@model Medicine
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "Medicine Details ";
 
+    Layout = "_AdminLayout";
+    var a = 0;
 }
-<section class="vh-100" style="background-color: #f4f5f7;">
+<section class="page-section">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-6 mb-4 mb-lg-0">
+            <div class="col col-lg-8 mb-4 mb-lg-0">
                 <div class="card mb-3" style="border-radius: .5rem;">
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-black"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="~/img/portfolio/instagram.png"
+                            <img src="~/img/portfolio/@Model.Image"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.Name</h5>
-                            <p>For: @Model.Patients.Count()</p>
+                            <p>For: @(Model.Category is null ? "":Model.Category.Name)</p>
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>
-                             </a> 
-                            
+                            </a>
+
                             <a asp-action="Index">
 
                                 <i class="far fa-backward">
 
                                 </i>
+                                Go Back
                             </a>
                         </div>
                         <div class="col-md-8">
@@ -38,27 +40,47 @@
                                         <p class="text-muted">@Model.Description</p>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <h6>Price</h6>
-                                        <p class="text-muted">@Model.Price</p>
+                                        <h6>Medicine Type:@Model.MedicineType</h6>
+                                        <p class="text-muted">Dosage : @Model.Dosage</p>
+                                        <p class="text-muted">Price : @Model.Price</p>
                                     </div>
                                 </div>
-                                <h6>Category</h6>
+                                <h6>Ingredients : </h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>@Model.Category</h6>
-                                        <p class="text-muted">Lorem ipsum</p>
-                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>Name</td>
+                                                <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var ing in Model.Ingredients)
+                                            {
+                                                <tr class=" mb-3">
+                                                    <td>@(a+=1)</td>
+                                                    <td>@ing.Name</td>
+                                                    <td>@ing.Description</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>Go To list </h6>
                                         <a asp-action="Index">Back to List</a>
 
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                    <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                    <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                    <div class="col-6 mb-3">
+                                        <h6>Add Ingredient </h6>
+                                        <a asp-action="AddIngredints" asp-controller="Medicine" asp-route-id="@Model.Id">Add </a>
+
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>

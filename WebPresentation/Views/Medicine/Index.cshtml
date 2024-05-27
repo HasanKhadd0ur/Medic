@@ -50,7 +50,7 @@
 
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.Patients.First().User.Email)
+                    @Html.DisplayNameFor(model => model.Patients.First().User.CreationTime)
 
                 </th>
 
@@ -67,7 +67,7 @@
                 <th>First  name</th>
                 <th>Last name</th>
                 <th>BIO</th>
-                <th>Email</th>
+                <th>Creation Time</th>
 
                 <th>Manage</th>
             </tr>
@@ -92,7 +92,7 @@
                         @Html.DisplayFor(modelItem => item.BIO)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User.Email)
+                        @Html.DisplayFor(modelItem => item.User.CreationTime)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-controller="Patients" asp-route-id="@item.Id"><i class="far fa-pen-to-square text-bg-info"></i></a>

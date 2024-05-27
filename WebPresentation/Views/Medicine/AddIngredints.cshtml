@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Ingredient>
+@{
+}
+<section class="page-section">
+    <form method="post" asp-action="AddIngredints">
+        <select asp-for="@Model.First().Id">
+            @foreach (var i in Model)
+            {
+                <option value="@i.Id">@i.Name </option>
+            }
+        </select>
+        <input type="number"name="ratio" />
+        <input value="@ViewBag.MedicineId" name="med" hidden />
+        <button role="submit">Submit</button>
+    </form>
+</section>
