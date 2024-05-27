@@ -12,5 +12,8 @@ namespace ApplicationCore.Entities
         public String Description { get; set; }
         public ICollection<Medicine> Medicines { get; set; }
         public ICollection<MedicineIngredient> MedicineIngredients { get; set; }
+
+
+
     }
 }

@@ -10,5 +10,9 @@ namespace ApplicationCore.Entities
     {
         public String Name { get; set; }
         public ICollection<Medicine> Medicines { get; set; }
+        public void  AddMedicine(Medicine medicine) {
+
+            Medicines.Add(medicine);
+        }
     }
 }

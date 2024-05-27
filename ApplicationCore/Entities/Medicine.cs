@@ -19,7 +19,17 @@ namespace ApplicationCore.Entities
         public ICollection<MedicineIngredient> MedicineIngredients { get; set; }
         public ICollection<Patient> Patients { get; set; }
         public ICollection<PatientMedicine> PatientMedicines { get; set; }
-        
+
+        public void AddIngredient(Ingredient ingredient , int ratio ) {
+            MedicineIngredients.Add(
+                new MedicineIngredient
+                {
+                    Ingredient = ingredient,
+                    Ratio = ratio,
+                    Medicine = this
+                });
+
+        }
 
 
 
