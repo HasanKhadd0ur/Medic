@@ -33,6 +33,13 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Augmentine"
+                        });
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Ingredient", b =>
@@ -88,6 +95,16 @@ namespace Infrastructure.Migrations
                     b.HasIndex("MedicineTypeId");
 
                     b.ToTable("Medicines");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Dosage = 12,
+                            Image = "med1.png",
+                            Name = "Augmentine",
+                            Price = 2500
+                        });
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.MedicineIngredient", b =>
@@ -137,21 +154,27 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("BIO")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BIO = "a Patient ",
+                            UserId = "2"
+                        });
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.PatientMedicine", b =>
@@ -188,6 +211,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -201,6 +227,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -218,9 +250,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -248,10 +277,49 @@ namespace Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PatientId")
-                        .IsUnique();
-
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            Avatar = "avatar.jpg",
+                            ConcurrencyStamp = "9122e783-9528-4e0a-b15d-82345f6f0418",
+                            CreationTime = new DateTime(2024, 5, 31, 17, 38, 21, 491, DateTimeKind.Local).AddTicks(4784),
+                            Email = "hasan@b",
+                            EmailConfirmed = false,
+                            FirstName = "Hasan",
+                            LastName = "Kh",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "hasan@b",
+                            NormalizedUserName = "Hasan.Bahjat",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJwazDmiC7dJqkx0ZQHpN6lKVdLp1MlBxIx4e5ZcqF+gkiJTfUb/OJOI6LYXXw8o2A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3fe96d52-7dbf-46c8-b9ff-2bf6819fbeac",
+                            TwoFactorEnabled = false,
+                            UserName = "Hasan.Bahjat"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            Avatar = "avatar1.jpg",
+                            ConcurrencyStamp = "6ef31db3-4cc6-40c1-9082-3dca1d055c9a",
+                            CreationTime = new DateTime(2024, 5, 31, 17, 38, 21, 508, DateTimeKind.Local).AddTicks(9726),
+                            Email = "hasan.bahjat@mail.y",
+                            EmailConfirmed = false,
+                            FirstName = "Hasan",
+                            LastName = "Khaddour",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "hasan@b",
+                            NormalizedUserName = "Hasan.khaddour",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDWozHY53JhRnMlp3wyKL2X6zVG8Rgd8AQSP7OHCui5ObaKA6p2dpcg6EVjXzMc99Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "df27679f-e318-49b0-af02-2ebd01b2ef40",
+                            TwoFactorEnabled = false,
+                            UserName = "Hasan.Khaddour"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -280,6 +348,22 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1-2-1",
+                            ConcurrencyStamp = "e90561ea-fc91-4e43-9090-6967145f6f5b",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "28134bcc-f733-40be-8d2e-bface932cc86",
+                            Name = "patient",
+                            NormalizedName = "patient"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -365,6 +449,18 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1-2-1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -420,6 +516,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Medicine");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.Patient", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.User", "User")
+                        .WithOne("Patient")
+                        .HasForeignKey("ApplicationCore.Entities.Patient", "UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.PatientMedicine", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.Medicine", "Medicine")
@@ -435,17 +540,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Medicine");
-
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("ApplicationCore.Entities.User", b =>
-                {
-                    b.HasOne("ApplicationCore.Entities.Patient", "Patient")
-                        .WithOne("User")
-                        .HasForeignKey("ApplicationCore.Entities.User", "PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Patient");
                 });
@@ -526,8 +620,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("ApplicationCore.Entities.Patient", b =>
                 {
                     b.Navigation("PatientMedicines");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("ApplicationCore.Entities.User", b =>
+                {
+                    b.Navigation("Patient");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,15 +15,15 @@ namespace Infrastructure.Data
         public MedicDbContext(DbContextOptions<MedicDbContext> options)
            : base(options)
         {
-         
+
         }
-        
+
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<MedicineType> MedicineTypes { get; set; }
-       
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-TI6EF1L\\SQLEXPRESS;Initial Catalog=portfoilo;Integrated Security=True");
@@ -70,44 +70,115 @@ namespace Infrastructure.Data
                 .HasOne(o => o.MedicineType);
             modelBuilder.Entity<User>().Property(e => e.Id).HasMaxLength(200);
             modelBuilder.Entity<IdentityRole>().Property(e => e.Id).HasMaxLength(200);
-         
-            // Seed(modelBuilder);
-
            base.OnModelCreating(modelBuilder);
 
-
+            Seed(modelBuilder);
 
         }
         public void Seed(ModelBuilder modelBuilder) {
-            var P = new Patient
-            {
-                Id = 1,
-                FirstName = "Hasasn",
-                LastName = "Khaddour",
-                Avatar = "avatr.png"
+            #region Roles 
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Name = "Admin",
+                    NormalizedName = "Admin",
+                    Id = "1-2-1"
+                },
+                new IdentityRole
+                {
+                    Name = "patient",
+                    NormalizedName = "patient",
+                    Id = "1"
+                }
 
-            };
-            modelBuilder.Entity<Patient>().HasData(P);
+                );
 
-            var appUser = new User
-            {
-                Id = "123-1213",
-                Email = "hasan@b",
-                EmailConfirmed = true,
-                UserName = "frankofoedu@gmail.com",
-                NormalizedUserName = "FRANKOFOEDU@GMAIL.COM",
-                PatientId = 1
 
-            };
-            //set user password
-            //appUser.Patient = P;
+            modelBuilder.Entity<IdentityUserRole<String>>()
+                .HasData( new IdentityUserRole<String>
+                 {
+                     UserId = "1",
+                     RoleId = "1-2-1"
+                 }, new IdentityUserRole<String>
+                 {
+                     UserId = "2",
+                     RoleId = "1"
+
+                 }
+
+                );
+            #endregion Roles
+            #region User 
             PasswordHasher<User> ph = new PasswordHasher<User>();
-            appUser.PasswordHash = ph.HashPassword(appUser, "123@Aa");
 
-            //seed user
-            modelBuilder.Entity<User>().HasData(appUser);
+            var admin = new User
+            {
+                Id = "1",
+                FirstName = "Hasan",
+                LastName = "Kh",
+                Avatar = "avatar.jpg",
+                Email = "hasan@b",
+                UserName="Hasan.Bahjat",
+                NormalizedEmail="hasan@b",
+                NormalizedUserName= "Hasan.Bahjat",
+              
+                CreationTime = DateTime.Now
+            };
+            var PatientAccount = new User
+            {
+                Id = "2",
+                FirstName = "Hasan",
+                LastName = "Khaddour",
+                Avatar = "avatar1.jpg",
+                Email = "hasan.bahjat@mail.y",
 
+                UserName = "Hasan.Khaddour",
+                NormalizedEmail = "hasan@b",
+                NormalizedUserName = "Hasan.khaddour",
+                CreationTime = DateTime.Now
+            };
 
+            admin.PasswordHash = ph.HashPassword(admin, "123@Aa");
+            PatientAccount.PasswordHash = ph.HashPassword(PatientAccount, "123@Aa");
+
+            modelBuilder.Entity<User>()
+                .HasData(
+                admin,
+                PatientAccount
+                );
+
+            #endregion User
+            #region Patients 
+            var Patient = new Patient {
+                Id=1,
+                
+                BIO = "a Patient ",
+                UserId = PatientAccount.Id,
+                
+            };
+            modelBuilder.Entity<Patient>().HasData(
+                Patient
+                );
+
+            #endregion Patients
+            #region Medicines 
+            var med = new Medicine
+            {
+                Id=-1,
+                Name = "Augmentine",
+                Image="med1.png",
+                Dosage = 12,
+                Price = 2500,
+                
+                
+
+            };
+            var c = new Category { Id = 1, Name = "Augmentine" };
+            modelBuilder.Entity<Category>().HasData(c);
+       //     med.Category = c;
+            modelBuilder.Entity<Medicine>().HasData(med);
+
+            #endregion Medicines
         }
     }
     }

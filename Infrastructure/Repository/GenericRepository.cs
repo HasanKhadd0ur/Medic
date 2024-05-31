@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces.ISpecification;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,30 +26,25 @@ namespace Infrastructure.Repository
             _table.Remove(entity);
         }
 
-        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeProperties)
+        public IEnumerable<T> GetAll(ISpecification<T> specification)
         {
 
-            {
+            
                 IQueryable<T> queryable = _table;
-                foreach (var includeProperty in includeProperties)
-                {
-                    queryable = queryable.Include(includeProperty);
-                }
+                queryable = GetQuery(queryable, specification);
+
                 return queryable.AsEnumerable();
-            }
         }
 
-        public T GetById(int id, params Expression<Func<T, object>>[] includeProperties)
+        public T GetById(int id, ISpecification<T>? specification)
         {
 
 
             IQueryable<T> query = _table;
-            if (includeProperties is not null)
-                foreach (var includeProperty in includeProperties)
-                {
-                    query = query.Include(includeProperty);
-                }
-            return query.Where(p => p.Id == id).First();
+            if(specification != null )
+            query = GetQuery(query, specification);
+
+            return query.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public T Insert(T entity)
@@ -62,6 +58,36 @@ namespace Infrastructure.Repository
             _context.Entry(entity).State = EntityState.Modified;
 
             return e;
+        }
+        public  IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
+        {
+            IQueryable<T> query = inputQuery;
+
+            // modify the IQueryable using the specification's criteria expression
+            if (specification.Criteria != null)
+            {
+                query = query.Where(specification.Criteria);
+            }
+
+            // Includes all expression-based includes
+            query = specification.Includes.Aggregate(query,
+                                    (current, include) => current.Include(include));
+            
+            // Include any string-based include statements
+            query = specification.ThenInclude.Aggregate(query,
+                                    (current, include) => current.Include(include));
+
+            // Apply ordering if expressions are set
+            if (specification.OrderBy != null)
+            {
+                query = query.OrderBy(specification.OrderBy);
+            }
+            else if (specification.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending);
+            }
+
+            return query;
         }
     }
 }
