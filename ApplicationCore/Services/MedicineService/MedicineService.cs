@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,27 +12,26 @@ namespace ApplicationCore.Services.MedicineService
     public class MedicineService
     {
         private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
-
+        private MedicineIngredientSpecification _medicineIngredientSpecification;
         public MedicineService(IUnitOfWork<Medicine> medicineUnitOfWork)
         {
             _medicineUnitOfWork = medicineUnitOfWork;
+            _medicineIngredientSpecification = new MedicineIngredientSpecification();
         }
         public IEnumerable<Medicine> GetAllMedicines() {
             return _medicineUnitOfWork.Entity.GetAll(
-                  p => p.Category 
-                , p => p.Ingredients
-                , p => p.Patients
-                );
+                 _medicineIngredientSpecification
+                 );
         }
         public void AddMedicine(Medicine medicine) {
-          
+            
             _medicineUnitOfWork.Entity.Insert(medicine);
             _medicineUnitOfWork.Save();
 
         }
         public void AddMedicineIngredient(int medicineId ,Ingredient ingredient ) {
 
-            var s =_medicineUnitOfWork.Entity.GetById(medicineId, p => p.Ingredients);
+            var s =_medicineUnitOfWork.Entity.GetById(medicineId,_medicineIngredientSpecification);
             s.Ingredients.Add(ingredient);
             _medicineUnitOfWork.Entity.Update(s);
             _medicineUnitOfWork.Save();
@@ -47,19 +47,23 @@ namespace ApplicationCore.Services.MedicineService
         public Medicine GetMedicineDetails(int id)
         {
 
-            return _medicineUnitOfWork.Entity.GetById(id , i => i.MedicineIngredients , i => i.Ingredients,c => c.Category );
+            return _medicineUnitOfWork.Entity.GetById(id ,_medicineIngredientSpecification );
             
         }
         public Medicine GetMedicineIngredentisDetails(int medicineId) {
             return _medicineUnitOfWork.Entity
                 .GetById(medicineId ,
-                    i => i.MedicineIngredients,
-                    i => i.Ingredients,
-                    c => c.Category);
+                   _medicineIngredientSpecification);
 
         }
         public void AddIngredient(int medicineId, int ratio ,Ingredient ingredient) {
             var m = GetMedicineIngredentisDetails(medicineId);
+            if(ingredient.Id!= 0 )
+
+            foreach (var i in m.Ingredients) {
+                if (i.Id.Equals(ingredient.Id))
+                    return;
+            }
             m.AddIngredient(ingredient ,ratio );
             _medicineUnitOfWork.Entity.Update(m);
             _medicineUnitOfWork.Save();

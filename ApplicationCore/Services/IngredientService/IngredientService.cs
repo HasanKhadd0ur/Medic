@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,17 @@ namespace ApplicationCore.Services.IngredientService
     public class IngredientService
     {
         private readonly IUnitOfWork<Ingredient> _ingredientUnitOfWork;
+        private IngredientSpecification _IngredientSpecification;
 
         public IngredientService(IUnitOfWork<Ingredient> ingredientUnitOfWork)
         {
             _ingredientUnitOfWork = ingredientUnitOfWork;
+            _IngredientSpecification = new IngredientSpecification();
         }
         public IEnumerable<Ingredient> GetAllIngredients()
         {
             return _ingredientUnitOfWork.Entity.GetAll(
-                p=>p.MedicineIngredients 
+                _IngredientSpecification 
                  );
         }
         public void AddIngredient(Ingredient ingredient)
@@ -41,9 +44,7 @@ namespace ApplicationCore.Services.IngredientService
         {
 
             return _ingredientUnitOfWork.Entity.GetById(id, 
-                i => i.MedicineIngredients,
-                i => i.Medicines
-                );
+                _IngredientSpecification);
 
         }
         public void Delete(int id)

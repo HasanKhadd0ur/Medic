@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cleanArchWebApp.ApplicationCore.ViewModels
+namespace ApplicationCore.ViewModel
 {
     public class LoginInuptModel
     {
@@ -20,6 +20,6 @@ namespace cleanArchWebApp.ApplicationCore.ViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
-
+        public String ReturnUrl { get; set; }
     }
 }

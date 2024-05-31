@@ -13,5 +13,6 @@ namespace ApplicationCore.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+
     }
 }

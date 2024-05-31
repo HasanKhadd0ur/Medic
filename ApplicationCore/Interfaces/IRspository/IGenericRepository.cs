@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Interfaces.ISpecification;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,9 +13,9 @@ namespace ApplicationCore.Interfaces
         
         public T Update(T entities);
         public T Insert(T entities);
-        public T GetById(int id, params Expression<Func<T, object>>[] includeProperties);
+        public T GetById(int id, ISpecification<T>? specification = null );
         public void Delete(int id);
-        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeProperties);
+        public IEnumerable<T> GetAll(ISpecification<T> specification);
 
     }
 }

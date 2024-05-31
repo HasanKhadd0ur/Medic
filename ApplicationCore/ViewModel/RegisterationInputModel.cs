@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cleanArchWebApp.ApplicationCore.Aggregate
+namespace ApplicationCore.ViewModel
 {
     public class RegisterationInputModel
     {
@@ -14,6 +14,14 @@ namespace cleanArchWebApp.ApplicationCore.Aggregate
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+        public string Avatar { get; set; }
+
         [Required]
         public Patient Patient { get; set; }
         [Required]
@@ -26,5 +34,6 @@ namespace cleanArchWebApp.ApplicationCore.Aggregate
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }
