@@ -1,8 +1,7 @@
-﻿@page
-@model LoginModel
-
+﻿@model ApplicationCore.ViewModel.LoginInuptModel
 @{
     ViewData["Title"] = "Log in";
+
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -20,31 +19,31 @@
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
 
-                                <form method="post">
+                                <form method="post" asp-action="Login" asp-controller="Access">
 
                                     <div class="d-flex align-items-center mb-3 pb-1">
                                         <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                                         <span class="h1 fw-bold mb-0">Logo</span>
                                     </div>
-
+                                    <input hidden asp-for="@Model.ReturnUrl" value="@ViewBag.ReturnUrl"/>
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <input type="email" id="form2Example17" asp-for="Input.Email" class="form-control form-control-lg" />
-                                        <label class="form-label" asp-for="Input.Email">Email address</label>
+                                        <input type="email" id="form2Example17" asp-for="@Model.Email" class="form-control form-control-lg" />
+                                        <label class="form-label" asp-for="@Model.Email">Email address</label>
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <input type="password" asp-for="Input.Password" class="form-control form-control-lg" />
-                                        <label class="form-label" asp-for="Input.Password">Password</label>
-                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        <input type="password" asp-for="@Model.Password" class="form-control form-control-lg" />
+                                        <label class="form-label" asp-for="@Model.Password">Password</label>
+                                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <div class="checkbox">
-                                            <label asp-for="Input.RememberMe">
-                                                <input asp-for="Input.RememberMe" />
-                                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                            <label asp-for="@Model.RememberMe">
+                                                <input asp-for="@Model.RememberMe" />
+                                                @Html.DisplayNameFor(m => m.RememberMe)
                                             </label>
                                         </div>
                                     </div>
@@ -53,9 +52,9 @@
                                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" role="submit">Login</button>
                                     </div>
 
-                                    <a id="forgot-password" class="small text-muted" asp-page="./ForgotPassword">Forgot your password?</a>
+                                    <a id="forgot-password" class="small text-muted" >Forgot your password?</a>
                                     <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                                        Don't have an account? <a style="color: #393f81;" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+                                        Don't have an account? <a style="color: #393f81;" asp-controller="Access" asp-action="Register" asp-route-returnUrl="@ViewBag.ReturnUrl">
                                             Register Here
                                         </a>
                                     </p>

@@ -1,5 +1,4 @@
-﻿@page
-@model RegisterModel
+﻿@model ApplicationCore.ViewModel.RegisterationInputModel ;
 @{
     ViewData["Title"] = "Register";
 }
@@ -25,8 +24,8 @@
 </style>
 <section class="page-section bg-primary text-black mb-0">
 
-    <h3 class="mb-5 text-uppercase text-center">Owner Registration</h3>
-    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <h3 class="mb-5 text-uppercase text-center">Patient Registration</h3>
+    <form  method="post" asp-controller="Access" asp-action="Register">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col">
@@ -42,48 +41,49 @@
                                 <div class="card-body p-md-5 text-black">
                                     <div asp-validation-summary="All" class="text-danger"></div>
                                     <div class="form-group row">
-                                        <label asp-for="Input.Email"></label>
-                                        <input asp-for="Input.Email" class="form-control" />
-                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                        <label asp-for="@Model.Email"></label>
+                                        <input asp-for="@Model.Email" class="form-control" />
+                                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row ">
-                                        <label asp-for="Input.Password"></label>
-                                        <input asp-for="Input.Password" class="form-control" />
-                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        <label asp-for="@Model.Password"></label>
+                                        <input asp-for="@Model.Password" class="form-control" />
+                                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
                                     </div>
                                     <div class="form-group row">
-                                        <label asp-for="Input.ConfirmPassword"></label>
-                                        <input asp-for="Input.ConfirmPassword" class="form-control" />
-                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                        <label asp-for="@Model.ConfirmPassword"></label>
+                                        <input asp-for="@Model.ConfirmPassword" class="form-control" />
+                                        <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
                                     </div>
+                                    <input hidden asp-for="@Model.ReturnUrl" value="@ViewBag.ReturnUrl" />
 
                                     <div class="form-group row mb-4">
 
                                         <div data-mdb-input-init class="col form-outline">
-                                            <input type="text" asp-for="Input.Patient.FirstName" class="form-control form-control-lg" />
-                                            <label class="form-label" asp-for="Input.Patient.FirstName">First name</label>
+                                            <input type="text" asp-for="@Model.FirstName" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="@Model.FirstName">First name</label>
                                         </div>
                                         <div data-mdb-input-init class="col form-outline">
-                                            <input type="text" asp-for="Input.Patient.LastName" class="form-control form-control-lg" />
-                                            <label class="form-label" asp-for="Input.Patient.LastName">Last name</label>
+                                            <input type="text" asp-for="@Model.LastName" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="@Model.LastName">Last name</label>
                                         </div>
 
                                     </div>
 
                                     <div class="form-group row mb-4">
                                         <div data-mdb-input-init class="form-outline col">
-                                            <input type="text" asp-for="Input.Patient.BIO" class="form-control form-control-lg" />
-                                            <label class="form-label" asp-for="Input.Patient.BIO">BIO</label>
+                                            <input type="text" asp-for="@Model.Patient.BIO" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="@Model.Patient.BIO">BIO</label>
                                         </div>
                                     </div>
 
-                                   
+
 
                                     <div class="form-group row mb-4">
-                                        
+
                                         <div data-mdb-input-init class="form-outline col">
-                                            <input type="text" asp-for="Input.Patient.Avatar" class="form-control form-control-lg" />
-                                            <label class="form-label" asp-for="Input.Patient.Avatar">Image</label>
+                                            <input type="text" asp-for="@Model.Avatar" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="@Model.Avatar">Image</label>
                                         </div>
                                     </div>
 

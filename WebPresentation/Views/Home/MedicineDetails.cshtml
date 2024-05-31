@@ -2,13 +2,15 @@
 
 @{
     ViewData["Title"] = "Medicine Details ";
-    var  a = 0;
+
+
+    var a = 0;
 }
 
 <section class="page-section" style="background-color: #f4f5f7;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-6 mb-4 mb-lg-0">
+            <div class="col col-8 col-lg-8 mb-4 mb-lg-0">
                 <div class="card mb-3" style="border-radius: .5rem;">
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-black"
@@ -39,7 +41,7 @@
                                         <p class="text-muted">@Model.Description</p>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <h6>Medicine Type:@Model.MedicineType</h6>
+                                        <h6>Medicine Type:@Model.MedicineType.TypeName</h6>
                                         <p class="text-muted">Dosage : @Model.Dosage</p>
                                         <p class="text-muted">Price : @Model.Price</p>
                                     </div>
@@ -53,16 +55,20 @@
                                                 <td>#</td>
                                                 <td>Name</td>
                                                 <td>Description</td>
+                                                <td>Ratio</td>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var ing in Model.Ingredients)
+                                            @foreach (var ing in Model.MedicineIngredients)
                                             {
-                                                <tr class=" mb-3">
-                                                    <td>@(a+=1)</td>
-                                                    <td>@ing.Name</td>
-                                                    <td>@ing.Description</td>
-                                                </tr>
+                                            <tr class=" mb-3">
+                                                <td>@(a+=1)</td>
+                                                <td>@ing.Ingredient.Name</td>
+                                                <td>@ing.Ingredient.Description</td>
+                                                <td>@ing.Ratio</td>
+
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>

@@ -9,9 +9,10 @@
 
 *@
 @{
-    ViewData["title"] = "Home - " + UserManager.GetUserName(User);
-
-    ViewData["userName"] = Model.FirstName + " " + Model.LastName;
+    var userName = UserManager.GetUserName(User);
+    ViewData["title"] = "Home - " + userName;
+    
+    ViewData["userName"] = Model.User.FirstName + " " + Model.User.LastName;
 
     ViewBag.owner = Model;
     var top = Model.Medicines.Where(t => t.Dosage > 0).ToList();
@@ -24,10 +25,10 @@
     <div class="container d-flex align-items-center flex-column">
 
         <!-- Masthead Avatar Image -->
-        <img class="masthead-avatar mb-5" src="/img/@Model.Avatar" style="border-radius:50%" alt="">
+        <img class="masthead-avatar mb-5" src="/img/@Model.User.Avatar" style="border-radius:50%" alt="">
 
         <!-- Masthead Heading -->
-        <h1 class="masthead-heading text-uppercase mb-0">@(Model.FirstName +" "+ Model.LastName)</h1>
+        <h1 class="masthead-heading text-uppercase mb-0">@(Model.User.FirstName +" "+ Model.User.LastName)</h1>
 
         <!-- Icon Divider -->
         <div class="divider-custom divider-light">
@@ -101,7 +102,7 @@
     <div class="container-fluid">
         <!-- Portfolio Section Heading -->
         <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">For more Medicine</h2><br/>
-        <h2 class="page-section-heading text-center text-bg-info text-secondary mb-0r"><a>Go to Add Medicine to your profile</a> </h2>
+        <h2 class="page-section-heading text-center  mb-0r" style="color :white!important ;"><a asp-action="MedicinesGalary" asp-controller="Home" >Go to Add Medicine to your profile</a> </h2>
         <!-- Icon Divider -->
 
     </div>   

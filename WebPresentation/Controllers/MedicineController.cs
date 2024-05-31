@@ -38,9 +38,10 @@ namespace WebPresentation.Controllers
         {
             var s = new PatientMedicineViewModel
             {
-                Patients = _patientService.getAll(),
+                Patients = _patientService.GetAll(p=> p.User ),
                 Medicines = _medicineService.GetAllMedicines()
             };
+
             return View(s);
         }
 

@@ -1,16 +1,32 @@
 ﻿@model IEnumerable<Ingredient>
 @{
 }
-<section class="page-section">
-    <form method="post" asp-action="AddIngredints">
-        <select asp-for="@Model.First().Id">
+<section class="page-section p-5">
+    <form class=" " method="post" asp-action="AddIngredints">
+
+
+        <div class="form-group floating-label-form-group controls mb-0 pb-2">
+            <label>Choose Ingredient</label>
+
+            <p class="help-block text-danger"></p>
+        </div>
+
+        <select class="form-select" asp-for="@Model.First().Id">
             @foreach (var i in Model)
             {
                 <option value="@i.Id">@i.Name </option>
             }
         </select>
-        <input type="number"name="ratio" />
+        <br>
+
+        <input class="form-text" type="number" name="ratio" />
+        <br>
+
         <input value="@ViewBag.MedicineId" name="med" hidden />
-        <button role="submit">Submit</button>
+        <div id="success"></div>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-xl" role="submit">Add <i class="fa fa-plus"></i></button>
+        </div>
     </form>
 </section>

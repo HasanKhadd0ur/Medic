@@ -1,6 +1,5 @@
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\appsettings.json
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\WebPresentation.StaticWebAssets.xml
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\WebPresentation.exe
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\WebPresentation.deps.json
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\WebPresentation.runtimeconfig.json
@@ -14,8 +13,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Humanizer.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
@@ -30,7 +27,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.EntityFr
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Identity.Client.dll
@@ -133,7 +129,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.Ge
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.AssemblyInfoInputs.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.AssemblyInfo.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.csproj.CoreCompileInputs.cache
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.RazorAssemblyInfo.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.RazorAssemblyInfo.cs
@@ -143,18 +138,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\scopedcss\bundle\W
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.TagHelpers.input.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.TagHelpers.output.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.RazorCoreGenerate.cache
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Logout.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\ResetPassword.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\MedicineDetails.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
@@ -179,3 +162,11 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\ref\WebPresentatio
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.pdb
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.genruntimeconfig.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\MedicinesGalary.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\AddIngredints.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Create.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Delete.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Details.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Edit.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Index.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Access\Login.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Access\Register.cshtml.g.cs

@@ -3,6 +3,7 @@ using ApplicationCore.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,10 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebPresentation
 {
@@ -34,7 +31,7 @@ namespace WebPresentation
 
 
             
-            services.AddScoped(typeof(DbContext), typeof(MedicDbContext));
+            services.AddScoped<DbContext, MedicDbContext>();
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -42,18 +39,22 @@ namespace WebPresentation
 
             services.AddDbContext<MedicDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc()
-            .AddSessionStateTempDataProvider();
-
+           
             services.AddSession();
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<MedicDbContext>()
-               .AddDefaultTokenProviders().AddDefaultUI();
+                .AddEntityFrameworkStores<MedicDbContext>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.LoginPath = "Access/Login";
+                    options.LogoutPath = "Access/Logout";
+                    options.AccessDeniedPath = "Access/Login";
+                }
+                );
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
-
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +77,7 @@ namespace WebPresentation
             app.UseRouting();
 
             app.UseAuthentication();
+           
             app.UseAuthorization();
 
             app.UseSession();
@@ -86,8 +88,7 @@ namespace WebPresentation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
+                 });
         }
     }
 }
