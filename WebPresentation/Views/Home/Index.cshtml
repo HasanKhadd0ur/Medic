@@ -11,11 +11,11 @@
 @{
     var userName = UserManager.GetUserName(User);
     ViewData["title"] = "Home - " + userName;
-    
+
     ViewData["userName"] = Model.User.FirstName + " " + Model.User.LastName;
+    ViewBag.Avatar = Model.User.Avatar;
 
     ViewBag.owner = Model;
-    var i = 1;
 
 }
 
@@ -44,25 +44,15 @@
     </div>
 </header>
 
-<!-- Portfolio Section -->
-<section class="page-section portfolio" id="portfolio">
-    <div class="container-fluid">
+<section id="services" class=" services ">
+    <div class="container">
 
-        <!-- Portfolio Section Heading -->
-        <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">Patient Medicine</h2>
-        <!-- Icon Divider -->
-
-        <div class=" divider-custom">
-            <div class="divider-custom-line"></div>
-
-            <div class="divider-custom-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="divider-custom-line"></div>
+        <div class="section-title">
+            <h2>Your medical State  </h2>
+            <p>Here you can create new medical state <a asp-controller="MedicalState" asp-action="Create" >Create</a>.</p>
         </div>
 
-        <!-- Portfolio Grid Items -->
-        <div class="row d-flex flex-wrap justify-content-sm-center">
+        <div class="row">
             @if (Model.MedicalStates.Count() == 0)
             {
                 <h2 class="text-center">You dont have any  MedicalState</h2>
@@ -73,39 +63,80 @@
                 {
 
 
-                    <div class="col-lg-4">
-                        <div class="card m-3">
-                            <img src="/img/portfolio/flappy.png"
-                                 class="card-img-top img-fluid" style="max-height:250px "
-                                 alt="Waterfall" />
-                            <div class="card-body">
-                                <h5 class="card-title">@item.StateName</h5>
-                                <p class="card-text">
-                                    @item.StateDescription
-                                    <br />
-                                    Date : @item.PrescriptionTime <br />
-
-                                    Medicines : @item.Medicines.Count()
-
-                                </p>
-                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
-                            </div>
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                            <h4>@item.StateName</h4>
+                            <p>@item.StateDescription - Prescriped at @(item.PrescriptionTime)</p>
+                            <a  data-toggle="modal" data-target="#item-@(item.Id)" class="btn btn-primary" >
+                            Details</a>
                         </div>
-                    </div>}
+
+                    </div>
+                }
+
         </div>
-        <!-- /.row -->
 
     </div>
-</section>
+</section><!-- End Services Section -->
+
+<!--<section class="page-section ">
+    <div class="container-fluid">-->
+
+        <!-- Portfolio Grid Items -->
+        <!--<div class="row d-flex flex-wrap justify-content-sm-center">
+            @if (Model.MedicalStates.Count() == 0)
+            {
+                <h2 class="text-center">You dont have any  MedicalState</h2>
+                <img src="~/img/portfolio/noData.jpg" class="figure-img" />
+            }
+            else
+                @foreach (var item in Model.MedicalStates)
+                {
+
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                            <h4><a href="">@item.StateName</a></h4>
+                            <p>@item.StateDescription</p>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                            <div class="card m-3">
+                                <img src="/img/portfolio/flappy.png"
+                                     class="card-img-top img-fluid" style="max-height:250px "
+                                     alt="Waterfall" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.StateName</h5>
+                                    <p class="card-text">
+                                        @item.StateDescription
+                                        <br />
+                                        Date : @item.PrescriptionTime <br />
+
+                                        Medicines : @item.Medicines.Count()
+
+                                    </p>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
+                                </div>
+                            </div>
+                        </div>
+                }
+        </div>-->
+        <!-- /.row -->
+
+    <!--</div>
+</section>-->
 <section class="page-section bg-primary  text-white mb-0" id="topThree">
     <div class="container-fluid">
         <!-- Portfolio Section Heading -->
-        <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">For more Medicine</h2><br/>
-        <h2 class="page-section-heading text-center  mb-0r" style="color :white!important ;"><a asp-action="MedicinesGalary" asp-controller="Home" >Go to Add Medicine to your profile</a> </h2>
+        <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">For more Medicine</h2><br />
+        <h2 class=" page-section-heading text-center  text-secondary   mb-0" style="color :white!important ;"><a asp-action="Index" asp-controller="MedicalState">Go to You Medical States profile</a> </h2>
         <!-- Icon Divider -->
 
-    </div>   
-  
+    </div>
+
 </section>
 
 <!-- Contact Section -->
@@ -197,13 +228,13 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <!-- Portfolio Modal - Image -->
-                                <img class="img-fluid rounded mb-5" src="/img/portfolio/ecole.png"   alt="">
+                                <img class="img-fluid rounded mb-5" src="/img/portfolio/ecole.png" alt="">
                                 <!-- Portfolio Modal - Text -->
                                 <p class="mb-5">State Description : @item.StateDescription</p>
                                 <p class="mb-5">State Name : @item.StateName</p>
                                 <p class="mb-5">State Time : @item.PrescriptionTime</p>
 
-                                <a asp-action="MedicalStateDetails" role="button" class="btn btn-primary" asp-controller="Home" asp-route-id="@item.Id">View More </a>
+                                <a asp-action="Details" role="button" class="btn btn-primary" asp-controller="MedicalState" asp-route-id="@item.Id">View More </a>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                                     <i class="fas fa-times fa-fw"></i>
                                     Close Window

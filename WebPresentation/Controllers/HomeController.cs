@@ -1,7 +1,4 @@
 ﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Services.MedicineService;
-using ApplicationCore.Services.PatientService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebPresentation.Models;
+using ApplicationCore.Interfaces.IServices;
 
 namespace WebPresentation.Controllers
 {
@@ -19,21 +17,20 @@ namespace WebPresentation.Controllers
 [Authorize(Roles ="patient")]
     public class HomeController : BaseController
     {
-        private readonly PatientService _patientService;
-        private readonly MedicineService _medicineService;
+        private readonly IPatientService _patientService;
+        private readonly IMedicineService _medicineService;
 
         private readonly UserManager<User> _userManager;
         
         public HomeController(
                 UserManager<User> userManager,
-                IUnitOfWork<Patient> patientUnitOfWork,
-                IUnitOfWork<Medicine> medicineUnitOfWork,
-                IUnitOfWork<MedicalState> medicalStateUnitOfWork
+                IPatientService patientService,
+                IMedicineService medicineService
             ):base(userManager)
         {
             _userManager = userManager;
-            _medicineService = new MedicineService(medicineUnitOfWork);
-            _patientService = new PatientService(patientUnitOfWork,medicalStateUnitOfWork);
+            _medicineService = medicineService;
+            _patientService = patientService;
             
         }
 
@@ -53,31 +50,8 @@ namespace WebPresentation.Controllers
             return View(ownesr);
         }
 
-        public IActionResult MedicalStateDetails(int id ) {
-            var s = _patientService.GetMedicalStateDetails(
-                id);
-            if (s is null) {
-                return NotFound();
-            }
-            else 
-            return View(s);
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult AddMedicalState(int id) {
-            var userId = _userManager.GetUserId(User);
-
-            var patient = _patientService.GetAll()
-                .Where(u => u.User.Id ==userId ).FirstOrDefault();
-            var m =_patientService.GetMedicalStateDetails(id);
-            _patientService.AddMedicalState(patient.Id, m);
-            
-            return RedirectToAction("Index","Home");
-                
-        }
+        
+       
         public IActionResult MedicinesGalary() {
 
             return View(_medicineService.GetAllMedicines());

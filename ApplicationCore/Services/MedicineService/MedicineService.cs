@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Specification;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Services.MedicineService
+namespace ApplicationCore.Services
 {
-    public class MedicineService
+    public class MedicineService : IMedicineService
     {
         private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
         private MedicineIngredientSpecification _medicineIngredientSpecification;

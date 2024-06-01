@@ -17,12 +17,14 @@ namespace ApplicationCore.Specification
             AddInclude(p => p.MedicalStateMedicines);
             AddInclude(p => p.Medicines);
             AddInclude(p => p.Patient);
-            
+
             AddThenInclude("MedicalStateMedicines.Medicine");
+            AddThenInclude("Medicines.Category");
+            AddThenInclude("Medicines.MedicineType");
 
 
         }
     }
-    {
-    }
+   
+    
 }

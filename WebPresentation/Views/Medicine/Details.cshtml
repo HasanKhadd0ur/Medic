@@ -16,7 +16,7 @@
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                             <img src="~/img/portfolio/@Model.Image"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                            <h5>@Model.Name</h5>
+                            <h5>@Model.TradeName</h5>
                             <p>For: @(Model.Category is null ? "":Model.Category.Name)</p>
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>
@@ -40,7 +40,7 @@
                                         <p class="text-muted">@Model.Description</p>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <h6>Medicine Type:@Model.MedicineType</h6>
+                                        <h6>Medicine Type:@Model.MedicineType?.TypeName</h6>
                                         <p class="text-muted">Dosage : @Model.Dosage</p>
                                         <p class="text-muted">Price : @Model.Price</p>
                                     </div>

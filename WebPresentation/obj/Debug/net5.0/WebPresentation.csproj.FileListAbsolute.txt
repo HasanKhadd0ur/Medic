@@ -139,7 +139,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.Ta
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.TagHelpers.output.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.RazorCoreGenerate.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\MedicineDetails.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\Create.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\Delete.cshtml.g.cs
@@ -170,3 +169,9 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingred
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Index.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Access\Login.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Access\Register.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\MedicalStateDetails.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Create.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Details.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Edit.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Index.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\AddMedicine.cshtml.g.cs

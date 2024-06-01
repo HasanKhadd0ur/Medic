@@ -16,9 +16,9 @@
             <form asp-action="Edit" class="form-group ">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label "></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="TradeName" class="control-label "></label>
+                    <input asp-for="TradeName" class="form-control" />
+                    <span asp-validation-for="TradeName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Description" class="control-label"></label>
@@ -46,9 +46,30 @@
 
                     </div>
                     <div class="col">
+                        <label asp-for="ManufactureName" class="control-label"></label>
+                        <input asp-for="ManufactureName" class="form-control" />
+                        <span asp-validation-for="ManufactureName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col ">
+                        <label asp-for="ScintificName" class="control-label"></label>
+                        <input asp-for="ScintificName" class="form-control" />
+                        <span asp-validation-for="ScintificName" class="text-danger"></span>
+
+                    </div>
+                    <div class="col">
                         <label asp-for="MedicineType.TypeName" class="control-label"></label>
                         <input asp-for="MedicineType.TypeName" class="form-control" />
                         <span asp-validation-for="MedicineType.TypeName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col ">
+                        <label asp-for="SideEffect" class="control-label"></label>
+                        <input asp-for="SideEffect" class="form-control" />
+                        <span asp-validation-for="SideEffect" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="form-group">

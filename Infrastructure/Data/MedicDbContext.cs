@@ -187,10 +187,6 @@ namespace Infrastructure.Data
                   new Ingredient { Id = 1, Name = "Amoxicillin" },
                   new Ingredient { Id = 2, Name = "Paracetamol" }
             );
-            modelBuilder.Entity<MedicineIngredient>().HasData(
-                 new MedicineIngredient { MedicineId = 1, IngredientId = 1 },
-                 new MedicineIngredient { MedicineId = 2, IngredientId = 2 }
-            );
             #endregion Ingredients
             #region Medicines 
             var med = new Medicine
@@ -198,19 +194,32 @@ namespace Infrastructure.Data
                 Id=1,
                 ScintificName = "Augmentine",
                 TradeName="Augmentine",
+                Description="antibitic mdicine",
                 ManufactureName="Ibin Sina",
                 SideEffect="No. ",
-                Category=c1 ,
+                //Category=c1 ,
                 Image="med1.png",
                 Dosage = 12,
                 Price = 2500,
 
             };
+
+         //   modelBuilder.Entity<MedicineIngredient>().HasData(
+         //     new MedicineIngredient { Id = 1, MedicineId = 1, IngredientId = 1 },
+         //     new MedicineIngredient { Id = 2, MedicineId = 2, IngredientId = 2 }
+         //);
             modelBuilder.Entity<Medicine>().HasData(med);
 
             #endregion Medicines
             #region MedicalState
-
+            var st = new MedicalState
+            {
+                Id=1,
+                PatientId=1,
+                PrescriptionTime=DateTime.Now,
+                
+            };
+            modelBuilder.Entity<MedicalState>().HasData(st);
             #endregion MedicalState
         }
     }

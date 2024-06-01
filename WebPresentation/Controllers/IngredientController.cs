@@ -1,8 +1,8 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
-using ApplicationCore.Services.IngredientService;
-using ApplicationCore.Services.MedicineService;
-using ApplicationCore.Services.PatientService;
+using ApplicationCore.Interfaces.IServices;
+using ApplicationCore.Services;
+using ApplicationCore.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +15,18 @@ namespace WebPresentation.Controllers
 {
     public class IngredientController : BaseController
     {
-        private readonly IngredientService _ingredientService;
-        private readonly MedicineService _medicineService;
+        private readonly IIngredientService _ingredientService;
+        private readonly IMedicineService _medicineService;
 
 
         public IngredientController(UserManager<User> userManager,
-            IUnitOfWork<Medicine> medicineUnitOfWork,
-            IUnitOfWork<Ingredient> ingredientUnitOfWork) : base(userManager)
+            IMedicineService medicineService ,
+            IIngredientService ingredientSercie
+            ) : base(userManager)
+        
         {
-            _ingredientService = new IngredientService(ingredientUnitOfWork);
-            _medicineService = new MedicineService(medicineUnitOfWork);
+            _ingredientService =ingredientSercie;
+            _medicineService = medicineService;
             
         }
 

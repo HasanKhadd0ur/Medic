@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
+using ApplicationCore.Specification.BaseSpecification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,7 @@ namespace WebPresentation.Controllers
     public abstract class BaseController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly IUnitOfWork<Patient> _patientUnitOfWork;
 
         public BaseController(UserManager<User> userManager) {
             _userManager = userManager;
@@ -29,6 +32,7 @@ namespace WebPresentation.Controllers
         public String GetUserName() {
             return GetCurrentUser().UserName;
         }
+        
 
         public String GetUserId() {
             return GetCurrentUser().Id;

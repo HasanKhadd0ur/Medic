@@ -127,7 +127,7 @@
                 </th>
                 <th scope="col">
 
-                    @Html.DisplayNameFor(model => model.Medicines.First().Name)
+                    @Html.DisplayNameFor(model => model.Medicines.First().TradeName)
                 </th>
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.Medicines.First().Description)
@@ -176,7 +176,7 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.TradeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
@@ -196,7 +196,7 @@
                     <a asp-action="Delete" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-trash-can text-bg-danger"></i></a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Patients.Count)
+                    @Html.DisplayFor(modelItem => item.MedicalStates.Count)
                 </td>
             </tr>
             }

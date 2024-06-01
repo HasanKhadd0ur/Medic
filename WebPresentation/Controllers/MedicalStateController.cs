@@ -2,49 +2,44 @@
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Services;
-
-using ApplicationCore.ViewModel;
+using ApplicationCore.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebPresentation.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    public class MedicineController : BaseController
+    [Authorize]
+    public class MedicalStateController : BaseController
     {
-        private readonly IIngredientService _ingredientService;
+        private readonly IMedicalStateService _medicalStateService;
         private readonly IMedicineService _medicineService;
         private readonly IPatientService _patientService;
 
-        public MedicineController(UserManager<User> userManager,
-            IMedicineService medicineService ,
-            IIngredientService ingredientService ,
-            IPatientService patientService
-
-            ):base(userManager)
+        public MedicalStateController(UserManager<User> userManager,
+            IMedicalStateService medicalStateService ,
+            IPatientService patientService ,
+            IMedicineService medicineService 
+            ) : base(userManager)
         {
-            _ingredientService =ingredientService;
+            _medicalStateService = medicalStateService;
             _medicineService = medicineService;
             _patientService =patientService;
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int?  id )
         {
-            var s = new PatientMedicineViewModel
-            {
-                Patients = _patientService.GetAll(p=> p.User ),
-                Medicines = _medicineService.GetAllMedicines()
-            };
-
-            return View(s);
+                var u = GetUserId();
+                var pId = _patientService.GetAll().Where(p => p.User.Id == u).FirstOrDefault().Id;
+                var meds = _medicalStateService.GetAll(pId);
+                return View(meds);
+            
         }
 
         public IActionResult Details(int? id)
@@ -54,7 +49,7 @@ namespace WebPresentation.Controllers
                 return NotFound();
             }
 
-            var medicine = _medicineService.GetMedicineDetails((int)id);
+            var medicine = _medicalStateService.GetDetails((int)id);
 
             if (medicine == null)
             {
@@ -75,14 +70,23 @@ namespace WebPresentation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Medicine medicine, int id)
+        public IActionResult Create(MedicalState medicalState, int id)
         {
             if (ModelState.IsValid)
             {
-                _medicineService.AddMedicine(medicine);
+                var uId = GetUserId();
+                var p = _patientService.GetAll(
+                     )
+                    .Where(
+                        u => u.User.Id == uId
+                        )
+                    .FirstOrDefault().Id;
+                if (medicalState.PrescriptionTime == DateTime.MinValue )
+                    medicalState.PrescriptionTime = DateTime.Now;
+                _medicalStateService.Add(p,medicalState);
                 return RedirectToAction(nameof(Index));
             }
-            return View(medicine);
+            return View(medicalState);
         }
 
         // GET: Projects/Edit/5
@@ -93,7 +97,7 @@ namespace WebPresentation.Controllers
                 return NotFound();
             }
 
-            var medicine = _medicineService.GetMedicineDetails((int)id);
+            var medicine = _medicalStateService.GetDetails((int)id);
             if (medicine == null)
             {
                 return NotFound();
@@ -106,11 +110,11 @@ namespace WebPresentation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Edit(int id,Medicine medicine)
+        public IActionResult Edit(int id, MedicalState medicalState)
         {
-            if (id != medicine.Id)
+            if (id != medicalState.Id)
             {
-                
+
                 return NotFound();
             }
 
@@ -118,7 +122,18 @@ namespace WebPresentation.Controllers
             {
                 try
                 {
-                    _medicineService.Update(medicine);
+
+                    var uId = GetUserId();
+                    var p = _patientService.GetAll(
+                         )
+                        .Where(
+                            u => u.User.Id == uId
+                            )
+                        .FirstOrDefault();
+                    medicalState.Patient = p;
+                    medicalState.PatientId = p.Id;
+                   
+                    _medicalStateService.Update(medicalState);
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -135,14 +150,14 @@ namespace WebPresentation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(medicine);
+            return View(medicalState);
         }
 
         // GET: Projects/Delete/5
         public IActionResult Delete(int id)
         {
 
-            var project = _medicineService.GetMedicineDetails(id);
+            var project = _medicalStateService.GetDetails(id);
 
             if (project == null)
             {
@@ -151,19 +166,19 @@ namespace WebPresentation.Controllers
 
             return View(project);
         }
-        public IActionResult AddIngredints(int id ) {
-            var s = _ingredientService.GetAllIngredients();
-            ViewBag.MedicineId = id;
+        public IActionResult AddMedicine(int id)
+        {
+            var s = _medicineService.GetAllMedicines();
+            ViewBag.MedicalStateId = id;
             return View(s);
-        
+
         }
         [HttpPost]
-        public IActionResult AddIngredints(int id , int med ,int ratio )
+        public IActionResult AddMedicine(int id, int med)
         {
-            var s = _ingredientService.GetIngredientDetails(id);
-            _medicineService.AddIngredient(med, ratio, s);
+            _medicalStateService.AddMedicine(id ,med);
 
-            return RedirectToAction("Details","Medicine", new { Id = med}) ;
+            return RedirectToAction("Details", "MedicalState", new { Id = id });
         }
 
         // POST: Projects/Delete/5

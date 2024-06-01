@@ -43,6 +43,9 @@
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>Medicines Count:@Model.Medicines.Count()</h6>
+                                        <a asp-controller="MedicalState" asp-action="AddMedicine" asp-route-id="@Model.Id">Add Medicine</a>
+                                        <a asp-controller="MedicalState" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+
                                     </div>
                                 </div>
                                 <h6>Medicines : </h6>
@@ -122,7 +125,7 @@
                                             Type : @item.MedicineType
 
                                         </p>
-                                        <a asp-action="AddMedicine" asp-controller="Home" asp-route-id="@item.Id" data-mdb-ripple-init class="btn btn-primary">Add to my Profile</a>
+                                        <a asp-action="RemoveMedicine" asp-controller="MedicalState" asp-route-id="@item.Id" data-mdb-ripple-init class="btn btn-primary">Remove From my Profile</a>
                                     </div>
                                 </div>
                             </div>

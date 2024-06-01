@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Services.PatientService
+namespace ApplicationCore.Services
 {
     public class PatientService : IPatientService
     {

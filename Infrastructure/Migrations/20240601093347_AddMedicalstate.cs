@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class identityUpdat : Migration
+    public partial class AddMedicalstate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -222,7 +222,10 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TradeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ScintificName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManufactureName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SideEffect = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -245,6 +248,28 @@ namespace Infrastructure.Migrations
                         principalTable: "MedicineTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MedicalStates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    StateName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StateDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PrescriptionTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedicalStates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MedicalStates_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,28 +300,27 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PatientMedicine",
+                name: "MedicalStateMedicine",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PrescripDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MedicineId = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false)
+                    MedicalStateId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PatientMedicine", x => x.Id);
+                    table.PrimaryKey("PK_MedicalStateMedicine", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PatientMedicine_Medicines_MedicineId",
-                        column: x => x.MedicineId,
-                        principalTable: "Medicines",
+                        name: "FK_MedicalStateMedicine_MedicalStates_MedicalStateId",
+                        column: x => x.MedicalStateId,
+                        principalTable: "MedicalStates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PatientMedicine_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
+                        name: "FK_MedicalStateMedicine_Medicines_MedicineId",
+                        column: x => x.MedicineId,
+                        principalTable: "Medicines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -306,8 +330,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1-2-1", "e90561ea-fc91-4e43-9090-6967145f6f5b", "Admin", "Admin" },
-                    { "1", "28134bcc-f733-40be-8d2e-bface932cc86", "patient", "patient" }
+                    { "1-2-1", "79801859-19d1-49e6-a817-586cede3bf9c", "Admin", "Admin" },
+                    { "1", "6a86886f-aeb2-41fa-9884-44dee37b46c6", "patient", "patient" }
                 });
 
             migrationBuilder.InsertData(
@@ -315,19 +339,41 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "CreationTime", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "avatar.jpg", "9122e783-9528-4e0a-b15d-82345f6f0418", new DateTime(2024, 5, 31, 17, 38, 21, 491, DateTimeKind.Local).AddTicks(4784), "hasan@b", false, "Hasan", "Kh", false, null, "hasan@b", "Hasan.Bahjat", "AQAAAAEAACcQAAAAEJwazDmiC7dJqkx0ZQHpN6lKVdLp1MlBxIx4e5ZcqF+gkiJTfUb/OJOI6LYXXw8o2A==", null, false, "3fe96d52-7dbf-46c8-b9ff-2bf6819fbeac", false, "Hasan.Bahjat" },
-                    { "2", 0, "avatar1.jpg", "6ef31db3-4cc6-40c1-9082-3dca1d055c9a", new DateTime(2024, 5, 31, 17, 38, 21, 508, DateTimeKind.Local).AddTicks(9726), "hasan.bahjat@mail.y", false, "Hasan", "Khaddour", false, null, "hasan@b", "Hasan.khaddour", "AQAAAAEAACcQAAAAEDWozHY53JhRnMlp3wyKL2X6zVG8Rgd8AQSP7OHCui5ObaKA6p2dpcg6EVjXzMc99Q==", null, false, "df27679f-e318-49b0-af02-2ebd01b2ef40", false, "Hasan.Khaddour" }
+                    { "1", 0, "avatar.jpg", "166ee2cd-0ad4-467f-bd19-99bfa9b2b96e", new DateTime(2024, 6, 1, 12, 33, 45, 873, DateTimeKind.Local).AddTicks(3497), "hasan@b", false, "Hasan", "Kh", false, null, "hasan@b", "Hasan.Bahjat", "AQAAAAEAACcQAAAAEJ0fBRaO45ScU6Ei66Jp2vepLKOv6d6fHWIoI5HIIFU6VQDnUzmaA3IhyhbtT/KcNw==", null, false, "1af74e67-0e8a-4827-a64c-d7da0b4f425a", false, "Hasan.Bahjat" },
+                    { "2", 0, "avatar1.jpg", "8dbe8b06-155f-4a9e-9e68-3ed47b0a7f69", new DateTime(2024, 6, 1, 12, 33, 45, 886, DateTimeKind.Local).AddTicks(2019), "hasan.bahjat@mail.y", false, "Hasan", "Khaddour", false, null, "hasan@b", "Hasan.khaddour", "AQAAAAEAACcQAAAAEBFPNGBwPL/f3/1bZ453ogAMvnVvqvaySCgoUft4De5riMniqppK7H/zipFff8XFgA==", null, false, "eb16351d-865c-4e4f-9220-d46441abaacd", false, "Hasan.Khaddour" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Augmentine" });
+                values: new object[,]
+                {
+                    { 1, "Antibiotic" },
+                    { 2, "Painkiller" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ingredients",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, null, "Amoxicillin" },
+                    { 2, null, "Paracetamol" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MedicineTypes",
+                columns: new[] { "Id", "TypeName" },
+                values: new object[,]
+                {
+                    { 1, "Tablet" },
+                    { 2, "Syrup" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Medicines",
-                columns: new[] { "Id", "CategoryId", "Description", "Dosage", "Image", "MedicineTypeId", "Name", "Price" },
-                values: new object[] { -1, null, null, 12, "med1.png", null, "Augmentine", 2500 });
+                columns: new[] { "Id", "CategoryId", "Description", "Dosage", "Image", "ManufactureName", "MedicineTypeId", "Price", "ScintificName", "SideEffect", "TradeName" },
+                values: new object[] { 1, null, "antibitic mdicine", 12, "med1.png", "Ibin Sina", null, 2500, "Augmentine", "No. ", "Augmentine" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -343,6 +389,11 @@ namespace Infrastructure.Migrations
                 table: "Patients",
                 columns: new[] { "Id", "BIO", "UserId" },
                 values: new object[] { 1, "a Patient ", "2" });
+
+            migrationBuilder.InsertData(
+                table: "MedicalStates",
+                columns: new[] { "Id", "PatientId", "PrescriptionTime", "StateDescription", "StateName" },
+                values: new object[] { 1, 1, new DateTime(2024, 6, 1, 12, 33, 45, 887, DateTimeKind.Local).AddTicks(8926), null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -384,6 +435,21 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MedicalStateMedicine_MedicalStateId",
+                table: "MedicalStateMedicine",
+                column: "MedicalStateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedicalStateMedicine_MedicineId",
+                table: "MedicalStateMedicine",
+                column: "MedicineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedicalStates_PatientId",
+                table: "MedicalStates",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicineIngredient_IngredientId",
                 table: "MedicineIngredient",
                 column: "IngredientId");
@@ -402,16 +468,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Medicines_MedicineTypeId",
                 table: "Medicines",
                 column: "MedicineTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientMedicine_MedicineId",
-                table: "PatientMedicine",
-                column: "MedicineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientMedicine_PatientId",
-                table: "PatientMedicine",
-                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_UserId",
@@ -439,13 +495,16 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "MedicalStateMedicine");
+
+            migrationBuilder.DropTable(
                 name: "MedicineIngredient");
 
             migrationBuilder.DropTable(
-                name: "PatientMedicine");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "MedicalStates");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");

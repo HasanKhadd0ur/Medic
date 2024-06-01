@@ -1,5 +1,7 @@
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces.IServices;
+using ApplicationCore.Services;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
@@ -35,10 +37,19 @@ namespace WebPresentation
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IMedicalStateService, MedicalStateService>();
 
+            services.AddScoped<IMedicineService, MedicineService>();
 
-            services.AddDbContext<MedicDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IIngredientService, IngredientService>();
+
+            services.AddDbContext<MedicDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                ;
+                }
+                ); ;
+            
            
             services.AddSession();
 
