@@ -17,7 +17,7 @@ namespace ApplicationCore.Specification
             AddInclude(p => p.MedicineIngredients);
             AddInclude(p => p.Category);
             AddInclude(p => p.MedicineType);
-            AddInclude(p => p.Patients);
+            AddInclude(p => p.MedicalStates);
             AddInclude(p => p.Ingredients);
 
             AddThenInclude("MedicineIngredients.Ingredient");

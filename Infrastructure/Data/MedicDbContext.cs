@@ -23,6 +23,7 @@ namespace Infrastructure.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<MedicineType> MedicineTypes { get; set; }
+        public DbSet<MedicalState> MedicalStates { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,16 +50,21 @@ namespace Infrastructure.Data
              );
 
             modelBuilder.Entity<Patient>()
+                .HasMany(e => e.MedicalStates)
+                .WithOne(e => e.Patient);
+
+            modelBuilder.Entity<MedicalState>()
                 .HasMany(e => e.Medicines)
-                .WithMany(e => e.Patients)
-                .UsingEntity<PatientMedicine>(
+                .WithMany(e => e.MedicalStates)
+                .UsingEntity<MedicalStateMedicine>(
                     l => l.HasOne<Medicine>(e => e.Medicine)
-                        .WithMany(e => e.PatientMedicines)
+                        .WithMany(e => e.MedicalStateMedicines)
                         .HasForeignKey(e => e.MedicineId),
-                    r => r.HasOne<Patient>(e => e.Patient)
-                        .WithMany(e => e.PatientMedicines)
-                        .HasForeignKey(e => e.PatientId)
+                    r => r.HasOne<MedicalState>(e => e.MedicalState)
+                        .WithMany(e => e.MedicalStateMedicines)
+                        .HasForeignKey(e => e.MedicalStateId)
              );
+
 
             modelBuilder.Entity<Patient>()
                 .HasOne(o => o.User);
@@ -109,7 +115,7 @@ namespace Infrastructure.Data
                 );
             #endregion Roles
             #region User 
-            PasswordHasher<User> ph = new PasswordHasher<User>();
+            var  ph = new PasswordHasher<IdentityUser>();
 
             var admin = new User
             {
@@ -119,7 +125,8 @@ namespace Infrastructure.Data
                 Avatar = "avatar.jpg",
                 Email = "hasan@b",
                 UserName="Hasan.Bahjat",
-                NormalizedEmail="hasan@b",
+                PasswordHash = ph.HashPassword(null, "123@Aa"),
+                NormalizedEmail ="hasan@b",
                 NormalizedUserName= "Hasan.Bahjat",
               
                 CreationTime = DateTime.Now
@@ -131,16 +138,14 @@ namespace Infrastructure.Data
                 LastName = "Khaddour",
                 Avatar = "avatar1.jpg",
                 Email = "hasan.bahjat@mail.y",
-
+                PasswordHash= ph.HashPassword(null, "123@Aa"),
                 UserName = "Hasan.Khaddour",
                 NormalizedEmail = "hasan@b",
                 NormalizedUserName = "Hasan.khaddour",
                 CreationTime = DateTime.Now
             };
 
-            admin.PasswordHash = ph.HashPassword(admin, "123@Aa");
-            PatientAccount.PasswordHash = ph.HashPassword(PatientAccount, "123@Aa");
-
+            
             modelBuilder.Entity<User>()
                 .HasData(
                 admin,
@@ -161,24 +166,52 @@ namespace Infrastructure.Data
                 );
 
             #endregion Patients
+            #region Categories
+            var c1 = new Category { Id = 1, Name = "Antibiotic" };
+
+            var c2 = new Category { Id = 2, Name = "Painkiller" };
+
+
+            modelBuilder.Entity<Category>().HasData(
+                c1 ,c2
+                );
+            #endregion Categories
+            #region MedicineType
+            modelBuilder.Entity<MedicineType>().HasData(
+                new MedicineType { Id = 1, TypeName = "Tablet" },
+                new MedicineType { Id = 2, TypeName = "Syrup" }
+            );
+            #endregion MedicineType
+            #region Ingredients
+            modelBuilder.Entity<Ingredient>().HasData(
+                  new Ingredient { Id = 1, Name = "Amoxicillin" },
+                  new Ingredient { Id = 2, Name = "Paracetamol" }
+            );
+            modelBuilder.Entity<MedicineIngredient>().HasData(
+                 new MedicineIngredient { MedicineId = 1, IngredientId = 1 },
+                 new MedicineIngredient { MedicineId = 2, IngredientId = 2 }
+            );
+            #endregion Ingredients
             #region Medicines 
             var med = new Medicine
             {
-                Id=-1,
-                Name = "Augmentine",
+                Id=1,
+                ScintificName = "Augmentine",
+                TradeName="Augmentine",
+                ManufactureName="Ibin Sina",
+                SideEffect="No. ",
+                Category=c1 ,
                 Image="med1.png",
                 Dosage = 12,
                 Price = 2500,
-                
-                
 
             };
-            var c = new Category { Id = 1, Name = "Augmentine" };
-            modelBuilder.Entity<Category>().HasData(c);
-       //     med.Category = c;
             modelBuilder.Entity<Medicine>().HasData(med);
 
             #endregion Medicines
+            #region MedicalState
+
+            #endregion MedicalState
         }
     }
     }

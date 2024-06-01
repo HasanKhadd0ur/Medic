@@ -1,7 +1,7 @@
-﻿@model Medicine
+﻿@model MedicalState
 
 @{
-    ViewData["Title"] = "Medicine Details ";
+    ViewData["Title"] = "Medical State Details ";
 
 
     var a = 0;
@@ -15,9 +15,9 @@
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-black"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="~/img/portfolio/@Model.Image"
+                            <img src="~/img/portfolio/ecole.png"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                            <h5>@Model.Name</h5>
+                            <h5>@Model.</h5>
                             <p>For: @(Model.Category is null ? "":Model.Category.Name)</p>
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>

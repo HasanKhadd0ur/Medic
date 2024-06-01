@@ -21,14 +21,19 @@ namespace WebPresentation.Controllers
     {
         private readonly PatientService _patientService;
         private readonly MedicineService _medicineService;
+
         private readonly UserManager<User> _userManager;
         
-        public HomeController(UserManager<User> userManager,IUnitOfWork<Patient> patientUnitOfWork, IUnitOfWork<Medicine> medicineUnitOfWork):base(userManager)
+        public HomeController(
+                UserManager<User> userManager,
+                IUnitOfWork<Patient> patientUnitOfWork,
+                IUnitOfWork<Medicine> medicineUnitOfWork,
+                IUnitOfWork<MedicalState> medicalStateUnitOfWork
+            ):base(userManager)
         {
             _userManager = userManager;
-
-            _patientService = new PatientService(patientUnitOfWork,medicineUnitOfWork);
             _medicineService = new MedicineService(medicineUnitOfWork);
+            _patientService = new PatientService(patientUnitOfWork,medicalStateUnitOfWork);
             
         }
 
@@ -39,9 +44,7 @@ namespace WebPresentation.Controllers
             
             var ownesr = _patientService
                 .GetAll(
-                    u => u.User ,
-                    u => u.Medicines
-                    )
+                 )
                 .Where(
                     u => u.User.Id == userId
                     )
@@ -50,13 +53,9 @@ namespace WebPresentation.Controllers
             return View(ownesr);
         }
 
-        public IActionResult MedicineDetails(int id ) {
-            var s = _patientService.GetMedicineDetails(
-                id,
-                i => i.MedicineIngredients,
-                i => i.Ingredients ,
-                i => i.Category,
-                i => i.MedicineType);
+        public IActionResult MedicalStateDetails(int id ) {
+            var s = _patientService.GetMedicalStateDetails(
+                id);
             if (s is null) {
                 return NotFound();
             }
@@ -68,13 +67,13 @@ namespace WebPresentation.Controllers
             return View();
         }
 
-        public IActionResult AddMedicine(int id) {
+        public IActionResult AddMedicalState(int id) {
             var userId = _userManager.GetUserId(User);
 
-            var patient = _patientService.GetAll(u => u.User, u => u.Medicines)
+            var patient = _patientService.GetAll()
                 .Where(u => u.User.Id ==userId ).FirstOrDefault();
-            var m =_medicineService.GetMedicineDetails(id);
-            _patientService.AddMedicine(patient.Id, m);
+            var m =_patientService.GetMedicalStateDetails(id);
+            _patientService.AddMedicalState(patient.Id, m);
             
             return RedirectToAction("Index","Home");
                 

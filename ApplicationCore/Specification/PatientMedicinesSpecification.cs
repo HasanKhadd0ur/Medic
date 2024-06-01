@@ -12,9 +12,10 @@ namespace ApplicationCore.Specification
     {
         public PatientMedicinesSpecification()
         {
-            AddInclude(p => p.Medicines);
+            AddInclude(p => p.MedicalStates);
             AddInclude(p => p.User);
-            AddInclude(p=> p.PatientMedicines);
+           
+            AddThenInclude("MedicalStates.Medicines");
             
         }
 

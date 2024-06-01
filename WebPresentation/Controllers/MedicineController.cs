@@ -26,11 +26,12 @@ namespace WebPresentation.Controllers
         public MedicineController(UserManager<User> userManager,
             IUnitOfWork<Patient> patientUnitOfWork,
             IUnitOfWork<Medicine> medicineUnitOfWork,
+            IUnitOfWork<MedicalState> medicalStateUnitOfWork,
             IUnitOfWork<Ingredient>ingredientUnitOfWork):base(userManager)
         {
             _ingredientService =new IngredientService( ingredientUnitOfWork);
             _medicineService = new MedicineService( medicineUnitOfWork);
-            _patientService = new PatientService(patientUnitOfWork,medicineUnitOfWork);
+            _patientService = new PatientService(patientUnitOfWork,medicalStateUnitOfWork);
 
         }
 

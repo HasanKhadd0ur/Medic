@@ -11,13 +11,13 @@ namespace ApplicationCore.Interfaces.IServices
     public interface IPatientService
     {
 
-        public IEnumerable<Medicine> GetPatientMedicines(int patientId);
-        public Medicine GetMedicineDetails(int id, params Expression<Func<Medicine, object>>[] includeProperties);
+        public IEnumerable<MedicalState> GetPatientMedicalStates(int patientId);
+        public MedicalState GetMedicalStateDetails(int id, params Expression<Func<MedicalState, object>>[] includeProperties);
         public IEnumerable<Patient> GetAll(params Expression<Func<Patient, object>>[] includeProperties);
-        public void AddMedicine(int patientId, Medicine medicine);
+        public void AddMedicalState(int patientId, MedicalState medicalState);
         public Patient GetById(int id, params Expression<Func<Patient, object>>[] includeProperties);
-        public void Insert(Patient owner);
-        public void Update(Patient owner);
+        public void Insert(Patient patient);
+        public void Update(Patient patient);
         public void Delete(int id);
         public bool PatientExists(int id);
 

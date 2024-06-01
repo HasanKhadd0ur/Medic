@@ -14,52 +14,50 @@ namespace ApplicationCore.Services.PatientService
     public class PatientService : IPatientService
     {
         private readonly IUnitOfWork<Patient> _patientUnitOfWork;
-        private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
+        private readonly IUnitOfWork<MedicalState> _medicalStateUnitOfWork;
         private PatientMedicinesSpecification _patientMedicinesSpecification;
-        private MedicineIngredientSpecification _medicineIngredientSpecification;
+        private MedicalStateSpecification _medicalStateSpecification;
 
-        public PatientService(IUnitOfWork<Patient> patientUnitOfWork, IUnitOfWork<Medicine> medicineUnitOfWork)
+        public PatientService(
+            IUnitOfWork<Patient> patientUnitOfWork,
+            IUnitOfWork<MedicalState> medicalStateUnitOfWork)
         {
             _patientUnitOfWork = patientUnitOfWork;
-            _medicineUnitOfWork = medicineUnitOfWork;
+            _medicalStateUnitOfWork = medicalStateUnitOfWork;
             _patientMedicinesSpecification = new PatientMedicinesSpecification();
-            _medicineIngredientSpecification = new MedicineIngredientSpecification();
+            _medicalStateSpecification = new MedicalStateSpecification();
         }
 
-        public IEnumerable<Medicine> GetPatientMedicines(int patientId) {
+        public IEnumerable<MedicalState> GetPatientMedicalStates(int patientId) {
 
             return _patientUnitOfWork.Entity
                 .GetById(
                 patientId,_patientMedicinesSpecification
-                ).Medicines.AsEnumerable();
+                ).MedicalStates.AsEnumerable();
 
         }
-        public Medicine GetMedicineDetails(int id, params Expression<Func<Medicine, object>>[] includeProperties)
+        public MedicalState GetMedicalStateDetails(int id, params Expression<Func<MedicalState, object>>[] includeProperties)
         {
            
-            return _medicineUnitOfWork.Entity.GetById(id,_medicineIngredientSpecification);
+            return _medicalStateUnitOfWork.Entity.GetById(id,_medicalStateSpecification);
 
         }
         public IEnumerable<Patient> GetAll(params Expression<Func<Patient, object>>[] includeProperties) {
             return _patientUnitOfWork.Entity.GetAll(_patientMedicinesSpecification);
         }
-        public void AddMedicine(int patientId, Medicine medicine) {
+        public void AddMedicalState (int patientId, MedicalState medicalState) {
             var ptient = _patientUnitOfWork.Entity.GetById(patientId,_patientMedicinesSpecification);
-            if (medicine.Id != 0)
+            if (medicalState.Id != 0)
 
-                foreach (var i in ptient.Medicines)
+                foreach (var i in ptient.MedicalStates)
                 {
-                    if (i.Id.Equals(medicine.Id))
+                    if (i.Id.Equals(medicalState.Id))
                         return;
                 }
 
-            ptient.PatientMedicines
-                .Add(new PatientMedicine{
-                        Medicine = medicine,
-                        Patient =ptient ,
-                        PrescripDate=DateTime.Now 
-
-                });
+            ptient.MedicalStates
+                .Add(medicalState
+                );
             _patientUnitOfWork.Entity.Update(ptient);
             _patientUnitOfWork.Save();
         }
@@ -68,19 +66,19 @@ namespace ApplicationCore.Services.PatientService
             return _patientUnitOfWork.Entity.GetById(id, _patientMedicinesSpecification);
 
         }
-        public void Insert(Patient owner)
+        public void Insert(Patient patient)
         {
 
-            _patientUnitOfWork.Entity.Insert(owner);
+            _patientUnitOfWork.Entity.Insert(patient);
 
             _patientUnitOfWork.Save();
         }
 
-        public void Update(Patient owner)
+        public void Update(Patient patient)
         {
 
 
-            _patientUnitOfWork.Entity.Update(owner);
+            _patientUnitOfWork.Entity.Update(patient);
             _patientUnitOfWork.Save();
         }
         public void Delete(int id)

@@ -15,7 +15,6 @@
     ViewData["userName"] = Model.User.FirstName + " " + Model.User.LastName;
 
     ViewBag.owner = Model;
-    var top = Model.Medicines.Where(t => t.Dosage > 0).ToList();
     var i = 1;
 
 }
@@ -64,29 +63,29 @@
 
         <!-- Portfolio Grid Items -->
         <div class="row d-flex flex-wrap justify-content-sm-center">
-            @if (Model.Medicines.Count() == 0)
+            @if (Model.MedicalStates.Count() == 0)
             {
-                <h2 class="text-center">You dont have any  Medicine</h2>
+                <h2 class="text-center">You dont have any  MedicalState</h2>
                 <img src="~/img/portfolio/noData.jpg" class="figure-img" />
             }
             else
-                @foreach (var item in Model.Medicines)
+                @foreach (var item in Model.MedicalStates)
                 {
 
 
                     <div class="col-lg-4">
                         <div class="card m-3">
-                            <img src="/img/portfolio/@item.Image"
+                            <img src="/img/portfolio/flappy.png"
                                  class="card-img-top img-fluid" style="max-height:250px "
                                  alt="Waterfall" />
                             <div class="card-body">
-                                <h5 class="card-title">@item.Name</h5>
+                                <h5 class="card-title">@item.StateName</h5>
                                 <p class="card-text">
-                                    @item.Description
+                                    @item.StateDescription
                                     <br />
-                                    Price : @item.Price <br />
+                                    Date : @item.PrescriptionTime <br />
 
-                                    Type : @item.MedicineType
+                                    Medicines : @item.Medicines.Count()
 
                                 </p>
                                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#item-@(item.Id)">go to descriptiuon </a>
@@ -171,7 +170,7 @@
 </section>
 
 <!-- Modals -->
-@foreach (var item in Model.Medicines)
+@foreach (var item in Model.MedicalStates)
 {
     <!-- Portfolio Modal  -->
     <div class="portfolio-modal modal fade" id="item-@(item.Id)" tabindex="-1" role="dialog" aria-labelledby="label-@item.Id" aria-hidden="true">
@@ -188,7 +187,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title -->
-                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@item.Name </h2>
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@item.StateName </h2>
                                 <!-- Icon Divider -->
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
@@ -198,13 +197,13 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <!-- Portfolio Modal - Image -->
-                                <img class="img-fluid rounded mb-5" src=@("/img/portfolio/"+item.Image ) ) alt="">
+                                <img class="img-fluid rounded mb-5" src="/img/portfolio/ecole.png"   alt="">
                                 <!-- Portfolio Modal - Text -->
-                                <p class="mb-5">medicine Description : @item.Description</p>
-                                <p class="mb-5">medicine price : @item.Price</p>
-                                <p class="mb-5">medicine Dosage : @item.Dosage</p>
+                                <p class="mb-5">State Description : @item.StateDescription</p>
+                                <p class="mb-5">State Name : @item.StateName</p>
+                                <p class="mb-5">State Time : @item.PrescriptionTime</p>
 
-                                <a asp-action="MedicineDetails" role="button" class="btn btn-primary" asp-controller="Home" asp-route-id="@item.Id">View More </a>
+                                <a asp-action="MedicalStateDetails" role="button" class="btn btn-primary" asp-controller="Home" asp-route-id="@item.Id">View More </a>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal">
                                     <i class="fas fa-times fa-fw"></i>
                                     Close Window

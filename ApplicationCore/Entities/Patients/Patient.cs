@@ -13,8 +13,11 @@ namespace ApplicationCore.Entities
         public String  UserId { get; set; }
         public User User { get; set; }
         public String BIO { get; set; }
-        public ICollection<Medicine> Medicines { get; set; }
-        public ICollection<PatientMedicine> PatientMedicines { get; set; }
-       
+
+        #region Relations
+        public ICollection<MedicalState> MedicalStates { get; set; }
+       // public ICollection<Medicine> Medicines { get; set; }
+       // public ICollection<PatientMedicine> PatientMedicines { get; set; }
+        #endregion Relations
     }
 }
