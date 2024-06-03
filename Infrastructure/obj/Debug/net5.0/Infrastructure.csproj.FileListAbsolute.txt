@@ -16,3 +16,5 @@ C:\Users\HASAN\Desktop\Medic\Infrastructure\obj\Debug\net5.0\Infrastructure.dll
 C:\Users\HASAN\Desktop\Medic\Infrastructure\obj\Debug\net5.0\ref\Infrastructure.dll
 C:\Users\HASAN\Desktop\Medic\Infrastructure\obj\Debug\net5.0\Infrastructure.pdb
 C:\Users\HASAN\Desktop\Medic\Infrastructure\obj\Debug\net5.0\Infrastructure.genruntimeconfig.cache
+C:\Users\HASAN\Desktop\Medic\Infrastructure\bin\Debug\net5.0\ApplicationDomain.dll
+C:\Users\HASAN\Desktop\Medic\Infrastructure\bin\Debug\net5.0\ApplicationDomain.pdb

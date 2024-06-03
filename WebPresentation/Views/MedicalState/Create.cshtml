@@ -1,4 +1,4 @@
-﻿@model ApplicationCore.Entities.MedicalState
+﻿@model MedicalState
 
 @{
     ViewData["Title"] = "Create";
@@ -6,44 +6,49 @@
 
 }
 
-<h1>Create</h1>
+<section class="page-section" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-8 col-lg-8 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0">
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" asp-controller="MedicalState">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <div class="col-5">
-                    <label asp-for="StateName" class="control-label"></label>
-                    <input asp-for="StateName" class="form-control" />
-                    <span asp-validation-for="StateName" class="text-danger"></span>
-                </div>
-                <div class="col-5">
-                    <label asp-for="PrescriptionTime" class="control-label"></label>
-                    <input asp-for="PrescriptionTime" class="form-control" />
-                    <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                    <label asp-for="StateDescription" class="control-label"></label>
-                    <input asp-for="StateDescription" class="form-control" />
-                    <span asp-validation-for="StateDescription" class="text-danger"></span>
-             
-            </div>
-            <div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="Create" asp-controller="MedicalState">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <div class="col-5">
+                                            <label asp-for="StateName" class="control-label"></label>
+                                            <input asp-for="StateName" class="form-control" />
+                                            <span asp-validation-for="StateName" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-5">
+                                            <label asp-for="PrescriptionTime" class="control-label"></label>
+                                            <input asp-for="PrescriptionTime" class="form-control" />
+                                            <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="StateDescription" class="control-label"></label>
+                                        <input asp-for="StateDescription" class="form-control" />
+                                        <span asp-validation-for="StateDescription" class="text-danger"></span>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                                    </div>
+                                    <div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                        <div>
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                        </div></div></div></div></div></section>
+
+                        @section Scripts {
+                            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                        }

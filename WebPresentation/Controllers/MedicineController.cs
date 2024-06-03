@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
+﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Services;
 

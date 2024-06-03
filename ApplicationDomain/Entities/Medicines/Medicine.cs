@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Entities
+namespace ApplicationDomain.Entities
 {
     public class Medicine : EntityBase
     {
@@ -21,11 +21,10 @@ namespace ApplicationCore.Entities
 
         #region Relations
         public ICollection<Ingredient> Ingredients { get; set; }
-        //public ICollection<Patient> Patients { get; set; }
         public ICollection<MedicalState> MedicalStates { get; set; }
         public ICollection<MedicalStateMedicine> MedicalStateMedicines { get; set; }
         public ICollection<MedicineIngredient> MedicineIngredients { get; set; }
-       // public ICollection<PatientMedicine> PatientMedicines { get; set; }
+        #endregion Relations
 
         public void AddIngredient(Ingredient ingredient , int ratio ) {
             MedicineIngredients.Add(
@@ -37,8 +36,7 @@ namespace ApplicationCore.Entities
                 });
 
         }
-
-        #endregion Relations
-
+       
+        
     }
 }

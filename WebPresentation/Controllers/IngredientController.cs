@@ -1,8 +1,5 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
+﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces.IServices;
-using ApplicationCore.Services;
-using ApplicationCore.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

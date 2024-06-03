@@ -34,6 +34,7 @@
       "WebPresentation/1.0.0": {
         "dependencies": {
           "ApplicationCore": "1.0.0",
+          "ApplicationDomain": "1.0.0",
           "Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.17",
           "Microsoft.EntityFrameworkCore.Design": "5.0.17",
@@ -1874,6 +1875,7 @@
       },
       "ApplicationCore/1.0.0": {
         "dependencies": {
+          "ApplicationDomain": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.17",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.17"
         },
@@ -1882,6 +1884,18 @@
         },
         "compile": {
           "ApplicationCore.dll": {}
+        }
+      },
+      "ApplicationDomain/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.17",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.17"
+        },
+        "runtime": {
+          "ApplicationDomain.dll": {}
+        },
+        "compile": {
+          "ApplicationDomain.dll": {}
         }
       },
       "Infrastructure/1.0.0": {
@@ -4471,6 +4485,11 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "ApplicationCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ApplicationDomain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

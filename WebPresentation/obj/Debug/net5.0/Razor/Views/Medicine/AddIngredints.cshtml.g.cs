@@ -27,7 +27,7 @@ using WebPresentation.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\HASAN\Desktop\Medic\WebPresentation\Views\_ViewImports.cshtml"
-using ApplicationCore.Entities;
+using ApplicationDomain.Entities;
 
 #line default
 #line hidden
@@ -40,7 +40,7 @@ using System;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a", @"/Views/Medicine/AddIngredints.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"afde39527760d3d287f4d84a4731a7fb9211e4e9", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e6fffd8dfe80957a1cbddaf47a216a7c128d6cf7", @"/Views/_ViewImports.cshtml")]
     public class Views_Medicine_AddIngredints : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<Ingredient>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("form-select"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -75,9 +75,9 @@ using System;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             WriteLiteral("<section class=\"page-section p-5\">\r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a5200", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a5202", async() => {
                 WriteLiteral("\r\n\r\n\r\n        <div class=\"form-group floating-label-form-group controls mb-0 pb-2\">\r\n            <label>Choose Ingredient</label>\r\n\r\n            <p class=\"help-block text-danger\"></p>\r\n        </div>\r\n\r\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a5687", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a5689", async() => {
                     WriteLiteral("\r\n");
 #nullable restore
 #line 15 "C:\Users\HASAN\Desktop\Medic\WebPresentation\Views\Medicine\AddIngredints.cshtml"
@@ -88,7 +88,7 @@ using System;
 #line hidden
 #nullable disable
                     WriteLiteral("                ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a6226", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd7a098e0cb6bfa5309d1d17c44c54e46532ba0a6228", async() => {
 #nullable restore
 #line 17 "C:\Users\HASAN\Desktop\Medic\WebPresentation\Views\Medicine\AddIngredints.cshtml"
                                  Write(i.Name);

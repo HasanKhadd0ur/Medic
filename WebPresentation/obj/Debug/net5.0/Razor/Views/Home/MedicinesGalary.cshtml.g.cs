@@ -27,7 +27,7 @@ using WebPresentation.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\HASAN\Desktop\Medic\WebPresentation\Views\_ViewImports.cshtml"
-using ApplicationCore.Entities;
+using ApplicationDomain.Entities;
 
 #line default
 #line hidden
@@ -40,7 +40,7 @@ using System;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f388de96728e624cc50372185fc0eb996ca1ee35", @"/Views/Home/MedicinesGalary.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"afde39527760d3d287f4d84a4731a7fb9211e4e9", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e6fffd8dfe80957a1cbddaf47a216a7c128d6cf7", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_MedicinesGalary : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<Medicine>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "AddMedicine", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -146,7 +146,7 @@ WriteAttributeValue("", 748, item.Image, 748, 11, false);
 #line hidden
 #nullable disable
             WriteLiteral("\r\n                                                \r\n                                            </p>\r\n                                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f388de96728e624cc50372185fc0eb996ca1ee357774", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f388de96728e624cc50372185fc0eb996ca1ee357776", async() => {
                 WriteLiteral("Add to my Profile");
             }
             );

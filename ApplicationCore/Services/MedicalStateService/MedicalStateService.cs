@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ApplicationCore.Entities;
+using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Specification;
@@ -29,9 +29,17 @@ namespace ApplicationCore.Services
             _patientService = new PatientService(patientUnitOfWork,medicalUnitOfWork);
             
         }
-        public void Add(int patientId , MedicalState medicalState)
+        public MedicalState Add(int patientId , MedicalState medicalState)
         {
-            _patientService.AddMedicalState(patientId, medicalState);
+            var im = Create(medicalState);
+            _patientService.AddMedicalState(patientId ,im);
+
+            return im;
+        }
+        public MedicalState Create(MedicalState medicalState ) {
+       
+            return _medicalStateUnitOfWork.Entity.Insert(medicalState);
+        
         }
 
         public void AddMedicine(int medicalStateId, int medicineId)
@@ -52,7 +60,11 @@ namespace ApplicationCore.Services
             _medicalStateUnitOfWork.Save();
         }
 
-        public IEnumerable<MedicalState> GetAll(int patientId)
+        public IEnumerable<MedicalState> GetAll()
+        {
+            return _medicalStateUnitOfWork.Entity.GetAll(_medicalStateSpecification);
+        }
+        public IEnumerable<MedicalState> GetAllPatientMedicalStates(int patientId)
         {
            return  _patientService.GetPatientMedicalStates(patientId);
         }
@@ -65,6 +77,7 @@ namespace ApplicationCore.Services
         public MedicalState Update(MedicalState medicalState)
         {
            var r = _medicalStateUnitOfWork.Entity.Update(medicalState);
+           
            _medicalStateUnitOfWork.Save();
             return r; 
         }

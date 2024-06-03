@@ -1,14 +1,9 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationDomain.Entities;
 using ApplicationCore.ViewModel;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebPresentation.Controllers
@@ -119,11 +114,11 @@ namespace WebPresentation.Controllers
             await _signInManager.SignOutAsync();
             if (returnUrl != null)
             {
-                return LocalRedirect(returnUrl);
+                return Redirect(returnUrl);
             }
             else
             {
-                return LocalRedirect("/Home/Index");
+                return Redirect("/Home/Index");
             }
         }
     }

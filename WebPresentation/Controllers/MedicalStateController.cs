@@ -1,8 +1,5 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
+﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces.IServices;
-using ApplicationCore.Services;
-using ApplicationCore.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +34,7 @@ namespace WebPresentation.Controllers
         {
                 var u = GetUserId();
                 var pId = _patientService.GetAll().Where(p => p.User.Id == u).FirstOrDefault().Id;
-                var meds = _medicalStateService.GetAll(pId);
+                var meds = _medicalStateService.GetAllPatientMedicalStates(pId);
                 return View(meds);
             
         }
@@ -84,7 +81,7 @@ namespace WebPresentation.Controllers
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
                 _medicalStateService.Add(p,medicalState);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "MedicalState", new { Id = id });
             }
             return View(medicalState);
         }
@@ -92,6 +89,17 @@ namespace WebPresentation.Controllers
         // GET: Projects/Edit/5
         public IActionResult Edit(int? id)
         {
+
+            var uId = GetUserId();
+
+            var p = _patientService.GetAll(
+                 )
+                .Where(
+                    u => u.User.Id == uId
+                    )
+                .FirstOrDefault();
+
+            ViewBag.id = p.Id;
             if (id == null)
             {
                 return NotFound();
@@ -110,7 +118,7 @@ namespace WebPresentation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, MedicalState medicalState)
+        public IActionResult Edit(int id,int pId , MedicalState medicalState)
         {
             if (id != medicalState.Id)
             {
@@ -123,17 +131,9 @@ namespace WebPresentation.Controllers
                 try
                 {
 
-                    var uId = GetUserId();
-                    var p = _patientService.GetAll(
-                         )
-                        .Where(
-                            u => u.User.Id == uId
-                            )
-                        .FirstOrDefault();
-                    medicalState.Patient = p;
-                    medicalState.PatientId = p.Id;
-                   
-                    _medicalStateService.Update(medicalState);
+                    medicalState.PatientId = pId;
+                    // _patientService.UpdateMedicalState(p.Id, medicalState);
+                   _medicalStateService.Update(medicalState );
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -148,7 +148,7 @@ namespace WebPresentation.Controllers
                     }
                 */
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details","MedicalState",new { Id =id});
             }
             return View(medicalState);
         }
@@ -186,7 +186,7 @@ namespace WebPresentation.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            _medicineService.Delete(id);
+            _medicalStateService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 

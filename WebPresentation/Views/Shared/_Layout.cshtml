@@ -45,13 +45,13 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Medicines</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="Index" asp-controller="MedicalState">Medicines</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#galary">Galary</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="MedicineGalary" asp-controller="Home">Galary</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"asp-action="Index" asp-controller="Home">Home</a>
                     </li>
 
                     <partial name="_LoginPartial" />
@@ -99,10 +99,10 @@
 
                 <!-- Footer About Text -->
                 <div class="col-lg-4">
-                    <h4 class="text-uppercase mb-4">About Freelancer</h4>
+                    <h4 class="text-uppercase mb-4">Admin Dashboard</h4>
                     <p class="lead mb-0">
-                        Freelance is a free to use, MIT licensed Bootstrap theme created by
-                        <a href="http://startbootstrap.com">Start Bootstrap</a>.
+                        here is the link to the Dashboard<br />
+                        <a asp-action="Index" asp-controller="Medicine">Click me !.</a>
                     </p>
                 </div>
 
@@ -113,7 +113,7 @@
     <!-- Copyright Section -->
     <section class="copyright py-4 text-center text-white">
         <div class="container">
-            <small>Copyright &copy; Your Website 2019</small>
+            <small>Copyright &copy; Rawad & Hasan 2024</small>
         </div>
     </section>
 

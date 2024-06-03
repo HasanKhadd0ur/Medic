@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.ISpecification;
 using Microsoft.EntityFrameworkCore;
@@ -31,12 +31,12 @@ namespace Infrastructure.Repository
 
             
                 IQueryable<T> queryable = _table;
-                queryable = GetQuery(queryable, specification);
-
-                return queryable.AsEnumerable();
+                queryable =  GetQuery(queryable, specification);
+                  
+                return  queryable.AsEnumerable();
         }
 
-        public T GetById(int id, ISpecification<T>? specification)
+        public T GetById(int id, ISpecification<T> specification = null)
         {
 
 
@@ -54,12 +54,14 @@ namespace Infrastructure.Repository
 
         public T Update(T entity)
         {
+
+            
             var e =_table.Attach(entity).Entity;
             _context.Entry(entity).State = EntityState.Modified;
 
             return e;
         }
-        public  IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
+        public IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
         {
             IQueryable<T> query = inputQuery;
 

@@ -175,3 +175,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medica
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Edit.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Index.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\AddMedicine.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Delete.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\ApplicationDomain.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\ApplicationDomain.pdb

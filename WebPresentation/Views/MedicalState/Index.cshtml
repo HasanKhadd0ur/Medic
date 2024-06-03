@@ -4,63 +4,73 @@
     ViewData["Title"] = "Medical states ";
 
 }
-@foreach(var item in Model){
 <section class="page-section">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-8 mb-4 mb-lg-0">
-                <div class="card mb-3" style="border-radius: .5rem;">
-                    <div class="row g-0">
-                        <div class="col-md-4 gradient-custom text-center text-black"
-                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="~/img/portfolio/ecole.png"
-                                 alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                            <h5>@item.StateName</h5>
-                            <p>Prescriped At  : @item.PrescriptionTime</p>
-                            <a asp-action="Edit" asp-route-id="@item.Id">
-                                <i class="far fa-edit mb-5"></i>
-                            </a>
+    @if (Model.Count() == 0)
+    {
+        <h2 class="text-center">You dont have any  MedicalState</h2>
+        <img src="~/img/portfolio/noData.jpg" class="figure-img" />
+        <h3>Create New <a asp-action="Create" asp-controller="MedicalState">Create</a></h3>
+    }
+    else
 
-                            <a asp-action="Index">
+        @foreach (var item in Model)
+        {
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col col-lg-8 mb-4 mb-lg-0">
+                        <div class="card mb-3" style="border-radius: .5rem;">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-black"
+                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                    <img src="~/img/portfolio/ecole.png"
+                                         alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                                    <h5>@item.StateName</h5>
+                                    <p>Prescriped At  : @item.PrescriptionTime</p>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="far fa-edit mb-5"></i>
+                                    </a>
 
-                                <i class="far fa-backward">
+                                    <a asp-action="Index">
 
-                                </i>
-                                Go Back
-                            </a>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body p-4">
-                                <h6>Information</h6>
-                                <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>Description</h6>
-                                        <p class="text-muted">@item.StateDescription</p>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>Medicine count :@item.Medicines.Count()</h6>
-                                    </div>
+                                        <i class="far fa-backward">
+
+                                        </i>
+                                        Go Back
+                                    </a>
                                 </div>
-                                <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <a asp-action="Index">Back to Home</a>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <h6>Information</h6>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Description</h6>
+                                                <p class="text-muted">@item.StateDescription</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Medicine count :@item.Medicines.Count()</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <a asp-action="Index">Back to Home</a>
 
+                                            </div>
+                                            <div class="col-6 mb-3">
+
+                                                <a class="btn btn-primary" asp-action="Details" asp-controller="MedicalState" asp-route-id="@item.Id">Details </a>
+
+                                            </div>
+
+
+                                        </div>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>Add Medicine </h6>
-                                        <a asp-action="AddMedicine" asp-controller="MedicalState" asp-route-id="@item.Id">Add </a>
-
-                                    </div>
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+        }
 </section>
-}

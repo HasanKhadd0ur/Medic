@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Entities
-{
+namespace ApplicationDomain.Entities 
+{ 
     public class MedicalState : EntityBase
     {
         public int PatientId { get; set; }

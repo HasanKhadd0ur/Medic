@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Entities;
+﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Specification;
@@ -27,7 +27,7 @@ namespace ApplicationCore.Services
             _patientMedicinesSpecification = new PatientMedicinesSpecification();
             _medicalStateSpecification = new MedicalStateSpecification();
         }
-
+        
         public IEnumerable<MedicalState> GetPatientMedicalStates(int patientId) {
 
             return _patientUnitOfWork.Entity
@@ -47,17 +47,10 @@ namespace ApplicationCore.Services
         }
         public void AddMedicalState (int patientId, MedicalState medicalState) {
             var ptient = _patientUnitOfWork.Entity.GetById(patientId,_patientMedicinesSpecification);
-            if (medicalState.Id != 0)
-
-                foreach (var i in ptient.MedicalStates)
-                {
-                    if (i.Id.Equals(medicalState.Id))
-                        return;
-                }
-
-            ptient.MedicalStates
-                .Add(medicalState
-                );
+            
+            
+            ptient.MedicalStates.Add(medicalState);
+            
             _patientUnitOfWork.Entity.Update(ptient);
             _patientUnitOfWork.Save();
         }

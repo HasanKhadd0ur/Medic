@@ -27,7 +27,7 @@ using WebPresentation.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\HASAN\Desktop\Medic\WebPresentation\Views\_ViewImports.cshtml"
-using ApplicationCore.Entities;
+using ApplicationDomain.Entities;
 
 #line default
 #line hidden
@@ -40,7 +40,7 @@ using System;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"63facbc62168b42781e47ea83818a4a99b4a97d4", @"/Views/Medicine/Details.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"afde39527760d3d287f4d84a4731a7fb9211e4e9", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e6fffd8dfe80957a1cbddaf47a216a7c128d6cf7", @"/Views/_ViewImports.cshtml")]
     public class Views_Medicine_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Medicine>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("alt", new global::Microsoft.AspNetCore.Html.HtmlString("Avatar"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -96,7 +96,7 @@ using System;
                         <div class=""col-md-4 gradient-custom text-center text-black""
                              style=""border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;"">
                             ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "63facbc62168b42781e47ea83818a4a99b4a97d46670", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "63facbc62168b42781e47ea83818a4a99b4a97d46672", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -138,7 +138,7 @@ AddHtmlAttributeValue("", 685, Model.Image, 685, 12, false);
 #line hidden
 #nullable disable
             WriteLiteral("</p>\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d49026", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d49028", async() => {
                 WriteLiteral("\r\n                                <i class=\"far fa-edit mb-5\"></i>\r\n                            ");
             }
             );
@@ -169,7 +169,7 @@ AddHtmlAttributeValue("", 685, Model.Image, 685, 12, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d411311", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d411313", async() => {
                 WriteLiteral("\r\n\r\n                                <i class=\"far fa-backward\">\r\n\r\n                                </i>\r\n                                Go Back\r\n                            ");
             }
             );
@@ -288,7 +288,7 @@ AddHtmlAttributeValue("", 685, Model.Image, 685, 12, false);
                                     <div class=""col-6 mb-3"">
                                         <h6>Go To list </h6>
                                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d417378", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d417380", async() => {
                 WriteLiteral("Back to List");
             }
             );
@@ -304,7 +304,7 @@ AddHtmlAttributeValue("", 685, Model.Image, 685, 12, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n\r\n                                    </div>\r\n                                    <div class=\"col-6 mb-3\">\r\n                                        <h6>Add Ingredient </h6>\r\n                                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d418764", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63facbc62168b42781e47ea83818a4a99b4a97d418766", async() => {
                 WriteLiteral("Add ");
             }
             );

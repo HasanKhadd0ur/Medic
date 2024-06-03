@@ -1,4 +1,4 @@
-using ApplicationCore.Entities;
+using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Services;
@@ -30,31 +30,37 @@ namespace WebPresentation
         public void ConfigureServices(IServiceCollection services)
         {
 
-
-
-            
             services.AddScoped<DbContext, MedicDbContext>();
+
+            #region ADD Scoped Repository 
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            #endregion ADD Scope dRepository
 
+            #region ADD Scoped  Services
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IMedicalStateService, MedicalStateService>();
-
             services.AddScoped<IMedicineService, MedicineService>();
-
             services.AddScoped<IIngredientService, IngredientService>();
-
+            #endregion ADD Scoped  Services
+            
+            #region ADD DB Context
             services.AddDbContext<MedicDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 ;
                 }
                 ); ;
-            
-           
-            services.AddSession();
 
-            services.AddIdentity<User, IdentityRole>()
+            # endregion ADD DB Context
+
+            #region ADD Identity 
+            services
+                .AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<MedicDbContext>();
+
+            #endregion ADD Identity 
+            
+            #region ADD Authentication Schema 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 options =>
                 {
@@ -63,6 +69,9 @@ namespace WebPresentation
                     options.AccessDeniedPath = "Access/Login";
                 }
                 );
+            #endregion ADD Authentication Schema 
+           
+            services.AddSession();
 
             services.AddControllersWithViews();
             

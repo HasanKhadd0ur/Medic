@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Entities
+namespace ApplicationDomain.Entities
 {
-    public class MedicineIngredient : EntityBase
+    public class PatientMedicine : EntityBase
     {
-        public int Ratio { get; set; }
+        public DateTime PrescripDate { get; set; }
         public int MedicineId { get; set; }
-        public int IngredientId { get; set; }
-
+        public int PatientId { get; set; }
         public Medicine Medicine { get; set; }
-        public Ingredient Ingredient { get; set; }
+        public Patient Patient { get; set; }
     }
 }

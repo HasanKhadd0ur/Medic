@@ -32,19 +32,20 @@
                                 Go Back
                             </a>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col">
                             <div class="card-body p-4">
                                 <h6>Information</h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>Description</h6>
-                                        <p class="text-muted">@Model.StateDescription</p>
+                                        <p class="text">@Model.StateDescription</p>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>Medicines Count:@Model.Medicines.Count()</h6>
-                                        <a asp-controller="MedicalState" asp-action="AddMedicine" asp-route-id="@Model.Id">Add Medicine</a>
-                                        <a asp-controller="MedicalState" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                        <a class="btn btn-primary m-1" asp-controller="MedicalState" asp-action="AddMedicine" asp-route-id="@Model.Id">Add Medicine</a>
+                                        <a class="btn btn-primary m-1" asp-controller="MedicalState" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                        <a class="btn btn-primary m-1" asp-controller="MedicalState" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
 
                                     </div>
                                 </div>
