@@ -1,8 +1,17 @@
-﻿using ;
+﻿using ApplicationCore.ViewModel;
+using ApplicationDomain.Entities;
+using AutoMapper;
+
+
 
 namespace ApplicationCore.Mapper
 {
-    class MedicineMapper
+    public class MedicineMapper :Profile
     {
+        public MedicineMapper() {
+            CreateMap<Medicine, MedicineViewModel>(
+                );
+        
+        }
     }
 }

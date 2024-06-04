@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ApplicationCore.Mapper;
 
 namespace WebPresentation
 {
@@ -31,6 +32,7 @@ namespace WebPresentation
         {
 
             services.AddScoped<DbContext, MedicDbContext>();
+            services.AddScoped<MedicineMapper>();
 
             #region ADD Scoped Repository 
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));

@@ -38,9 +38,13 @@
                     <li><a class="dropdown-item" href="#!">Hello @UserManager.GetUserName(User)</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
-                        <form id="logoutForm" class="dropdown-item form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button id="logout" type="submit" class="nav-link rounded text-bg-dark js-scroll-trigger">Logout</button>
-                        </form>
+                        <a class="dropdown-item"
+                           asp-action="Logout"
+                           asp-controller="Access" 
+                           asp-route-returnUrl="/Home/Inedx">
+                            Logout
+                        </a>
+                        
                     </li>
                 </ul>
             </li>
@@ -52,12 +56,16 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link"  asp-action="Index">
+                        <a class="nav-link" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+
+                        <!-- Patient Managment -->
+                        <a class="nav-link collapsed"
+                           asp-action="Inedx" asp-controller="Patient"
+                           data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Patients Managment
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -68,7 +76,9 @@
                                 <a class="nav-link" asp-controller="Patient" asp-action="Index">ALL Patients </a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#ing" aria-expanded="false" aria-controls="collapseLayouts">
+
+                        <!-- Ingredients Managment -->
+                        <a class="nav-link collapsed" asp-action="Index" asp-controller="Ingredients" data-bs-toggle="collapse" data-bs-target="#ing" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Ingredients Manage
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -79,22 +89,36 @@
                                 <a class="nav-link" asp-controller="Ingredient" asp-action="Index">ALL Ingredients </a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#cPages" aria-expanded="false" aria-controls="collapsePages">
+
+                        <!-- Medicine Managment -->
+                        <a class="nav-link collapsed" asp-action="Index" asp-controller="Medicine" data-bs-toggle="collapse" data-bs-target="#cPages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Medicine Managment
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-
                         <div class="collapse" id="cPages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" asp-controller="Medicine" asp-action="Create">Add Medicine </a>
                                 <a class="nav-link" asp-controller="Medicine" asp-action="Index">ALL Medicines </a>
                             </nav>
                         </div>
+                    
+                        <!-- Medical State Managment -->
+                        <a class="nav-link collapsed" asp-action="Index" asp-controller="Medicine" data-bs-toggle="collapse" data-bs-target="#cPages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Medical States 
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="cPages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" >Add Medical State </a>
+                                <a class="nav-link" >ALL Medical State </a>
+                            </nav>
+                        </div>
 
                         <div class="sb-sidenav-footer">
                             <div class="small">Logged in as:@UserManager.GetUserName(User)</div>
-                            
+
                         </div>
                     </div>
                     </div>
@@ -104,9 +128,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
+                    
 
                     @RenderBody()
 

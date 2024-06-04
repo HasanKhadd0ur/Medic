@@ -7,20 +7,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationCore.Mapper;
+using AutoMapper;
+using ApplicationCore.ViewModel;
 
 namespace ApplicationCore.Services
 {
     public class MedicineService : IMedicineService
     {
+        private readonly MedicineMapper _mapper;
         private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
         private MedicineIngredientSpecification _medicineIngredientSpecification;
-        public MedicineService(IUnitOfWork<Medicine> medicineUnitOfWork)
+        public MedicineService(
+            IUnitOfWork<Medicine> medicineUnitOfWork,
+            MedicineMapper medicineMapper )
         {
+            _mapper = medicineMapper;
             _medicineUnitOfWork = medicineUnitOfWork;
             _medicineIngredientSpecification = new MedicineIngredientSpecification();
         }
         public IEnumerable<Medicine> GetAllMedicines() {
-            return _medicineUnitOfWork.Entity.GetAll(
+            return  _medicineUnitOfWork.Entity.GetAll(
                  _medicineIngredientSpecification
                  );
         }
@@ -48,7 +55,7 @@ namespace ApplicationCore.Services
         public Medicine GetMedicineDetails(int id)
         {
 
-            return _medicineUnitOfWork.Entity.GetById(id ,_medicineIngredientSpecification );
+            return _medicineUnitOfWork.Entity.GetById(id, _medicineIngredientSpecification);
             
         }
         public Medicine GetMedicineIngredentisDetails(int medicineId) {

@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "CSp6JRrfKdh1rHdoo3CLiDBLY/YSiTGT4lNyn7paLJjBcTLYON0hBn8ML2M1uO0R0+lyyK44eKrikaOa4Rn5tg==",
+  "dgSpecHash": "5NjBex83Lbd2kaYy9GsvM5i0NXJLpYSh6HP3ORMwpaP1/wYcRmb0qDrWmGWDwZC00ufTisZ63wxEDFovE2OAdA==",
   "success": true,
   "projectFilePath": "C:\\Users\\HASAN\\Desktop\\Medic\\ApplicationCore\\ApplicationCore.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\HASAN\\.nuget\\packages\\automapper\\7.0.1\\automapper.7.0.1.nupkg.sha512",
+    "C:\\Users\\HASAN\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\5.0.1\\automapper.extensions.microsoft.dependencyinjection.5.0.1.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.17\\microsoft.aspnetcore.cryptography.internal.5.0.17.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.17\\microsoft.aspnetcore.cryptography.keyderivation.5.0.17.nupkg.sha512",
@@ -101,6 +103,7 @@
     "C:\\Users\\HASAN\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\system.threading.tasks.extensions\\4.3.0\\system.threading.tasks.extensions.4.3.0.nupkg.sha512",
+    "C:\\Users\\HASAN\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\HASAN\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
