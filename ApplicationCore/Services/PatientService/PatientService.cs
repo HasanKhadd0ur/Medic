@@ -54,7 +54,7 @@ namespace ApplicationCore.Services
             _patientUnitOfWork.Entity.Update(ptient);
             _patientUnitOfWork.Save();
         }
-        public Patient GetById(int id, params Expression<Func<Patient, object>>[] includeProperties)
+        public Patient GetDetails(int id)
         {
             return _patientUnitOfWork.Entity.GetById(id, _patientMedicinesSpecification);
 
@@ -67,12 +67,13 @@ namespace ApplicationCore.Services
             _patientUnitOfWork.Save();
         }
 
-        public void Update(Patient patient)
+        public Patient Update(Patient patient)
         {
 
 
-            _patientUnitOfWork.Entity.Update(patient);
+            var p =_patientUnitOfWork.Entity.Update(patient);
             _patientUnitOfWork.Save();
+            return p;
         }
         public void Delete(int id)
         {

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Ingredient>
 @{
 }
-<section class="page-section p-5">
+<section class="page-section p-5 m-5">
     <form class=" " method="post" asp-action="AddIngredints">
 
 
@@ -11,7 +11,7 @@
             <p class="help-block text-danger"></p>
         </div>
 
-        <select class="form-select" asp-for="@Model.First().Id">
+        <select class="form-select custom-select" asp-for="@Model.First().Id">
             @foreach (var i in Model)
             {
                 <option value="@i.Id">@i.Name </option>

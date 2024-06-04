@@ -15,7 +15,7 @@ namespace WebPresentation.Controllers
 {
 
 [Authorize(Roles ="patient")]
-    public class HomeController : BaseController
+    public class HomeController : BaseController<Patient>
     {
         private readonly IPatientService _patientService;
         private readonly IMedicineService _medicineService;
@@ -26,7 +26,7 @@ namespace WebPresentation.Controllers
                 UserManager<User> userManager,
                 IPatientService patientService,
                 IMedicineService medicineService
-            ):base(userManager)
+            ):base(userManager,patientService)
         {
             _userManager = userManager;
             _medicineService = medicineService;
@@ -51,11 +51,6 @@ namespace WebPresentation.Controllers
         }
 
         
-       
-        public IActionResult MedicinesGalary() {
-
-            return View(_medicineService.GetAllMedicines());
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

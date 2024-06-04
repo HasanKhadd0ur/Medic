@@ -41,7 +41,7 @@ namespace ApplicationCore.Services
             return r;
         }
 
-        public Ingredient GetIngredientDetails(int id)
+        public Ingredient GetDetails(int id)
         {
 
             return _ingredientUnitOfWork.Entity.GetById(id, 

@@ -17,9 +17,12 @@
             </div>
         </div>
     </div>
- </div>
+</div>
+<p>
+    <a asp-action="Create" class="btn btn-primary ">Create New</a>
+</p>
 <div>
-     <table id="datatablesSimple" class="table">
+    <table id="datatablesSimple" class="table">
         <thead>
             <tr>
                 <th scope="col">
@@ -32,7 +35,7 @@
 
                     @Html.DisplayNameFor(model => model.First().Name)
                 </th>
-                
+
                 <th scope="col">
                     @Html.DisplayNameFor(model => model.First().Description)
 
@@ -49,7 +52,7 @@
                 <th scope="row">ID</th>
                 <th>  name</th>
                 <th>Description</th>
-                
+
                 <th>Manage</th>
             </tr>
         </tfoot>
@@ -69,7 +72,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    
+
                     <td>
                         <a asp-action="Edit" asp-controller="Ingredient" asp-route-id="@item.Id"><i class="far fa-pen-to-square text-bg-info"></i></a>
                         <a asp-action="Details" asp-controller="Ingredient" asp-route-id="@item.Id"><i class="far fa-address-card"></i></a>

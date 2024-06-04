@@ -52,7 +52,7 @@ namespace ApplicationCore.Services
             _medicineUnitOfWork.Save();
             return r;
         }
-        public Medicine GetMedicineDetails(int id)
+        public Medicine GetDetails(int id)
         {
 
             return _medicineUnitOfWork.Entity.GetById(id, _medicineIngredientSpecification);

@@ -8,20 +8,107 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebPresentation.Controllers
 {
     [Authorize]
-    public abstract class BaseController : Controller
+    public abstract class BaseController<T> : Controller where T : EntityBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly IUnitOfWork<Patient> _patientUnitOfWork;
-
-        public BaseController(UserManager<User> userManager) {
+        private readonly IService<T> _service;
+        public BaseController(UserManager<User> userManager , IService<T> service) {
             _userManager = userManager;
+            _service = service;
             
         }
-        public  User GetCurrentUser() {
+
+        // Details 
+        // 
+        public IActionResult Details(int?  id ) {
+
+            if (id is null)
+            {
+                return NotFound();
+            }
+            else {
+                T TModel = _service.GetDetails((int)id);
+                if (TModel is null)
+                    return NotFound();
+                return View(TModel);
+            }
+        }
+        
+        
+        public IActionResult Delete(int id)
+        {
+
+            var TModel = _service.GetDetails(id);
+
+            if (TModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(TModel);
+        }
+
+
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _service.Delete(id);
+            return RedirectToAction("Index" );
+        }
+
+        // GET: Projects/Edit/5
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            T tModel = _service.GetDetails((int)id);
+            if (tModel == null)
+            {
+                return NotFound();
+            }
+            return View(tModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, T tModel)
+        {
+            if (id != tModel.Id)
+            {
+
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    tModel=  _service.Update(tModel);
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                        return NotFound() ;
+                   
+                }
+                return RedirectToAction("Index");
+            }
+            return View(tModel);
+        }
+
+        
+        #region Current User Details  
+        public User GetCurrentUser() {
             User usr =  GetCurrentUserAsync().Result;
             return usr;
         }
@@ -37,6 +124,7 @@ namespace WebPresentation.Controllers
         public String GetUserId() {
             return GetCurrentUser().Id;
         }
-        
+
+        #endregion Current User Details
     }
 }

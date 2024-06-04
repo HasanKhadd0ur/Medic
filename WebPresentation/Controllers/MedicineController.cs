@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace WebPresentation.Controllers
 {
     [Authorize(Roles ="Admin")]
-    public class MedicineController : BaseController
+    public class MedicineController : BaseController<Medicine>
     {
         private readonly IIngredientService _ingredientService;
         private readonly IMedicineService _medicineService;
@@ -27,7 +27,7 @@ namespace WebPresentation.Controllers
             IIngredientService ingredientService ,
             IPatientService patientService
 
-            ):base(userManager)
+            ):base(userManager ,medicineService)
         {
             _ingredientService =ingredientService;
             _medicineService = medicineService;
@@ -44,23 +44,6 @@ namespace WebPresentation.Controllers
             };
 
             return View(s);
-        }
-
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var medicine = _medicineService.GetMedicineDetails((int)id);
-
-            if (medicine == null)
-            {
-                return NotFound();
-            }
-
-            return View(medicine);
         }
 
         // GET: Projects/Create
@@ -84,72 +67,7 @@ namespace WebPresentation.Controllers
             return View(medicine);
         }
 
-        // GET: Projects/Edit/5
-        public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var medicine = _medicineService.GetMedicineDetails((int)id);
-            if (medicine == null)
-            {
-                return NotFound();
-            }
-            return View(medicine);
-        }
-
-        // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public  IActionResult Edit(int id,Medicine medicine)
-        {
-            if (id != medicine.Id)
-            {
-                
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _medicineService.Update(medicine);
-
-                }
-                catch (DbUpdateConcurrencyException)
-                {/*
-                    if (!_medicineService.projectExists(project.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                */
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(medicine);
-        }
-
-        // GET: Projects/Delete/5
-        public IActionResult Delete(int id)
-        {
-
-            var project = _medicineService.GetMedicineDetails(id);
-
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            return View(project);
-        }
         public IActionResult AddIngredints(int id ) {
             var s = _ingredientService.GetAllIngredients();
             ViewBag.MedicineId = id;
@@ -159,19 +77,10 @@ namespace WebPresentation.Controllers
         [HttpPost]
         public IActionResult AddIngredints(int id , int med ,int ratio )
         {
-            var s = _ingredientService.GetIngredientDetails(id);
+            var s = _ingredientService.GetDetails(id);
             _medicineService.AddIngredient(med, ratio, s);
 
             return RedirectToAction("Details","Medicine", new { Id = med}) ;
-        }
-
-        // POST: Projects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _medicineService.Delete(id);
-            return RedirectToAction(nameof(Index));
         }
 
     }

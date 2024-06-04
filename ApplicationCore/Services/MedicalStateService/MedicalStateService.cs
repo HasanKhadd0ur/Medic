@@ -53,6 +53,17 @@ namespace ApplicationCore.Services
             _medicalStateUnitOfWork.Entity.Update(m);
             _medicalStateUnitOfWork.Save();
         }
+        public void RemoveMedicine(int medicalStateId, int medicineId)
+        {
+            var m = _medicalStateUnitOfWork.Entity.GetById(medicalStateId, _medicalStateSpecification);
+            if (m.Medicines is null)
+                m.Medicines = new List<Medicine>();
+            var d = _medicineUnitOfWork.Entity.GetById(medicineId, _medicineSpecification);
+            m.Medicines.Remove(d);
+
+            _medicalStateUnitOfWork.Entity.Update(m);
+            _medicalStateUnitOfWork.Save();
+        }
 
         public void Delete(int id)
         {

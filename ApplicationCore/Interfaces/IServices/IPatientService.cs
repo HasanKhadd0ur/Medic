@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.IServices
 {
-    public interface IPatientService 
+    public interface IPatientService :IService<Patient>
     {
 
         public IEnumerable<MedicalState> GetPatientMedicalStates(int patientId);
         public MedicalState GetMedicalStateDetails(int id, params Expression<Func<MedicalState, object>>[] includeProperties);
         public IEnumerable<Patient> GetAll(params Expression<Func<Patient, object>>[] includeProperties);
         public void AddMedicalState(int patientId, MedicalState medicalState);
-        public Patient GetById(int id, params Expression<Func<Patient, object>>[] includeProperties);
+       // public Patient GetDetails(int id);
         public void Insert(Patient patient);
-        public void Update(Patient patient);
-        public void Delete(int id);
+      //  public void Update(Patient patient);
+      //  public void Delete(int id);
         public bool PatientExists(int id);
 
     }

@@ -22,8 +22,11 @@
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-black"
                                      style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                    <img src="~/img/portfolio/ecole.png"
-                                         alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+
+
+                                    <div class="icon-box">
+                                        <div class="icon " style="color: #5e54b3"><i class="fas fa-heartbeat  fa-8x "></i></div>
+                                    </div>         
                                     <h5>@item.StateName</h5>
                                     <p>Prescriped At  : @item.PrescriptionTime</p>
                                     <a asp-action="Edit" asp-route-id="@item.Id">

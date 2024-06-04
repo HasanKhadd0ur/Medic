@@ -160,7 +160,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.dl
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\ref\WebPresentation.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.pdb
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.genruntimeconfig.cache
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\MedicinesGalary.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\AddIngredints.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Create.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Delete.cshtml.g.cs
@@ -169,7 +168,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingred
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Ingredient\Index.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Access\Login.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Access\Register.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\MedicalStateDetails.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Create.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Details.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\MedicalState\Edit.cshtml.g.cs
@@ -180,3 +178,4 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\ApplicationDomain.
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\ApplicationDomain.pdb
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Edit.cshtml.g.cs
