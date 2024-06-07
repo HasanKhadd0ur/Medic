@@ -1,18 +1,22 @@
 ﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
-using ApplicationCore.Specification;
+using ApplicationDomain.Abstraction;
+using ApplicationDomain.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using ApplicationCore.DomainModel;
 
 namespace ApplicationCore.Services
 {
     public class PatientService : IPatientService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork<Patient> _patientUnitOfWork;
         private readonly IUnitOfWork<MedicalState> _medicalStateUnitOfWork;
         private PatientMedicinesSpecification _patientMedicinesSpecification;
@@ -20,60 +24,67 @@ namespace ApplicationCore.Services
 
         public PatientService(
             IUnitOfWork<Patient> patientUnitOfWork,
-            IUnitOfWork<MedicalState> medicalStateUnitOfWork)
+            IUnitOfWork<MedicalState> medicalStateUnitOfWork,
+            IMapper mapper )
         {
+            _mapper = mapper;
             _patientUnitOfWork = patientUnitOfWork;
             _medicalStateUnitOfWork = medicalStateUnitOfWork;
             _patientMedicinesSpecification = new PatientMedicinesSpecification();
             _medicalStateSpecification = new MedicalStateSpecification();
         }
         
-        public IEnumerable<MedicalState> GetPatientMedicalStates(int patientId) {
+        public IEnumerable<MedicalStateModel> GetPatientMedicalStates(int patientId) {
 
-            return _patientUnitOfWork.Entity
+            return _mapper.Map<IEnumerable<MedicalStateModel>>( _patientUnitOfWork.Entity
                 .GetById(
                 patientId,_patientMedicinesSpecification
-                ).MedicalStates.AsEnumerable();
+                ).Result.MedicalStates.AsEnumerable());
 
         }
-        public MedicalState GetMedicalStateDetails(int id, params Expression<Func<MedicalState, object>>[] includeProperties)
+        public async Task< MedicalStateModel> GetMedicalStateDetails(int id)
         {
            
-            return _medicalStateUnitOfWork.Entity.GetById(id,_medicalStateSpecification);
+            return _mapper.Map<MedicalStateModel>(await  _medicalStateUnitOfWork.Entity.GetById(id,_medicalStateSpecification));
 
         }
-        public IEnumerable<Patient> GetAll(params Expression<Func<Patient, object>>[] includeProperties) {
-            return _patientUnitOfWork.Entity.GetAll(_patientMedicinesSpecification);
+        public async Task<IEnumerable<PatientModel>> GetAll() {
+            return _mapper.Map < IEnumerable < PatientModel >> (await _patientUnitOfWork.Entity.GetAll(_patientMedicinesSpecification));
         }
-        public void AddMedicalState (int patientId, MedicalState medicalState) {
-            var ptient = _patientUnitOfWork.Entity.GetById(patientId,_patientMedicinesSpecification);
+        public void AddMedicalState (int patientId, MedicalStateModel medicalState) {
+            var ptient = _patientUnitOfWork.Entity.GetById(patientId,_patientMedicinesSpecification).Result;
             
             
-            ptient.MedicalStates.Add(medicalState);
+            ptient.MedicalStates.Add(_mapper.Map<MedicalState>(medicalState));
             
             _patientUnitOfWork.Entity.Update(ptient);
             _patientUnitOfWork.Save();
         }
-        public Patient GetDetails(int id)
+        public async  Task<PatientModel> GetDetails(int id)
         {
-            return _patientUnitOfWork.Entity.GetById(id, _patientMedicinesSpecification);
+            return _mapper.Map < PatientModel>(await _patientUnitOfWork.Entity.GetById(id, _patientMedicinesSpecification));
 
         }
-        public void Insert(Patient patient)
+        public void Insert(PatientModel patient)
         {
 
-            _patientUnitOfWork.Entity.Insert(patient);
+            _patientUnitOfWork.Entity.Insert(_mapper.Map<Patient>(patient));
 
             _patientUnitOfWork.Save();
         }
 
-        public Patient Update(Patient patient)
+        public PatientModel Create(PatientModel patient) {
+
+            var p =_patientUnitOfWork.Entity.Insert(_mapper.Map<Patient>(patient));
+            return _mapper.Map<PatientModel>(p);
+        }
+        public PatientModel Update(PatientModel patient)
         {
 
 
-            var p =_patientUnitOfWork.Entity.Update(patient);
+            var p =_patientUnitOfWork.Entity.Update(_mapper.Map<Patient>(patient));
             _patientUnitOfWork.Save();
-            return p;
+            return _mapper.Map < PatientModel > (p);
         }
         public void Delete(int id)
         {

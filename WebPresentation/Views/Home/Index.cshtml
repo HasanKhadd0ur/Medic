@@ -1,6 +1,6 @@
 ﻿
 @using Microsoft.AspNetCore.Identity ;
-@model Patient ;
+@model PatientModel ;
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
@@ -76,7 +76,7 @@
                             <h4>@item.StateName</h4>
                             
                             <p class="text-start">Diagonistic : @item.StateDescription<br /> Prescriped at : @(item.PrescriptionTime) </p>
-                            <a data-toggle="modal" data-target="#item-@(item.Id)" class="btn btn-primary">
+                            <a data-toggle="modal" data-target="#item-@(item.Id)" class="btn btn-primary" style="color:white!important">
                                 Details
                             </a>
                         </div>
@@ -140,8 +140,8 @@
 <section class="page-section bg-primary  text-white mb-0" id="topThree">
     <div class="container-fluid">
         <!-- Portfolio Section Heading -->
-        <h2 class=" page-section-heading text-center text-uppercase text-secondary mb-0">For more Medicine</h2><br />
-        <h2 class=" page-section-heading text-center  text-secondary   mb-0" style="color :white!important ;"><a asp-action="Index" asp-controller="MedicalState">Go to You Medical States profile</a> </h2>
+        <h2 class="  text-center text-uppercase text-secondary mb-0">For more Profile Details </h2><br />
+        <h2 class="  text-center  text-secondary   mb-0" style="color :white!important ;"><a asp-action="Details" asp-controller="Home">Go to Your profile</a> </h2>
         <!-- Icon Divider -->
 
     </div>

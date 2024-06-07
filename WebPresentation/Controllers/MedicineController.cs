@@ -1,8 +1,6 @@
 ﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces.IServices;
-using ApplicationCore.Services;
 
-using ApplicationCore.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +10,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    public class MedicineController : BaseController<Medicine>
+    public class MedicineController : BaseController<MedicineModel>
     {
         private readonly IIngredientService _ingredientService;
         private readonly IMedicineService _medicineService;
@@ -35,52 +33,78 @@ namespace WebPresentation.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            var s = new PatientMedicineViewModel
-            {
-                Patients = _patientService.GetAll(p=> p.User ),
-                Medicines = _medicineService.GetAllMedicines()
-            };
+            var s = _medicineService.GetAllMedicines().Result;
+            
 
             return View(s);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Medicine medicine, int id)
+        public IActionResult Create(MedicineModel medicine, int id)
         {
             if (ModelState.IsValid)
             {
-                _medicineService.AddMedicine(medicine);
-                return RedirectToAction(nameof(Index));
+
+               var m = _medicineService.Create(medicine);
+                return RedirectToAction("Details","Medicine",new { Id = m.Id});
             }
             return View(medicine);
         }
 
 
+        [Authorize(Roles = "Admin")]
         public IActionResult AddIngredints(int id ) {
-            var s = _ingredientService.GetAllIngredients();
+            var s = _ingredientService.GetAllIngredients().Result;
             ViewBag.MedicineId = id;
             return View(s);
         
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddIngredints(int id , int med ,int ratio )
         {
-            var s = _ingredientService.GetDetails(id);
-            _medicineService.AddIngredient(med, ratio, s);
-
+            _ingredientService.AddToMedicine(id,med,ratio);
             return RedirectToAction("Details","Medicine", new { Id = med}) ;
+        }
+        [Authorize(Roles ="patient")]
+        public async Task<JsonResult>  GetDetails(int? id)
+        {
+
+            if (id is null)
+            {
+                return  Json("");
+            }
+            else
+            {
+                MedicineModel TModel = await _service.GetDetails((int)id);
+                if (TModel is null)
+                    return Json("");
+                return Json(TModel);
+            }
+        }
+
+        [Authorize(Roles = "patient")]
+        [HttpGet]
+        public JsonResult GetMedicines()
+        {
+            var all = _medicineService.GetAllMedicines().Result;
+
+            return new JsonResult(all);
+
         }
 
     }

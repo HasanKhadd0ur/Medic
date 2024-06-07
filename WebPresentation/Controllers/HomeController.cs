@@ -10,17 +10,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebPresentation.Models;
 using ApplicationCore.Interfaces.IServices;
+using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
 
 [Authorize(Roles ="patient")]
-    public class HomeController : BaseController<Patient>
+    public class HomeController : BaseController<PatientModel>
     {
         private readonly IPatientService _patientService;
-        private readonly IMedicineService _medicineService;
-
-        private readonly UserManager<User> _userManager;
         
         public HomeController(
                 UserManager<User> userManager,
@@ -28,30 +26,39 @@ namespace WebPresentation.Controllers
                 IMedicineService medicineService
             ):base(userManager,patientService)
         {
-            _userManager = userManager;
-            _medicineService = medicineService;
             _patientService = patientService;
             
         }
 
-        public IActionResult Index()
-        {
+        private PatientModel _getCurrentPatient() {
             var u = GetCurrentUser();
             var userId = GetUserId();
-            
-            var ownesr = _patientService
+
+            var patient = _patientService
                 .GetAll(
-                 )
+                 ).Result
                 .Where(
                     u => u.User.Id == userId
                     )
                 .FirstOrDefault();
+            return patient;
 
-            return View(ownesr);
+        }
+        public IActionResult Index()
+        {
+
+            return View(_getCurrentPatient());
         }
 
-        
 
+        public override  IActionResult Details(int? id ) {
+
+            return View(_getCurrentPatient());
+        
+        }
+
+        public IActionResult Privacy() {
+            return View() ; }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

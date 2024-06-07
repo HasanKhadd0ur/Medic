@@ -8,9 +8,10 @@ namespace ApplicationCore.Interfaces
 {
     public interface IService<T> where T : class   
     {
-        public T GetDetails(int Id);
+        public  Task<T> GetDetails(int Id);
         public void Delete(int Id);
         public T Update(T tModel);
+        public T Create(T tModel);
 
 
 

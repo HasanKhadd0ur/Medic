@@ -1,4 +1,4 @@
-﻿@model Ingredient
+﻿@model IngredientModel
 
 @{
     ViewData["Title"] = "Details";
@@ -16,7 +16,7 @@
                             <img src="~/img/portfolio/instagram.png"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.Name</h5>
-                            <p>For: @Model.Medicines.Count()</p>
+                           
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>
                              </a> 

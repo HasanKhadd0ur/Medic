@@ -1,53 +1,73 @@
 ﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
-using ApplicationCore.Specification;
+using ApplicationDomain.Abstraction;
+using ApplicationDomain.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationCore.DomainModel;
+using AutoMapper;
 
 namespace ApplicationCore.Services
 {
     public class IngredientService :IIngredientService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork<Ingredient> _ingredientUnitOfWork;
+        
         private IngredientSpecification _IngredientSpecification;
 
-        public IngredientService(IUnitOfWork<Ingredient> ingredientUnitOfWork)
+
+        public IngredientService(
+            IUnitOfWork<Ingredient> ingredientUnitOfWork,
+            IUnitOfWork<Medicine> medicineUnitOfWork,
+            IMapper mapper
+            )
         {
+            _mapper = mapper;
             _ingredientUnitOfWork = ingredientUnitOfWork;
             _IngredientSpecification = new IngredientSpecification();
         }
-        public IEnumerable<Ingredient> GetAllIngredients()
+        public async  Task<IEnumerable<IngredientModel>> GetAllIngredients()
         {
-            return _ingredientUnitOfWork.Entity.GetAll(
+            return _mapper.Map<IEnumerable<IngredientModel>>(await _ingredientUnitOfWork.Entity.GetAll(
                 _IngredientSpecification 
-                 );
+                 ));
         }
-        public void AddIngredient(Ingredient ingredient)
+        public IngredientModel Create(IngredientModel ingredient)
         {
 
-            _ingredientUnitOfWork.Entity.Insert(ingredient);
+            var ing = _ingredientUnitOfWork.Entity.Insert(_mapper.Map<Ingredient>(ingredient));
             _ingredientUnitOfWork.Save();
-
+            return _mapper.Map<IngredientModel>(ing);
         }
-        public Ingredient Update(Ingredient ingredient)
+        public IngredientModel Update(IngredientModel ingredient)
         {
 
-            var r = _ingredientUnitOfWork.Entity.Update(ingredient);
+            var r = _ingredientUnitOfWork.Entity.Update(_mapper.Map<Ingredient>(ingredient));
             _ingredientUnitOfWork.Save();
-            return r;
+            return _mapper.Map<IngredientModel>(r);
         }
 
-        public Ingredient GetDetails(int id)
+        public void AddToMedicine(int ingredientId, int medicineId, int ratio) {
+           var r = _ingredientUnitOfWork.Entity.GetById(ingredientId,_IngredientSpecification).Result;
+            r.MedicineIngredients.Add(
+                new MedicineIngredient { IngredientId = ingredientId , MedicineId=medicineId ,Ratio=ratio}
+                );
+            _ingredientUnitOfWork.Entity.Update(r);
+            _ingredientUnitOfWork.Save();
+        }
+        public async Task<IngredientModel> GetDetails(int id)
         {
 
-            return _ingredientUnitOfWork.Entity.GetById(id, 
-                _IngredientSpecification);
+            return   _mapper.Map<IngredientModel>(await _ingredientUnitOfWork.Entity.GetById(id, 
+                _IngredientSpecification));
 
         }
+
         public void Delete(int id)
         {
             _ingredientUnitOfWork.Entity.Delete(id);

@@ -1,5 +1,4 @@
 using ApplicationDomain.Entities;
-using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationCore.Services;
 using Infrastructure.Data;
@@ -8,13 +7,14 @@ using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ApplicationCore.Mapper;
+using AutoMapper;
+using ApplicationDomain.Abstraction;
+using ApplicationDomain.Repositories;
 
 namespace WebPresentation
 {
@@ -32,8 +32,9 @@ namespace WebPresentation
         {
 
             services.AddScoped<DbContext, MedicDbContext>();
-            services.AddScoped<MedicineMapper>();
-
+            services.AddScoped<Mapper>();
+            
+            services.AddAutoMapper(typeof(ApplicationCore.Mapper.ObjectMapper));
             #region ADD Scoped Repository 
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -58,18 +59,23 @@ namespace WebPresentation
             #region ADD Identity 
             services
                 .AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<MedicDbContext>();
+                .AddEntityFrameworkStores<MedicDbContext>()
+                .AddDefaultTokenProviders();
 
             #endregion ADD Identity 
             
             #region ADD Authentication Schema 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(
                 options =>
                 {
-                    options.LoginPath = "Access/Login";
-                    options.LogoutPath = "Access/Logout";
-                    options.AccessDeniedPath = "Access/Login";
+                    options.LoginPath = "/Access/Login";
+                    options.LogoutPath = "/Access/Logout";
+                    options.AccessDeniedPath = "/Access/Login";
                 }
+                );
+            services.AddAuthorization(
+                
                 );
             #endregion ADD Authentication Schema 
            

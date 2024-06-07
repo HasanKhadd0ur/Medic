@@ -1,4 +1,5 @@
-﻿using ApplicationDomain.Entities;
+﻿using ApplicationCore.DomainModel;
+using ApplicationDomain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.IServices
 {
-    public interface IMedicalStateService : IService<MedicalState>
+    public interface IMedicalStateService : IService<MedicalStateModel>
     {
-        public IEnumerable<MedicalState> GetAll();
+        public Task<IEnumerable<MedicalStateModel>> GetAll();
 
-        public IEnumerable<MedicalState> GetAllPatientMedicalStates(int patientId);
-        public MedicalState Add(int patientId , MedicalState medicalState);
+        public IEnumerable<MedicalStateModel> GetAllPatientMedicalStates(int patientId);
+        public MedicalStateModel Add(int patientId , MedicalStateModel medicalState);
         public void AddMedicine(int medicalStateId, int medicineId);
         public void RemoveMedicine(int medicalStateId, int medicineId);
 

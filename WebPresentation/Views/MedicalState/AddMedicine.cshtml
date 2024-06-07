@@ -1,11 +1,16 @@
-﻿@model IEnumerable<Medicine>
+﻿@model IEnumerable<MedicineModel>
 @(ViewData["Title"]="Medicines Galary")
+@{
+    var t = 0;
+}
 
+<div id="toast-container">
+
+</div>
 <section class="page-section mt-5">
     <!-- Carousel wrapper -->
     <div id="carouselMultiItemExample"
-         data-mdb-carousel-init class="carousel slide carousel-dark text-center"
-         data-mdb-ride="carousel">
+         class="carousel slide carousel-dark text-center">
         <!-- Inner -->
         <div class="carousel-inner py-4">
             <!-- Single item -->
@@ -14,7 +19,7 @@
                     <div class="row">
                         @foreach (var item in Model)
                         {
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-stretch mb-5">
                                 <div class="card m-3">
                                     <img src="/img/portfolio/@item.Image"
                                          class="card-img-top img-fluid" style="max-height:250px "
@@ -26,24 +31,155 @@
                                             <br />
                                             Price : @item.Price <br />
 
-                                            Type : @item.MedicineType
+                                            Type : @(item.MedicineType is null ? "No Type" : item.MedicineType.TypeName )
 
                                         </p>
-                                        <form class="form-inline" method="post" asp-action="AddMedicine" asp-controller="MedicalState" asp-route-med="@item.Id"  asp-route-id="@ViewBag.MedicalStateId">
-                                            <button role="submit" class="btn btn-primary">Add to my Profile</button>
-                                        </form>
+                                        <div class="row  justify-content-center">
+                                            <a data-toggle="modal" class="col col-auto btn btn-primary"
+                                               data-target="#item-@(item.Id)" style="color:white!important">
+                                                Details
+                                            </a>
+                                            <form class="form-inline col col-auto " method="post" asp-action="AddMedicine" asp-controller="MedicalState" asp-route-med="@item.Id" asp-route-id="@ViewBag.MedicalStateId">
+                                                <button role="submit" class="btn btn-primary">Add </button>
+                                            </form>
+                                            <button id="r" onclick="fu(@item.Id ,@ViewBag.MedicalStateId )" class="btn btn-primary">Add Json </button>
+
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
-
                         }
 
-                    </div>
 
+                    </div>
+                </div>
+            </div>
+            <!-- Inner -->
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <!-- Modal -->
+        <div class="modal fade" id="item-@(item.Id)" tabindex="-1" aria-labelledby="label-@item.Id" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-start p-3">
+                        <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">@item.TradeName</h5>
+                        <p class=" mb-5"> Manufacuture : @item.ManufactureName</p>
+
+                        <p class=" mb-5"> Side Effect : @item.SideEffect</p>
+
+                        <p class="mb-0">Ingredients Summary</p>
+
+                        <hr class="mt-2 mb-4"
+                            style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold mb-0">#</p>
+
+                            <p class="fw-bold mb-0">Ingredient Name</p>
+
+                            <p class="text-muted mb-0">Ratio</p>
+                        </div>
+
+                        @foreach (var i in item.MedicineIngredients)
+                        {
+                            <div class="d-flex justify-content-between">
+                                <p class="fw-bold mb-0">@(t+1)</p>
+
+                                <p class="fw-bold mb-0">@i.Ingredient.Name</p>
+
+                                <p class="text-muted mb-0">@i.Ratio</p>
+                            </div>
+                        }
+                        <hr class="mt-2 mb-4"
+                            style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold">Price</p>
+
+                            <p class="fw-bold">$@item.Price</p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+
+                        <form class="form-inline" method="post" asp-action="AddMedicine" asp-controller="MedicalState" asp-route-med="@item.Id" asp-route-id="@ViewBag.MedicalStateId">
+                            <button role="submit" class="btn btn-primary">Add to my Profile</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Inner -->
-    </div>
+    }
     <!-- Carousel wrapper -->
 </section>
+@section Scripts {
+    <script>
+
+        async function fu(med, id) {
+            try {
+                debugger;
+                let response = await fetch(`/MedicalState/AddMedicineT?id=${id}&med=${med}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id, med: med })
+                });
+
+                if (response.ok) {
+                    let result = await response.json();
+                    console.log(result); // "Added" if successful
+                    showToast(result,"medicine");
+                } else {
+                    console.error('Error:', response.statusText);
+                    alert('Failed to add medicine');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('Failed to add medicine');
+            }
+        }
+
+        function showToast(message, title) {
+            // Create the toast element
+            let toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+
+            toast.innerHTML = `
+             <div class="toast">
+  <div class="toast-header">
+    Toast Header
+  </div>
+  <div class="toast-body">
+    Some text inside the toast body
+  </div>
+</div> `;
+
+            // Append the toast to the container
+            let y = document.getElementById('toast-container');
+            y.innerHTML =toast;
+            alert(1);
+            // Show the toast
+            $(toast).toast({ delay: 3000 });
+            $(toast).toast('show');
+
+            // Remove the toast after it is hidden
+            $(toast).on('hidden.bs.toast', function () {
+                $(this).remove();
+            });
+        }
+    </script>
+}

@@ -8,12 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
 
     [Authorize(Roles = "patient")]
-    public class MedicalStateController : BaseController<MedicalState>
+    public class MedicalStateController : BaseController<MedicalStateModel>
     {
         private readonly IMedicalStateService _medicalStateService;
         private readonly IPatientService _patientService;
@@ -34,8 +35,8 @@ namespace WebPresentation.Controllers
         public IActionResult Index( )
         {
                 var u = GetUserId();
-                var pId = _patientService.GetAll().Where(p => p.User.Id == u).FirstOrDefault().Id;
-                var meds = _medicalStateService.GetAllPatientMedicalStates(pId);
+                var pId = _patientService.GetAll().Result.Where(p => p.User.Id == u).FirstOrDefault().Id;
+                var meds =((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
                 return View(meds);
             
         }
@@ -49,24 +50,26 @@ namespace WebPresentation.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(MedicalState medicalState, int id)
+        public IActionResult Create(MedicalStateModel medicalState, int id)
         {
             if (ModelState.IsValid)
             {
                 var uId = GetUserId();
                 var p = _patientService.GetAll(
-                     )
+                     ).Result
                     .Where(
                         u => u.User.Id == uId
                         )
                     .FirstOrDefault().Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
-                var n= _medicalStateService.Add(p,medicalState);
-                return RedirectToAction("Details", "MedicalState", new { Id = n.Id });
+                var n= ((IMedicalStateService)_service).Add(p,medicalState);
+                
+                return RedirectToAction("Details", "MedicalState" , new { Id =n.Id });
             }
             return View(medicalState);
         }
+
 
         [HttpGet]
         public IActionResult AddMedicine(int id)
@@ -83,6 +86,26 @@ namespace WebPresentation.Controllers
 
             return RedirectToAction("Details", "MedicalState", new { Id = id });
         }
+
+
+        [HttpPost]
+        public   JsonResult AddMedicineT(
+        int id,
+        int med)
+        {
+            try
+            {
+                 _medicalStateService.AddMedicine(id, med);
+
+                return  Json("Added");
+            }
+            catch (Exception e ) {
+
+                return Json("faild");
+            }
+        }
+
+
         [HttpPost]
         public IActionResult RemoveMedicine(int id, int med)
         {
@@ -91,5 +114,18 @@ namespace WebPresentation.Controllers
             return RedirectToAction("Details", "MedicalState", new { Id = id });
         }
 
+        [HttpPost]
+        public  JsonResult RemoveMedicineJ(int id, int med)
+        {
+            _medicalStateService.RemoveMedicine(id, med);
+
+            return Json("Reomved");
+        }
+
+        public JsonResult GetMedicalStateMedicine(int id) {
+
+            var r =  _medicalStateService.GetDetails(id).Result.Medicines;
+            return Json(r);
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿@model ApplicationCore.ViewModel.PatientMedicineViewModel;
-
+﻿@model IEnumerable<MedicineModel>;
 @{
     ViewData["Title"] = "Index";
 
@@ -12,102 +11,13 @@
         <div class="card bg-primary text-white mb-4">
             <div class="card-body">Medicine Counts </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#"> @Model.Medicines.Count()</a>
+                <a class="small text-white stretched-link" href="#"> @Model.Count()</a>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="card bg-warning text-white mb-4">
-            <div class="card-body">Patient Counts </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">@Model.Patients.Count()</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
-        </div>
-    </div>
+    
  </div>
-<div>
-     <table id="datatablesSimple" class="table">
-        <thead>
-            <tr>
-                <th scope="col">
-
-
-                    @Html.DisplayNameFor(model => model.Patients.First().Id)
-
-                </th>
-                <th scope="col">
-
-                    @Html.DisplayNameFor(model => model.Patients.First().User.FirstName)
-                </th>
-                <th scope="col">
-                    @Html.DisplayNameFor(model => model.Patients.First().User.LastName)
-                </th>
-
-                <th scope="col">
-                    @Html.DisplayNameFor(model => model.Patients.First().BIO)
-
-                </th>
-                <th scope="col">
-                    @Html.DisplayNameFor(model => model.Patients.First().User.CreationTime)
-
-                </th>
-
-                <th scope="col">
-                    Manage
-                </th>
-
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-
-                <th scope="row">ID</th>
-                <th>First  name</th>
-                <th>Last name</th>
-                <th>BIO</th>
-                <th>Creation Time</th>
-
-                <th>Manage</th>
-            </tr>
-        </tfoot>
-        <tbody>
-
-            @foreach (var item in Model.Patients)
-            {
-
-                <tr>
-
-                    <td scope="row">
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BIO)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.CreationTime)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-controller="Patients" asp-route-id="@item.Id"><i class="far fa-pen-to-square text-bg-info"></i></a>
-                        <a asp-action="Details" asp-controller="Patients" asp-route-id="@item.Id"><i class="far fa-address-card"></i></a>
-                        <a asp-action="Delete" asp-controller="Patients" asp-route-id="@item.Id"><i class="far fa-trash-can text-bg-danger"></i></a>
-                    </td>
-
-
-                </tr>
-            }
-        </tbody>
-    </table>
-
-</div>
-<hr />
 
 <div>
     <i class=""></i>
@@ -122,15 +32,15 @@
                 <th scope="col">
 
 
-                    @Html.DisplayNameFor(model => model.Medicines.First().Id)
+                    @Html.DisplayNameFor(model => model.First().Id)
 
                 </th>
                 <th scope="col">
 
-                    @Html.DisplayNameFor(model => model.Medicines.First().TradeName)
+                    @Html.DisplayNameFor(model => model.First().TradeName)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.Medicines.First().Description)
+                    @Html.DisplayNameFor(model => model.First().Description)
                 </th>
                 <th scope="col">
                     Category
@@ -139,7 +49,7 @@
                     Type
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.Medicines.First().Price)
+                    @Html.DisplayNameFor(model => model.First().Price)
 
                 </th>
                 <th scope="col">
@@ -162,12 +72,11 @@
                 <th>Type</th>
                 <th>Price</th>
                 <th>Manage</th>
-                <th>Patients Count  </th>
             </tr>
         </tfoot>
         <tbody>
 
-            @foreach (var item in Model.Medicines)
+            @foreach (var item in Model)
             {
 
             <tr>
@@ -194,9 +103,6 @@
                     <a asp-action="Edit" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-pen-to-square text-bg-info"></i></a>
                     <a asp-action="Details" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-address-card"></i></a>
                     <a asp-action="Delete" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-trash-can text-bg-danger"></i></a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MedicalStates.Count)
                 </td>
             </tr>
             }

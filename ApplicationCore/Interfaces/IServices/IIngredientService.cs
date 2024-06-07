@@ -1,4 +1,5 @@
-﻿using ApplicationDomain.Entities;
+﻿using ApplicationCore.DomainModel;
+using ApplicationDomain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.IServices
 {
-    public interface IIngredientService  : IService<Ingredient>
+    public interface IIngredientService  : IService<IngredientModel>
     {
-        public IEnumerable<Ingredient> GetAllIngredients();
-        public void AddIngredient(Ingredient ingredient);
- //       public Ingredient GetIngredientDetails(int id);
-   //     public Ingredient Update(Ingredient ingredient);
-//        public void Delete(int id );
-    
-    
+        public Task<IEnumerable<IngredientModel>> GetAllIngredients();
+        public void AddToMedicine(int ingredientId ,int medicineId , int ratio);
     }
 }
