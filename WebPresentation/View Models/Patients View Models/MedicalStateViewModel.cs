@@ -4,20 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationDomain.Entities 
+namespace WebPresentation.ViewModels
 { 
-    public class MedicalState : EntityBase
+    public class MedicalStateViewModel : BaseViewModel
     {
         public int PatientId { get; set; }
-        public Patient Patient { get; set; }
+        public PatientViewModel Patient { get; set; }
         public String StateName { get; set; }
         public String StateDescription { get; set; }
         public DateTime PrescriptionTime { get; set; }
-
-        #region Navigations
-        public ICollection<Medicine> Medicines { get; set; }
-        public ICollection<MedicalStateMedicine> MedicalStateMedicines { get; set; }
-
-        #endregion Navigations
+        public ICollection<MedicineViewModel> Medicines { get; set; }
+       
     }
 }

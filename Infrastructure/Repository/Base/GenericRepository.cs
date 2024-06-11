@@ -15,7 +15,7 @@ namespace Infrastructure.Repository
     public class GenericRepository<T> :  IGenericRepository<T> where T : EntityBase
     {
         protected readonly DbContext _context;
-        private DbSet<T> _table;
+        protected DbSet<T> _table;
         public GenericRepository(DbContext context)
         {
             _context = context;

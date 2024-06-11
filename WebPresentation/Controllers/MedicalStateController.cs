@@ -63,7 +63,7 @@ namespace WebPresentation.Controllers
                     .FirstOrDefault().Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
-                var n= ((IMedicalStateService)_service).Add(p,medicalState);
+                var n= ((IMedicalStateService)_service).AddMedicalStateToPateint(p,medicalState);
                 
                 return RedirectToAction("Details", "MedicalState" , new { Id =n.Id });
             }
@@ -74,7 +74,7 @@ namespace WebPresentation.Controllers
         [HttpGet]
         public IActionResult AddMedicine(int id)
         {
-            var all =  _medicineService.GetAllMedicines();
+            var all =  _medicineService.GetAll();
             ViewBag.MedicalStateId = id;
             return View(all);
         }

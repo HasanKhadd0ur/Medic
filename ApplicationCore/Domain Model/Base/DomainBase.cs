@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.DomainModel
 {
-    public class DomainBase : EntityBase
+    public class DomainBase 
     {
-     //   public int Id { get; set; }
+        public int Id { get; set; }
     }
 }

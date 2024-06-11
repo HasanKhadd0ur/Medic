@@ -28,7 +28,7 @@ namespace WebPresentation.Controllers
 
         public IActionResult Index()
         {
-            var s = _ingredientService.GetAllIngredients().Result;
+            var s = _ingredientService.GetAll().Result;
             return View(s);
         }
 

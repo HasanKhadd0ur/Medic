@@ -14,10 +14,10 @@ namespace ApplicationCore.Interfaces.IServices
 
         public IEnumerable<MedicalStateModel> GetPatientMedicalStates(int patientId);
         public Task<MedicalStateModel> GetMedicalStateDetails(int id);
-        public Task<IEnumerable<PatientModel>>GetAll();
+    //    public Task<IEnumerable<PatientModel>>GetAll();
         public void AddMedicalState(int patientId, MedicalStateModel medicalState);
        // public Patient GetDetails(int id);
-        public void Insert(PatientModel patient);
+      //  public void Insert(PatientModel patient);
       //  public void Update(Patient patient);
       //  public void Delete(int id);
         public bool PatientExists(int id);

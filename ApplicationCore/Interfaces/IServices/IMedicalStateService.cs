@@ -10,10 +10,8 @@ namespace ApplicationCore.Interfaces.IServices
 {
     public interface IMedicalStateService : IService<MedicalStateModel>
     {
-        public Task<IEnumerable<MedicalStateModel>> GetAll();
-
         public IEnumerable<MedicalStateModel> GetAllPatientMedicalStates(int patientId);
-        public MedicalStateModel Add(int patientId , MedicalStateModel medicalState);
+        public MedicalStateModel AddMedicalStateToPateint(int patientId , MedicalStateModel medicalState);
         public void AddMedicine(int medicalStateId, int medicineId);
         public void RemoveMedicine(int medicalStateId, int medicineId);
 

@@ -14,7 +14,7 @@ namespace ApplicationDomain.Specification.BaseSpecification
         {
             Criteria = criteria;
         }
-        public Expression<Func<T, bool>> Criteria { get; }
+        public Expression<Func<T, bool>> Criteria { get; set; }
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
         public List<String> ThenInclude { get; } = new List<String>();
         public Expression<Func<T, object>> OrderBy { get; private set; }

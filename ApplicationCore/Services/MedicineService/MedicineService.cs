@@ -14,87 +14,51 @@ using ApplicationCore.DomainModel;
 
 namespace ApplicationCore.Services
 {
-    public class MedicineService : IMedicineService
+    public class MedicineService : ServiceBase<Medicine,MedicineModel>,IMedicineService
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
-        private MedicineIngredientSpecification _medicineIngredientSpecification;
+    
         public MedicineService(
             IUnitOfWork<Medicine> medicineUnitOfWork,
-            IMapper medicineMapper )
+            IMapper Mapper )
+            :base(medicineUnitOfWork  , Mapper)
         {
-            _mapper = medicineMapper;
-            _medicineUnitOfWork = medicineUnitOfWork;
-            _medicineIngredientSpecification = new MedicineIngredientSpecification();
+            _specification = new MedicineIngredientSpecification();
         }
-        public async Task<IEnumerable<MedicineModel>> GetAllMedicines() {
-            var m =  _mapper.Map<IEnumerable<MedicineModel>>(await _medicineUnitOfWork.Entity.GetAll(
-                 _medicineIngredientSpecification
-                 ));
-            return m ;
-        }
-        public MedicineModel Create (MedicineModel medicineModel) {
-            var r = _mapper.Map<MedicineModel>(new Medicine());
-            var rr = _mapper.Map<Medicine>(new MedicineModel());
 
-            var medicine = _mapper.Map<Medicine>(medicineModel);
-            var m =  _medicineUnitOfWork.Entity.Insert(medicine);
-            _medicineUnitOfWork.Save();
-            return _mapper.Map<MedicineModel>(m);
-
-        }
         public   void AddMedicineIngredient(int medicineId ,IngredientModel ingredientModel ) {
 
-            var s = _medicineUnitOfWork.Entity.GetById(medicineId,_medicineIngredientSpecification).Result;
+            var s = _unitOfWork.Entity.GetById(medicineId,_specification).Result;
             s.Ingredients.Add(_mapper.Map<Ingredient>(ingredientModel));
-            _medicineUnitOfWork.Entity.Update(s);
-            _medicineUnitOfWork.Save();
+            _unitOfWork.Entity.Update(s);
+            _unitOfWork.Save();
 
 
         }
-        public MedicineModel Update(MedicineModel medicineModel) {
-            var medicine = _mapper.Map<Medicine>(medicineModel);
-            var rm=_medicineUnitOfWork.Entity.Update(medicine);
-            _medicineUnitOfWork.Save();
-            var r =_mapper.Map<MedicineModel>(rm);
-
-            return r;
-        }
-        public async Task<MedicineModel> GetDetails(int id)
-        {
-            var medicine = _mapper.Map<MedicineModel>(await _medicineUnitOfWork.Entity.GetById(id, _medicineIngredientSpecification));
-
-            return medicine;
-            
-        }
+       
+    
         public MedicineModel GetMedicineIngredentisDetails(int medicineId) {
-            return _mapper.Map<MedicineModel>(_medicineUnitOfWork.Entity
+            return _mapper.Map<MedicineModel>(_unitOfWork.Entity
                 .GetById(medicineId ,
-                   _medicineIngredientSpecification));
+                   _specification));
 
         }
 
-        public  void AddIngredient(int medicineId, int ratio , IngredientModel ingredient)
-        {
-            //   var m = _mapper.Map<Medicine>(GetMedicineIngredentisDetails(medicineId));
-            var m =  _medicineUnitOfWork.Entity.GetById(medicineId,_medicineIngredientSpecification).Result;
-            _medicineUnitOfWork.Save();
-            if (ingredient.Id != 0)
+        //public  void AddIngredient(int medicineId, int ratio , IngredientModel ingredient)
+        //{
+        //    //   var m = _mapper.Map<Medicine>(GetMedicineIngredentisDetails(medicineId));
+        //    var m =  _unitOfWork.Entity.GetById(medicineId,_specification).Result;
+        //    _unitOfWork.Save();
+        //    if (ingredient.Id != 0)
 
-                foreach (var i in m.Ingredients)
-                {
-                    if (i.Id.Equals(ingredient.Id))
-                        return;
-                }
-            m.AddIngredient(_mapper.Map<Ingredient>(ingredient), ratio);
-            _medicineUnitOfWork.Entity.Update(m);
-            _medicineUnitOfWork.Save();
+        //        foreach (var i in m.Ingredients)
+        //        {
+        //            if (i.Id.Equals(ingredient.Id))
+        //                return;
+        //        }
+        //    m.AddIngredient(_mapper.Map<Ingredient>(ingredient), ratio);
+        //    _unitOfWork.Entity.Update(m);
+        //    _unitOfWork.Save();
                 
-        }
-
-        public void Delete(int id) {
-            _medicineUnitOfWork.Entity.Delete(id);
-            _medicineUnitOfWork.Save();
-        }
+        //}
     }
 }

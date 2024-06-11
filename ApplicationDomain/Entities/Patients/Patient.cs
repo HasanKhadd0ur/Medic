@@ -14,10 +14,17 @@ namespace ApplicationDomain.Entities
         public User User { get; set; }
         public String BIO { get; set; }
 
-        #region Relations
+        #region manage 
+        public void AddMedicalState(MedicalState medicalState) {
+
+            MedicalStates.Add(medicalState);
+        }
+
+        #endregion manage
+
+        #region Navigations
         public ICollection<MedicalState> MedicalStates { get; set; }
-       // public ICollection<Medicine> Medicines { get; set; }
-       // public ICollection<PatientMedicine> PatientMedicines { get; set; }
-        #endregion Relations
+     
+        #endregion Navigations
     }
 }

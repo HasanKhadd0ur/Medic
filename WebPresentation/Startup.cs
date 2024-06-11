@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using ApplicationDomain.Abstraction;
 using ApplicationDomain.Repositories;
+using ApplicationCore.DomainModel;
 
 namespace WebPresentation
 {
@@ -33,7 +34,7 @@ namespace WebPresentation
 
             services.AddScoped<DbContext, MedicDbContext>();
             services.AddScoped<Mapper>();
-            
+           
             services.AddAutoMapper(typeof(ApplicationCore.Mapper.ObjectMapper));
             #region ADD Scoped Repository 
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));

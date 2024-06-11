@@ -36,7 +36,7 @@ namespace WebPresentation.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            var s = _medicineService.GetAllMedicines().Result;
+            var s = _medicineService.GetAll().Result;
             
 
             return View(s);
@@ -67,7 +67,7 @@ namespace WebPresentation.Controllers
 
         [Authorize(Roles = "Admin")]
         public IActionResult AddIngredints(int id ) {
-            var s = _ingredientService.GetAllIngredients().Result;
+            var s = _ingredientService.GetAll().Result;
             ViewBag.MedicineId = id;
             return View(s);
         
@@ -101,7 +101,7 @@ namespace WebPresentation.Controllers
         [HttpGet]
         public JsonResult GetMedicines()
         {
-            var all = _medicineService.GetAllMedicines().Result;
+            var all = _medicineService.GetAll().Result;
 
             return new JsonResult(all);
 

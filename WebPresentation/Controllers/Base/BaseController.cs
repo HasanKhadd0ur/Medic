@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
     [Authorize]
-    public abstract class BaseController<T> : Controller where T : EntityBase
+    public abstract class BaseController<T> : Controller where T : DomainBase
     {
         protected readonly UserManager<User> _userManager;
         protected readonly IService<T> _service;

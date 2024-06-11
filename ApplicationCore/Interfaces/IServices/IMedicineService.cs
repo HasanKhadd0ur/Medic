@@ -10,11 +10,10 @@ namespace ApplicationCore.Interfaces.IServices
 {
     public interface IMedicineService :IService<MedicineModel>
     {
-        public Task<IEnumerable<MedicineModel>> GetAllMedicines();
+       // public Task<IEnumerable<MedicineModel>> GetAllMedicines();
      //   public void AddMedicine(MedicineModel medicine);
         public void AddMedicineIngredient(int medicineId, IngredientModel ingredient);
         public MedicineModel GetMedicineIngredentisDetails(int medicineId);
-        public void AddIngredient( int medicineId, int ratio, IngredientModel ingredient);
-
+        
     }
 }

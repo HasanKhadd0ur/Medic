@@ -8,6 +8,7 @@ namespace ApplicationCore.Interfaces
 {
     public interface IService<T> where T : class   
     {
+        public Task<IEnumerable<T>> GetAll();
         public  Task<T> GetDetails(int Id);
         public void Delete(int Id);
         public T Update(T tModel);
