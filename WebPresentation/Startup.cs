@@ -16,6 +16,7 @@ using AutoMapper;
 using ApplicationDomain.Abstraction;
 using ApplicationDomain.Repositories;
 using ApplicationCore.DomainModel;
+using ApplicationCore.Mapper;
 
 namespace WebPresentation
 {
@@ -34,8 +35,17 @@ namespace WebPresentation
 
             services.AddScoped<DbContext, MedicDbContext>();
             services.AddScoped<Mapper>();
-           
-            services.AddAutoMapper(typeof(ApplicationCore.Mapper.ObjectMapper));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
+            services.AddAutoMapper(typeof(ObjectMapper));
             #region ADD Scoped Repository 
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -99,6 +109,7 @@ namespace WebPresentation
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -117,7 +128,9 @@ namespace WebPresentation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                 });
+               
+
+            });
         }
     }
 }

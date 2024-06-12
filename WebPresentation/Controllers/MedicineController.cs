@@ -14,7 +14,7 @@ using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
-    public class MedicineController : BaseController<MedicineModel>
+    public class MedicineController : CRUDController<MedicineModel>
     {
         private readonly IIngredientService _ingredientService;
         private readonly IMedicineService _medicineService;

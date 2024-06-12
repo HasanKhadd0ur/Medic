@@ -29,16 +29,17 @@ namespace ApplicationCore.Mapper
             CreateMap<Ingredient, IngredientModel>().ReverseMap();
             CreateMap<MedicalState, MedicalStateModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Patient, opt => opt.MapFrom(src => src.Patient))
+              //  .ForMember(dest => dest.Patient, opt => opt.MapFrom(src => src.Patient))
                 .ForMember(dest => dest.Medicines, opt => opt.MapFrom(src => src.Medicines));
             ;
 
             CreateMap<MedicalStateModel, MedicalState>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Patient, opt => opt.MapFrom(src => src.Patient))
+              //  .ForMember(dest => dest.Patient, opt => opt.MapFrom(src => src.Patient))
                 .ForMember(dest => dest.Medicines, opt => opt.MapFrom(src => src.Medicines))
-                .ForMember(s=>s.MedicalStateMedicines , op=>op.Ignore());
-          
+                .ForMember(s=>s.MedicalStateMedicines , op=>op.Ignore())
+                .ForMember(s => s.Patient, op => op.Ignore());
+
             CreateMap<Category, CategoryModel>();
             CreateMap<CategoryModel, Category>()
                 .ForMember(dest => dest.Medicines, opt => opt.Ignore())
@@ -46,8 +47,7 @@ namespace ApplicationCore.Mapper
             CreateMap<MedicineType, MedicineTypeModel>().ReverseMap();
 
             CreateMap<MedicalStateMedicine, MedicalStateMedicineModel>().ReverseMap();
-            CreateMap<DomainBase, EntityBase>().ReverseMap();
-
+            
         }
     }
 }

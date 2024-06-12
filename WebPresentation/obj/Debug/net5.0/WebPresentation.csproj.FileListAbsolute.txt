@@ -180,3 +180,4 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Edit.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Home\Details.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\NotFound.cshtml.g.cs

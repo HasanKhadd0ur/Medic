@@ -16,15 +16,14 @@ namespace WebPresentation.Controllers
 {
 
 [Authorize(Roles ="patient")]
-    public class HomeController : BaseController<PatientModel>
+    public class HomeController : BaseController
     {
         private readonly IPatientService _patientService;
         
         public HomeController(
                 UserManager<User> userManager,
-                IPatientService patientService,
-                IMedicineService medicineService
-            ):base(userManager,patientService)
+                IPatientService patientService
+            ):base(userManager)
         {
             _patientService = patientService;
             
@@ -51,7 +50,7 @@ namespace WebPresentation.Controllers
         }
 
 
-        public override  IActionResult Details(int? id ) {
+        public   IActionResult Details(int? id ) {
 
             return View(_getCurrentPatient());
         

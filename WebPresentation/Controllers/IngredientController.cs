@@ -13,7 +13,7 @@ using ApplicationCore.DomainModel;
 namespace WebPresentation.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class IngredientController : BaseController<IngredientModel>
+    public class IngredientController : CRUDController<IngredientModel>
     {
         private readonly IIngredientService _ingredientService;
 

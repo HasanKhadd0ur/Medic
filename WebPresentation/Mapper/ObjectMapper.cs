@@ -3,7 +3,7 @@ using ApplicationDomain.Entities;
 using AutoMapper;
 using WebPresentation.ViewModels;
 
-namespace ApplicationCore.Mapper
+namespace ApplicationCore.Mappere
 {
     public class ObjectMapper : Profile
     {

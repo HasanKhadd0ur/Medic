@@ -9,7 +9,7 @@ namespace ApplicationCore.DomainModel
     public class MedicalStateModel : DomainBase
     {
         public int PatientId { get; set; }
-        public PatientModel Patient { get; set; }
+       // public PatientModel Patient { get; set; }
         public String StateName { get; set; }
         public String StateDescription { get; set; }
         public DateTime PrescriptionTime { get; set; }

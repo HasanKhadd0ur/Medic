@@ -14,7 +14,7 @@ namespace WebPresentation.Controllers
 {
 
     [Authorize(Roles = "patient")]
-    public class MedicalStateController : BaseController<MedicalStateModel>
+    public class MedicalStateController : CRUDController<MedicalStateModel>
     {
         private readonly IMedicalStateService _medicalStateService;
         private readonly IPatientService _patientService;

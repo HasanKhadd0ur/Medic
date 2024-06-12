@@ -11,7 +11,7 @@ using WebPresentation.ViewModel.Identity;
 
 namespace WebPresentation.Controllers
 {
-    public class PatientsController : BaseController<PatientModel>
+    public class PatientsController : CRUDController<PatientModel>
     {
         private readonly IMedicalStateService _medicalStateService;
         private readonly IPatientService _patientService;
