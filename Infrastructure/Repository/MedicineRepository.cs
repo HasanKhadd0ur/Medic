@@ -1,8 +1,8 @@
-﻿using ApplicationDomain.Entities;
+﻿using ApplicationDomain.Abstraction;
+using ApplicationDomain.Entities;
 using ApplicationDomain.Repositories;
 using ApplicationDomain.Specification;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +18,7 @@ namespace Infrastructure.Repository
 
         public  Task<IEnumerable<Medicine>> GetByMedicalState(int medicalStateId)
         {
-            var spec = new MedicineIngredientSpecification();
+            var spec = new MedicineWithIngredientsSpecification();
 
             spec.Criteria = p => p.MedicalStates.All(s=>s.Id ==medicalStateId );
 
