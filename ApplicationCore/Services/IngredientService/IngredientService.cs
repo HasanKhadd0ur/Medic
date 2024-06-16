@@ -20,16 +20,18 @@ namespace ApplicationCore.Services
             IMapper mapper
             ):base(ingredientUnitOfWork,mapper)
         {
-            _specification = new IngredientSpecification();
+            _specification = new IngredientWithMedicinesSpecification();
         }
 
 
-        public void AddToMedicine(int ingredientId, int medicineId, int ratio) {
-           var r = _unitOfWork.Entity.GetById(ingredientId,_specification).Result;
-            r.MedicineIngredients.Add(
-                new MedicineIngredient { IngredientId = ingredientId , MedicineId=medicineId ,Ratio=ratio}
+        public async void AddToMedicine(MedicineIngredientModel medicineIngredientModel) {
+           var medicine = await _unitOfWork.Entity.GetById(medicineIngredientModel.IngredientId,_specification);
+            MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientModel);
+            medicine.MedicineIngredients.Add(
+                medicineIngredient
                 );
-            _unitOfWork.Entity.Update(r);
+
+            _unitOfWork.Entity.Update(medicine);
             _unitOfWork.Save();
         }
 

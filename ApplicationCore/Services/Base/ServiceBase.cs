@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public class ServiceBase<T,TModel> : IService<TModel> where  T : EntityBase  where TModel : DomainBase 
+    public class ServiceBase<TEntity,TModel> : IService<TModel> where  TEntity : EntityBase  where TModel : DomainBase 
     {
         protected readonly IMapper _mapper;
-        protected readonly IUnitOfWork<T> _unitOfWork;
+        protected readonly IUnitOfWork<TEntity> _unitOfWork;
 
-        protected ISpecification<T> _specification;
+        protected ISpecification<TEntity> _specification;
 
 
         public ServiceBase(
-            IUnitOfWork<T> unitOfWork,
+            IUnitOfWork<TEntity> unitOfWork,
            IMapper mapper
             )
         {
@@ -38,17 +38,17 @@ namespace ApplicationCore.Services
         public TModel Create(TModel model )
         {
 
-            var ing = _unitOfWork.Entity.Insert(_mapper.Map<T>(model));
+            TEntity entity = _unitOfWork.Entity.Insert(_mapper.Map<TEntity>(model));
             _unitOfWork.Save();
-            return _mapper.Map<TModel>(ing);
+            return _mapper.Map<TModel>(entity);
         }
 
         public TModel Update(TModel model)
         {
 
-            var r = _unitOfWork.Entity.Update(_mapper.Map<T>(model));
+            TEntity entity = _unitOfWork.Entity.Update(_mapper.Map<TEntity>(model));
             _unitOfWork.Save();
-            return _mapper.Map<TModel>(r);
+            return _mapper.Map<TModel>(entity);
         }
 
         public async Task<TModel> GetDetails(int id)

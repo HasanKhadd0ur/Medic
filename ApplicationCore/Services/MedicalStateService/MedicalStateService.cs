@@ -13,7 +13,7 @@ namespace ApplicationCore.Services
     {
         private readonly PatientService _patientService;
         private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
-        private readonly MedicineIngredientSpecification _medicineSpecification;
+        private readonly MedicineWithIngredientsSpecification _medicineSpecification;
         
         public MedicalStateService(
             IUnitOfWork<MedicalState> medicalUnitOfWork,
@@ -22,12 +22,12 @@ namespace ApplicationCore.Services
               IMapper Mapper
             ):base(medicalUnitOfWork,Mapper)
         {
-            _specification = new MedicalStateSpecification();
+            _specification = new MedicalStateWithMedicinesSpecification();
             _medicineUnitOfWork = medicineUnitOfWork;
             _patientService = new PatientService(patientUnitOfWork,medicalUnitOfWork,Mapper);
-            _medicineSpecification = new MedicineIngredientSpecification();
+            _medicineSpecification = new MedicineWithIngredientsSpecification();
         }
-        public MedicalStateModel AddMedicalStateToPateint(int patientId , MedicalStateModel medicalStateModel)
+        public MedicalStateModel AddToPateint(int patientId , MedicalStateModel medicalStateModel)
         {
             medicalStateModel.PatientId = patientId;
             
@@ -36,30 +36,6 @@ namespace ApplicationCore.Services
             var r = _unitOfWork.Entity.Insert(_mapper.Map<MedicalState>(im));
             _unitOfWork.Save();
             return _mapper.Map<MedicalStateModel>(r);
-        }
-
-
-        public void AddMedicine(int MedicalStateId, int medicineId)
-        {
-           var m =  _unitOfWork.Entity.GetById(MedicalStateId, _specification).Result;
-            if (m.Medicines is null)
-                m.Medicines = new List<Medicine>();
-            var d = _medicineUnitOfWork.Entity.GetById(medicineId,_medicineSpecification ).Result;
-            m.Medicines.Add(d );
-
-            _unitOfWork.Entity.Update(m);
-            _unitOfWork.Save();
-        }
-        public void RemoveMedicine(int MedicalStateId, int medicineId)
-        {
-            var m = _unitOfWork.Entity.GetById(MedicalStateId, _specification).Result;
-            if (m.Medicines is null)
-                m.Medicines = new List<Medicine>();
-            var d = _medicineUnitOfWork.Entity.GetById(medicineId, _medicineSpecification).Result;
-            m.Medicines.Remove(d);
-
-            _unitOfWork.Entity.Update(m);
-            _unitOfWork.Save();
         }
 
         

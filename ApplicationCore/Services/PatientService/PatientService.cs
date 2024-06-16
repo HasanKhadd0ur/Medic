@@ -17,7 +17,7 @@ namespace ApplicationCore.Services
     public class PatientService : ServiceBase<Patient ,PatientModel> , IPatientService
     {
         private readonly IUnitOfWork<MedicalState> _medicalStateUnitOfWork;
-        private MedicalStateSpecification _medicalStateSpecification;
+        private MedicalStateWithMedicinesSpecification _medicalStateSpecification;
 
         public PatientService(
             IUnitOfWork<Patient> patientUnitOfWork,
@@ -26,8 +26,8 @@ namespace ApplicationCore.Services
             :base(patientUnitOfWork  , mapper)
         {
             _medicalStateUnitOfWork = medicalStateUnitOfWork;
-            _specification = new PatientMedicinesSpecification();
-            _medicalStateSpecification = new MedicalStateSpecification();
+            _specification = new PatientWithMedicinesSpecification();
+            _medicalStateSpecification = new MedicalStateWithMedicinesSpecification();
         }
         
         public IEnumerable<MedicalStateModel> GetPatientMedicalStates(int patientId) {
@@ -38,7 +38,7 @@ namespace ApplicationCore.Services
                 ).Result.MedicalStates.AsEnumerable());
 
         }
-
+        
         public async Task< MedicalStateModel> GetMedicalStateDetails(int id)
         {
            
@@ -60,6 +60,11 @@ namespace ApplicationCore.Services
             return _unitOfWork.Entity.GetById(id) is null ? false : true;
         }
 
+        public async  Task<Patient> GetByUserID(string id)
+        {
+            var ps = await  _unitOfWork.Entity.GetAll(_specification);
+            return ps.Where(p => p.UserId == id).FirstOrDefault();
 
+        }
     }
 }

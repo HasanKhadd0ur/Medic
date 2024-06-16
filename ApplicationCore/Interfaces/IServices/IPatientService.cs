@@ -14,6 +14,7 @@ namespace ApplicationCore.Interfaces.IServices
 
         public IEnumerable<MedicalStateModel> GetPatientMedicalStates(int patientId);
         public Task<MedicalStateModel> GetMedicalStateDetails(int id);
+        public Task<Patient> GetByUserID(String id );
     //    public Task<IEnumerable<PatientModel>>GetAll();
         public void AddMedicalState(int patientId, MedicalStateModel medicalState);
        // public Patient GetDetails(int id);
