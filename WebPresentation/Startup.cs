@@ -17,6 +17,8 @@ using ApplicationDomain.Abstraction;
 using ApplicationDomain.Repositories;
 using ApplicationCore.DomainModel;
 using ApplicationCore.Mapper;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace WebPresentation
 {
@@ -37,12 +39,14 @@ namespace WebPresentation
             services.AddScoped<Mapper>();
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
-                });
+            
+                options.AddPolicy("AllowFrontend",
+                    builder => builder
+                        .WithOrigins("http://localhost:3000") // Add your frontend URL here
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+
             });
 
             services.AddAutoMapper(typeof(ObjectMapper));
@@ -85,6 +89,19 @@ namespace WebPresentation
                     options.AccessDeniedPath = "/Access/Login";
                 }
                 );
+            
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/access/login"; 
+                options.LogoutPath = "/access/logout"; 
+                options.AccessDeniedPath = "/access/login";
+                options.SlidingExpiration = true;
+            });
+
             services.AddAuthorization(
                 
                 );
@@ -109,12 +126,11 @@ namespace WebPresentation
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseCors("CorsPolicy");
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+            app.UseCors("AllowFrontend");
 
             app.UseAuthentication();
            

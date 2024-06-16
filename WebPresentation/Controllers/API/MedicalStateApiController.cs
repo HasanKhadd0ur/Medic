@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Interfaces.IServices;
+﻿using ApplicationCore.DomainModel;
+using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,39 +15,38 @@ namespace WebPresentation.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class MedicalStateApiController : BaseController
+    public class MedicalStateApiController : CrudAPIController<MedicalStateModel>
     {
         private readonly IPatientService _patientService;
-        private readonly IMedicalStateService _Service;
-
+        
         public MedicalStateApiController(
-            IMedicalStateService medicineService,
+            IMedicalStateService medicalstateService,
              IPatientService patientService,
             UserManager<User> userManager)
-            :base(userManager)
+            :base(medicalstateService, userManager)
         {
             _patientService = patientService;
-            _Service = medicineService;
         }
 
-        public async Task<IActionResult> GetAll()
+        public  override async Task<IActionResult> GetAll()
         {
             string u = GetUserId();
-            var pId = _patientService.GetAll().Result.Where(p => p.User.Id == u).FirstOrDefault().Id;
-            var meds = _Service.GetAllPatientMedicalStates(pId);
+            var ps = await _patientService.GetAll();
+            var pId=ps.Where(p => p.User.Id == u).FirstOrDefault().Id;
+            var meds = ((IMedicalStateService)_service).GetAllPatientMedicalStates(pId);
 
             return Ok(meds);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("GetMedicines")]
+        public  async Task<JsonResult> GetMedicalStateMedicine(int id)
         {
-            var medicine = await _Service.GetDetails(id);
-            if (medicine == null)
-            {
-                return NotFound();
-            }
-            return Ok(medicine);
+
+            var r = await ((IMedicalStateService)_service).GetDetails(id);
+            return Json(r.Medicines);
         }
+
+
+
     }
 }

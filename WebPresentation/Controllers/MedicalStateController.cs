@@ -32,25 +32,21 @@ namespace WebPresentation.Controllers
             _medicineService = medicineService;
         }
 
-        public IActionResult Index( )
+        public async override Task<IActionResult> Index( )
         {
                 var u = GetUserId();
-                var pId = _patientService.GetAll().Result.Where(p => p.User.Id == u).FirstOrDefault().Id;
+            var p = await _patientService.GetAll();
+                 var pId= p.Where(p => p.User.Id == u).FirstOrDefault().Id;
                 var meds =((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
                 return View(meds);
             
         }
 
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(MedicalStateModel medicalState, int id)
+        public override IActionResult Create(MedicalStateModel medicalState, int id)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +59,7 @@ namespace WebPresentation.Controllers
                     .FirstOrDefault().Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
-                var n= ((IMedicalStateService)_service).AddMedicalStateToPateint(p,medicalState);
+                var n= ((IMedicalStateService)_service).AddToPateint(p,medicalState);
                 
                 return RedirectToAction("Details", "MedicalState" , new { Id =n.Id });
             }
@@ -82,46 +78,21 @@ namespace WebPresentation.Controllers
         [HttpPost]
         public IActionResult AddMedicine(int id, int med)
         {
-            _medicalStateService.AddMedicine(id ,med);
+           _medicineService.AddToMedicalState(new MedicalStateMedicineModel{MedicalStateId=id ,MedicineId=med });
 
             return RedirectToAction("Details", "MedicalState", new { Id = id });
-        }
-
-
-        [HttpPost]
-        public   JsonResult AddMedicineT(
-        int id,
-        int med)
-        {
-            try
-            {
-                 _medicalStateService.AddMedicine(id, med);
-
-                return  Json("Added");
-            }
-            catch (Exception e ) {
-
-                return Json("faild");
-            }
         }
 
 
         [HttpPost]
         public IActionResult RemoveMedicine(int id, int med)
         {
-            _medicalStateService.RemoveMedicine(id, med);
+            _medicineService.RemoveFromMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
 
             return RedirectToAction("Details", "MedicalState", new { Id = id });
         }
 
-        [HttpPost]
-        public  JsonResult RemoveMedicineJ(int id, int med)
-        {
-            _medicalStateService.RemoveMedicine(id, med);
-
-            return Json("Reomved");
-        }
-
+       
         public JsonResult GetMedicalStateMedicine(int id) {
 
             var r =  _medicalStateService.GetDetails(id).Result.Medicines;

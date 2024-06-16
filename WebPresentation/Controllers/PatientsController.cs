@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DomainModel;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,40 +12,18 @@ using WebPresentation.ViewModel.Identity;
 
 namespace WebPresentation.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class PatientsController : CRUDController<PatientModel>
     {
-        private readonly IMedicalStateService _medicalStateService;
-        private readonly IPatientService _patientService;
-        private readonly IMedicineService _medicineService;
-        private readonly SignInManager<User> _signInManager;
 
 
         public PatientsController(UserManager<User> userManager,
-            IMedicalStateService medicalStateService,
-            IPatientService patientService,
-            IMedicineService medicineService,
-            SignInManager<User> signInManager
+            IPatientService patientService
             ) : base(userManager, patientService)
         {
-            _signInManager = signInManager;
-            _medicalStateService = medicalStateService;
-            _patientService = patientService;
-            _medicineService = medicineService;
-        }
-
-        public IActionResult Index()
-        {
-            var patiens = ((IPatientService)_service).GetAll().Result;
-            return View(patiens);
 
         }
-
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
+    
 
         [HttpPost]
         [ValidateAntiForgeryToken]

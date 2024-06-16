@@ -14,6 +14,7 @@ using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class MedicineController : CRUDController<MedicineModel>
     {
         private readonly IIngredientService _ingredientService;
@@ -33,37 +34,8 @@ namespace WebPresentation.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult Index()
-        {
-            var s = _medicineService.GetAll().Result;
-            
 
-            return View(s);
-        }
-
-        [Authorize(Roles = "Admin")]
-        // GET: Projects/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(MedicineModel medicine, int id)
-        {
-            if (ModelState.IsValid)
-            {
-
-               var m = _medicineService.Create(medicine);
-                return RedirectToAction("Details","Medicine",new { Id = m.Id});
-            }
-            return View(medicine);
-        }
-
+        
 
         [Authorize(Roles = "Admin")]
         public IActionResult AddIngredints(int id ) {
@@ -77,9 +49,11 @@ namespace WebPresentation.Controllers
         [HttpPost]
         public IActionResult AddIngredints(int id , int med ,int ratio )
         {
-            _ingredientService.AddToMedicine(id,med,ratio);
+            _ingredientService.AddToMedicine(new MedicineIngredientModel {Id=id ,MedicineId=med ,Ratio=ratio });
             return RedirectToAction("Details","Medicine", new { Id = med}) ;
         }
+
+
         [Authorize(Roles ="patient")]
         public async Task<JsonResult>  GetDetails(int? id)
         {

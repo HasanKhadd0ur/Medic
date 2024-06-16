@@ -137,7 +137,7 @@
         async function fetchMedicines() {
             try {
                 debugger
-                let response = await fetch('/Medicine/GetMedicines'); // Adjust the endpoint as needed
+                let response = await fetch('/api/MedicineAPi/'); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
                     populateTable(medicines, 'medicines-table');
@@ -153,7 +153,7 @@
 
             try {
                 debugger
-                let response = await fetch(`/MedicalState/GetMedicalStateMedicine/${id}`); // Adjust the endpoint as needed
+                let response = await fetch(`/api/MedicalStateAPI/GetMedicines/?id=${id}`); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
                     populateTable(medicines, 'Ingredients_');
@@ -182,7 +182,7 @@
                     <td>${medicine.price}</td>
                     <td>${medicine.dosage}</td>
 
-                    <td>${medicine.ManufactureName}</td>
+                    <td>${medicine.manufactureName}</td>
                     `;
                 row.innerHTML +=
                     (tableName == "Ingredients_") ?
@@ -209,7 +209,7 @@
         async function addMedicine(med) {
             let id =@Model.Id
             try {
-                let response = await fetch(`/MedicalState/AddMedicineT?id=${id}&med=${med}`, {
+                let response = await fetch(`/api/MedicineAPI/AddMedicineT?id=${id}&med=${med}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -234,13 +234,12 @@
             let id =@Model.Id
             try {
                 debugger
-                let response = await fetch(`/Medicine/GetDetails?id=${med}`, {
-                    method: 'POST',
+                let response = await fetch(`/api/MedicineApi/${med}`, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id:med }) // Adjust the body as needed
-                });
+                    }
+                 });
 
                 if (response.ok) {
                     let result = await response.json();
@@ -259,7 +258,7 @@
         async function ReomveMedicine(med) {
             let id =@Model.Id
             try {
-                let response = await fetch(`/MedicalState/RemoveMedicineJ?id=${id}&med=${med}`, {
+                let response = await fetch(`/api/MedicineAPI/RemoveMedicineJ?id=${id}&med=${med}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

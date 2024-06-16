@@ -22,7 +22,7 @@ namespace WebPresentation.Controllers
 
         }
 
-        public virtual IActionResult Details(int? id)
+        public async virtual Task<IActionResult> Details(int? id)
         {
 
             if (id is null)
@@ -31,7 +31,7 @@ namespace WebPresentation.Controllers
             }
             else
             {
-                T TModel = _service.GetDetails((int)id).Result;
+                T TModel = await _service.GetDetails((int)id);
                 if (TModel is null)
                     return View("NotFound");
                 return View(TModel);
@@ -39,10 +39,10 @@ namespace WebPresentation.Controllers
         }
 
 
-        public IActionResult Delete(int id)
+        public async Task< IActionResult> Delete(int id)
         {
 
-            var TModel = _service.GetDetails(id);
+            var TModel = await _service.GetDetails(id);
 
             if (TModel == null)
             {
@@ -52,6 +52,11 @@ namespace WebPresentation.Controllers
             return View(TModel);
         }
 
+        public async virtual Task<IActionResult> Index()
+        {
+            var s = await _service.GetAll();
+            return View(s);
+        }
 
 
         [HttpPost, ActionName("Delete")]
@@ -103,6 +108,28 @@ namespace WebPresentation.Controllers
                 return RedirectToAction("Index");
             }
             return View(tModel);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Projects/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual IActionResult Create(T viewModel, int id)
+        {
+            if (ModelState.IsValid)
+            {
+
+                
+                _service.Create(viewModel);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(viewModel);
         }
     }
 }

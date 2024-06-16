@@ -15,46 +15,15 @@ namespace WebPresentation.Controllers
     [Authorize(Roles = "Admin")]
     public class IngredientController : CRUDController<IngredientModel>
     {
-        private readonly IIngredientService _ingredientService;
 
         public IngredientController(UserManager<User> userManager,
             IIngredientService ingredientSercie
             ) : base(userManager,ingredientSercie)
         
         {
-            _ingredientService =ingredientSercie;
+
             
         }
-
-        public IActionResult Index()
-        {
-            var s = _ingredientService.GetAll().Result;
-            return View(s);
-        }
-
-
-     
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(IngredientModel ingredient, int id)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _ingredientService.Create(ingredient);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(ingredient);
-        }
-
 
 
         
