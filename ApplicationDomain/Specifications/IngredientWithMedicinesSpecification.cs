@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.Specification
 {
-    public class IngredientSpecification : BaseSpecification<Ingredient>
+    public class IngredientWithMedicinesSpecification : BaseSpecification<Ingredient>
     {
 
-        public IngredientSpecification()
+        public IngredientWithMedicinesSpecification()
 
         {
             AddInclude(p => p.MedicineIngredients);

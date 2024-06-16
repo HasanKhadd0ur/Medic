@@ -7,6 +7,7 @@ namespace ApplicationDomain.Abstraction
     {
 
         IGenericRepository<T> Entity { get; }
+
         void Save();
 
     }

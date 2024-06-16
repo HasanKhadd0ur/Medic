@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.Specification
 {
-    public class MedicalStateSpecification : BaseSpecification<MedicalState>
+    public class MedicalStateWithMedicinesSpecification : BaseSpecification<MedicalState>
     {
 
-        public MedicalStateSpecification(Expression<Func<MedicalState, bool>> criteria =null)
+        public MedicalStateWithMedicinesSpecification(Expression<Func<MedicalState, bool>> criteria =null)
             :base(criteria)
 
         {  

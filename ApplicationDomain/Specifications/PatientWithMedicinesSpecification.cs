@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.Specification
 {
-    public class PatientMedicinesSpecification : BaseSpecification<Patient>
+    public class PatientWithMedicinesSpecification : BaseSpecification<Patient>
     {
-        public PatientMedicinesSpecification()
+        public PatientWithMedicinesSpecification()
         {
             AddInclude(p => p.MedicalStates);
             AddInclude(p => p.User);

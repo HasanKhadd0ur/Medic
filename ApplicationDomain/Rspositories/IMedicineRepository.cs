@@ -12,5 +12,4 @@ namespace ApplicationDomain.Repositories
     {
         public Task<IEnumerable<Medicine>> GetByMedicalState(int medicalStateId );
     }
-
 }
