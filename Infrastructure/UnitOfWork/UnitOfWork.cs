@@ -16,6 +16,13 @@ namespace Infrastructure.UnitOfWork
     {
         private readonly DbContext _context;
         private IGenericRepository<T> _entity;
+        private IIngredientRepository _ingredients;
+        private IMedicalStateRepository _medicalStates;
+        private IPatientRepository _patients;
+        private IMedicineRepository _medicines;
+
+
+
         public UnitOfWork(DbContext context)
         {
             _context = context;
@@ -30,14 +37,54 @@ namespace Infrastructure.UnitOfWork
                 return _entity ?? (_entity = new GenericRepository<T>(_context));
             }
 
+        }
 
+        public IIngredientRepository Ingredients
+        {
+            get
+            {
 
+                return _ingredients ?? (_ingredients = new IngredientRepository(_context));
+            }
 
         }
 
-        void IUnitOfWork<T>.Save()
+        public IMedicalStateRepository MedicalStates
+        {
+            get
+            {
+
+                return _medicalStates ?? (_medicalStates = new MedicalStateRepository(_context));
+            }
+
+        }
+
+        public IPatientRepository Patients
+        {
+            get
+            {
+
+                return _patients ?? (_patients = new PatientRepository(_context));
+            }
+
+        }
+
+        public IMedicineRepository Medicines
+        {
+            get
+            {
+
+                return _medicines ?? (_medicines = new MedicineRepository(_context));
+            }
+
+        }
+
+        public void Commit()
         {
             _context.SaveChanges();
+        }
+        public void RollBack() { 
+        
         }
 
     }
