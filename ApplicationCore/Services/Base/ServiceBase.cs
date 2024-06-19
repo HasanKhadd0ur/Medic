@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DomainModel;
 using ApplicationCore.Interfaces;
 using ApplicationDomain.Abstraction;
+using ApplicationDomain.Exceptions;
 using ApplicationDomain.Entities;
 using AutoMapper;
 using System;
@@ -21,7 +22,7 @@ namespace ApplicationCore.Services
 
         public ServiceBase(
             IUnitOfWork<TEntity> unitOfWork,
-           IMapper mapper
+            IMapper mapper
             )
         {
             _unitOfWork = unitOfWork;
@@ -39,7 +40,7 @@ namespace ApplicationCore.Services
         {
 
             TEntity entity = _unitOfWork.Entity.Insert(_mapper.Map<TEntity>(model));
-            _unitOfWork.Save();
+            _unitOfWork.Commit();
             return _mapper.Map<TModel>(entity);
         }
 
@@ -47,22 +48,26 @@ namespace ApplicationCore.Services
         {
 
             TEntity entity = _unitOfWork.Entity.Update(_mapper.Map<TEntity>(model));
-            _unitOfWork.Save();
+            _unitOfWork.Commit();
             return _mapper.Map<TModel>(entity);
         }
 
         public async Task<TModel> GetDetails(int id)
         {
 
-            return _mapper.Map<TModel>(await _unitOfWork.Entity.GetById(id,
-                _specification));
+            var model = await _unitOfWork.Entity.GetById(id,
+                _specification);
+            if (model is null) {
+                throw new NotFoundException();
+            }
+            return _mapper.Map<TModel>(model);
 
         }
 
         public void Delete(int id)
         {
             _unitOfWork.Entity.Delete(id);
-            _unitOfWork.Save();
+            _unitOfWork.Commit();
         }
 
 

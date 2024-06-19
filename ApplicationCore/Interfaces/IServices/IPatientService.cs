@@ -12,9 +12,9 @@ namespace ApplicationCore.Interfaces.IServices
     public interface IPatientService :IService<PatientModel>
     {
 
-        public IEnumerable<MedicalStateModel> GetPatientMedicalStates(int patientId);
+        public Task<IEnumerable<MedicalStateModel>> GetPatientMedicalStates(int patientId);
         public Task<MedicalStateModel> GetMedicalStateDetails(int id);
-        public Task<Patient> GetByUserID(String id );
+        public Task<PatientModel> GetByUserEmail(String email );
     //    public Task<IEnumerable<PatientModel>>GetAll();
         public void AddMedicalState(int patientId, MedicalStateModel medicalState);
        // public Patient GetDetails(int id);

@@ -11,5 +11,7 @@ namespace ApplicationCore.Interfaces.IServices
     public interface IIngredientService  : IService<IngredientModel>
     {
         public void AddToMedicine(MedicineIngredientModel medicineIngredientModel);
+        public void RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel);
+
     }
 }

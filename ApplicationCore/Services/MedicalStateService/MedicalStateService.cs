@@ -11,21 +11,14 @@ namespace ApplicationCore.Services
 {
     public class MedicalStateService :ServiceBase<MedicalState ,MedicalStateModel>, IMedicalStateService
     {
-        private readonly PatientService _patientService;
-        private readonly IUnitOfWork<Medicine> _medicineUnitOfWork;
-        private readonly MedicineWithIngredientsSpecification _medicineSpecification;
         
         public MedicalStateService(
-            IUnitOfWork<MedicalState> medicalUnitOfWork,
-            IUnitOfWork<Medicine> medicineUnitOfWork,
-            IUnitOfWork<Patient> patientUnitOfWork,
-              IMapper Mapper
-            ):base(medicalUnitOfWork,Mapper)
+            IUnitOfWork<MedicalState> unitOfWork,
+            IMapper Mapper
+            ):base(unitOfWork,Mapper)
         {
             _specification = new MedicalStateWithMedicinesSpecification();
-            _medicineUnitOfWork = medicineUnitOfWork;
-            _patientService = new PatientService(patientUnitOfWork,medicalUnitOfWork,Mapper);
-            _medicineSpecification = new MedicineWithIngredientsSpecification();
+        
         }
         public MedicalStateModel AddToPateint(int patientId , MedicalStateModel medicalStateModel)
         {
@@ -34,14 +27,18 @@ namespace ApplicationCore.Services
             var im =medicalStateModel;
             
             var r = _unitOfWork.Entity.Insert(_mapper.Map<MedicalState>(im));
-            _unitOfWork.Save();
+            _unitOfWork.Commit();
             return _mapper.Map<MedicalStateModel>(r);
         }
 
         
-        public IEnumerable<MedicalStateModel> GetAllPatientMedicalStates(int patientId)
+        public async Task<IEnumerable<MedicalStateModel>> GetAllPatientMedicalStates(int patientId)
         {
-           return _mapper.Map<IEnumerable<MedicalStateModel>>( _patientService.GetPatientMedicalStates(patientId));
+           return _mapper.Map<IEnumerable<MedicalStateModel>>(
+
+                await _unitOfWork.MedicalStates.GetByPatient(patientId, _specification)
+               
+                );
         }
 
         

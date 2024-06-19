@@ -16,35 +16,35 @@ namespace ApplicationCore.Services
 {
     public class PatientService : ServiceBase<Patient ,PatientModel> , IPatientService
     {
-        private readonly IUnitOfWork<MedicalState> _medicalStateUnitOfWork;
         private MedicalStateWithMedicinesSpecification _medicalStateSpecification;
-
+        
         public PatientService(
             IUnitOfWork<Patient> patientUnitOfWork,
-            IUnitOfWork<MedicalState> medicalStateUnitOfWork,
             IMapper mapper )
             :base(patientUnitOfWork  , mapper)
         {
-            _medicalStateUnitOfWork = medicalStateUnitOfWork;
             _specification = new PatientWithMedicinesSpecification();
             _medicalStateSpecification = new MedicalStateWithMedicinesSpecification();
         }
-        
-        public IEnumerable<MedicalStateModel> GetPatientMedicalStates(int patientId) {
 
-            return _mapper.Map<IEnumerable<MedicalStateModel>>( _unitOfWork.Entity
-                .GetById(
-                patientId,_specification
-                ).Result.MedicalStates.AsEnumerable());
+        public async Task<IEnumerable<MedicalStateModel>> GetPatientMedicalStates(int patientId) {
+
+
+            return _mapper.Map<IEnumerable<MedicalStateModel>>(
+                await _unitOfWork.MedicalStates
+                .GetByPatient(
+                patientId, _medicalStateSpecification
+                ));
 
         }
         
         public async Task< MedicalStateModel> GetMedicalStateDetails(int id)
         {
            
-            return _mapper.Map<MedicalStateModel>(await  _medicalStateUnitOfWork.Entity.GetById(id,_medicalStateSpecification));
+            return _mapper.Map<MedicalStateModel>(await  _unitOfWork.MedicalStates.GetById(id,_medicalStateSpecification));
 
         }
+
         public void AddMedicalState (int patientId, MedicalStateModel medicalState) {
             var ptient = _unitOfWork.Entity.GetById(patientId,_specification).Result;
             
@@ -52,7 +52,7 @@ namespace ApplicationCore.Services
             ptient.MedicalStates.Add(_mapper.Map<MedicalState>(medicalState));
             
             _unitOfWork.Entity.Update(ptient);
-            _unitOfWork.Save();
+            _unitOfWork.Commit();
         }
         
         public bool PatientExists(int id)
@@ -60,10 +60,10 @@ namespace ApplicationCore.Services
             return _unitOfWork.Entity.GetById(id) is null ? false : true;
         }
 
-        public async  Task<Patient> GetByUserID(string id)
+        public async  Task<PatientModel> GetByUserEmail(string email)
         {
             var ps = await  _unitOfWork.Entity.GetAll(_specification);
-            return ps.Where(p => p.UserId == id).FirstOrDefault();
+            return _mapper.Map<PatientModel>(ps.Where(p => p.User.Email == email).FirstOrDefault());
 
         }
     }

@@ -10,7 +10,7 @@ namespace ApplicationCore.Interfaces.IServices
 {
     public interface IMedicalStateService : IService<MedicalStateModel>
     {
-        public IEnumerable<MedicalStateModel> GetAllPatientMedicalStates(int patientId);
+        public Task<IEnumerable<MedicalStateModel>> GetAllPatientMedicalStates(int patientId);
         public MedicalStateModel AddToPateint(int patientId , MedicalStateModel medicalState);
         
       

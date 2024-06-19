@@ -16,9 +16,9 @@ namespace ApplicationCore.Services
     public class IngredientService : ServiceBase<Ingredient,IngredientModel> , IIngredientService
     {
         public IngredientService(
-            IUnitOfWork<Ingredient> ingredientUnitOfWork,
+            IUnitOfWork<Ingredient> unitOfWork,
             IMapper mapper
-            ):base(ingredientUnitOfWork,mapper)
+            ):base(unitOfWork,mapper)
         {
             _specification = new IngredientWithMedicinesSpecification();
         }
@@ -30,9 +30,17 @@ namespace ApplicationCore.Services
             medicine.MedicineIngredients.Add(
                 medicineIngredient
                 );
-
             _unitOfWork.Entity.Update(medicine);
-            _unitOfWork.Save();
+            _unitOfWork.Commit();
+        }
+        public async void RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel)
+        {
+            var medicine = await _unitOfWork.Entity.GetById(medicineIngredientModel.IngredientId, _specification);
+            MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientModel);
+            var m =medicine.MedicineIngredients.Where(p => p.IngredientId == medicineIngredientModel.IngredientId).FirstOrDefault();
+            medicine.MedicineIngredients.Remove(m);
+            _unitOfWork.Entity.Update(medicine);
+            _unitOfWork.Commit();
         }
 
     }
