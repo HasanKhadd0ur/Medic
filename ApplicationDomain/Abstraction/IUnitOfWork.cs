@@ -7,8 +7,12 @@ namespace ApplicationDomain.Abstraction
     {
 
         IGenericRepository<T> Entity { get; }
+        IIngredientRepository Ingredients { get; }
+        IMedicalStateRepository MedicalStates { get; }
+        IPatientRepository Patients { get;  }
+        IMedicineRepository Medicines { get; }
 
-        void Save();
-
+        void Commit();
+    //    void Rollback();
     }
 }

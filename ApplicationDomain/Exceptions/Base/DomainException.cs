@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.Exceptions
 {
-    public class CoreException : Exception
+    public class DomainException : Exception
     {
-        internal CoreException(string businessMessage)
+        internal DomainException(string businessMessage)
             : base(businessMessage)
         {
         }
 
-        internal CoreException(string message, Exception innerException)
+        internal DomainException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
