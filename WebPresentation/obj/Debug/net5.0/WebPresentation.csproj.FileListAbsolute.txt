@@ -181,3 +181,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.dl
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\ref\WebPresentation.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.pdb
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.genruntimeconfig.cache
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

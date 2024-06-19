@@ -14,7 +14,14 @@
     <title>DashBoard - @ViewData["Title"]</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
-    <link href="/favicon.png"  rel="icon">
+    <link href="/favicon.png" rel="icon">
+    <!-- Custom fonts for this theme -->
+    <link href="~/fonts/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="~/favicon.png" rel="icon" />
+    <!-- Theme CSS -->
+    <link href="~/css/freelancer.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -40,11 +47,11 @@
                     <li>
                         <a class="dropdown-item"
                            asp-action="Logout"
-                           asp-controller="Access" 
+                           asp-controller="Access"
                            asp-route-returnUrl="/Home/Index">
                             Logout
                         </a>
-                        
+
                     </li>
                 </ul>
             </li>
@@ -102,17 +109,17 @@
                                 <a class="nav-link" asp-controller="Medicine" asp-action="Index">ALL Medicines </a>
                             </nav>
                         </div>
-                    
+
                         <!-- Medical State Managment -->
                         <a class="nav-link collapsed" asp-action="Index" asp-controller="Medicine" data-bs-toggle="collapse" data-bs-target="#MPages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Medical States 
+                            Medical States
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="MPages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" >Add Medical State </a>
-                                <a class="nav-link" >ALL Medical State </a>
+                                <a class="nav-link">Add Medical State </a>
+                                <a class="nav-link">ALL Medical State </a>
                             </nav>
                         </div>
 
@@ -121,13 +128,12 @@
 
                         </div>
                     </div>
-                    </div>
+                </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
+                <div class="container-fluid ">
                     
 
                     @RenderBody()
@@ -156,5 +162,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     @RenderSection("Scripts", required: false);
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="~/js/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
 </body>
 </html>

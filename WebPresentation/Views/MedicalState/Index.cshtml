@@ -5,11 +5,12 @@
 
 }
 <section class="page-section">
+    <h3>Create New <a asp-action="Create" asp-controller="MedicalState">Create</a></h3>
+
     @if (Model.Count() == 0)
     {
         <h2 class="text-center">You dont have any  MedicalState</h2>
         <img src="~/img/portfolio/noData.jpg" class="figure-img" />
-        <h3>Create New <a asp-action="Create" asp-controller="MedicalState">Create</a></h3>
     }
     else
 
@@ -26,7 +27,7 @@
 
                                     <div class="icon-box">
                                         <div class="icon " style="color: #5e54b3"><i class="fas fa-heartbeat  fa-8x "></i></div>
-                                    </div>         
+                                    </div>
                                     <h5>@item.StateName</h5>
                                     <p>Prescriped At  : @item.PrescriptionTime</p>
                                     <a asp-action="Edit" asp-route-id="@item.Id">

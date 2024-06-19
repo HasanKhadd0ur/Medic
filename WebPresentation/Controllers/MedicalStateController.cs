@@ -37,7 +37,7 @@ namespace WebPresentation.Controllers
                 var u = GetUserId();
             var p = await _patientService.GetAll();
                  var pId= p.Where(p => p.User.Id == u).FirstOrDefault().Id;
-                var meds =((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
+                var meds =await ((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
                 return View(meds);
             
         }
@@ -92,11 +92,14 @@ namespace WebPresentation.Controllers
             return RedirectToAction("Details", "MedicalState", new { Id = id });
         }
 
-       
+        #region json 
+        [HttpGet]
         public JsonResult GetMedicalStateMedicine(int id) {
 
             var r =  _medicalStateService.GetDetails(id).Result.Medicines;
             return Json(r);
         }
+        
+        #endregion json
     }
 }

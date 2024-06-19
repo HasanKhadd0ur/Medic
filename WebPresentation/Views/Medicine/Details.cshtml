@@ -7,7 +7,7 @@
     var a = 0;
 }
 <section class="page-section">
-    <div class="container py-5 h-100">
+    <div class="container  h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-8 mb-4 mb-lg-0">
                 <div class="card mb-3" style="border-radius: .5rem;">
@@ -17,22 +17,15 @@
                             <img src="~/img/portfolio/@Model.Image"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.TradeName</h5>
-                            <p>For: @(Model.Category is null ? "":Model.Category.Name)</p>
+                            <p>Category: @(Model.Category is null ? "":Model.Category.Name)</p>
                             <a asp-action="Edit" asp-route-id="@Model.Id">
                                 <i class="far fa-edit mb-5"></i>
                             </a>
 
-                            <a asp-action="Index">
-
-                                <i class="far fa-backward">
-
-                                </i>
-                                Go Back
-                            </a>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">
-                                <h6>Information</h6>
+                                <h6>Information:</h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
@@ -70,16 +63,20 @@
                                 </div>
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
-                                        <h6>Go To list </h6>
                                         <a asp-action="Index">Back to List</a>
 
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <h6>Add Ingredient </h6>
-                                        <a asp-action="AddIngredints" asp-controller="Medicine" asp-route-id="@Model.Id">Add </a>
+                                        <a asp-action="AddIngredints" asp-controller="Medicine" asp-route-id="@Model.Id">Add Ingredients </a>
 
                                     </div>
 
+                                    <div class="col-6 mb-3">
+                                        <button class="btn btn-primary" onclick="fetchAll()">Get All Ingredients </button>
+
+                                    </div>
+                                    <div id="t">
+                                    </div>
 
                                 </div>
                             </div>
@@ -90,3 +87,276 @@
         </div>
     </div>
 </section>
+<section class="page-section mb-4 mt-4">
+    
+    <div id="mod">
+
+    </div>
+</section>
+@section Scripts {
+    <script>
+        async function fetchAll() {
+            try {
+                debugger
+                let response = await fetch('/Medicine/GetIngredints'); // Adjust the endpoint as needed
+                if (response.ok) {
+                    let medicines = await response.json();
+                    //   showModal('',medicines);
+                    populateTable(medicines,'t')
+                } else {
+                    console.error('Error:', response.statusText);
+                    showToast(medicines, 'error');
+
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+        async function updateMedicines() {
+               let id =@Model.Id
+
+            try {
+                debugger
+                let response = await fetch(`/MedicalState/GetMedicalStateMedicine/?id=${id}`); // Adjust the endpoint as needed
+                if (response.ok) {
+                    let medicines = await response.json();
+                    populateTable(medicines, 'Ingredients_');
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        function populateTable(medicines,tableName) {
+
+
+            let tableBody = document.querySelector('#' + tableName);
+            tableBody.innerHTML = `
+            <table class="table">
+               <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Manage</td>
+                </tr>
+            </thead ><tbody id="b"> </tbody></table>`;
+
+             tableBody = document.querySelector('#b');
+
+            medicines.forEach(medicine => {
+                let row = document.createElement('tr');
+                row.classList = "mb-3"
+
+                row.innerHTML = `
+                    <td>${medicine.name}</td>
+                    <td>${medicine.description}</td>
+                    `;
+                row.innerHTML +=
+                    (tableName != "t") ?
+
+                        `
+                <td>
+
+                    <button class="btn btn-danger" ondblclick="ReomveIngredient(${medicine.id})">Delete</button>
+                    </td>
+                ` :
+                        `<td>
+                        <button class="btn btn-primary" onclick="addIngredient( ${medicine.id})">Add</button>
+    
+                    </td>
+                `
+
+                tableBody.appendChild(row);
+            });
+
+            tableBody.innerHTML += ``;
+
+        }
+
+        async function addIngredient(med) {
+            let id =@Model.Id
+            try {
+                var r;
+                prompt("what is the ratio", r);
+                let response = await fetch(`/Medicine/AddIngredintsT`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ingredientId: ing, medicineId: med ,ratio:r}) // Adjust the body as needed
+                });
+
+                if (response.ok) {
+                    let result = await response.json();
+                    updateMedicines();
+                    showToast('Medicine added successfully', 'Success');
+                } else {
+                    console.error('Error:', response.statusText);
+                    showToast('Failed to add medicine', 'Error');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showToast('Failed to add medicine', 'Error');
+            }
+        }
+        async function DetailMedicine(med) {
+            let id =@Model.Id
+            try {
+                debugger
+                let response = await fetch(`/Medicine/GetDetails/${med}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                 });
+
+                if (response.ok) {
+                    let result = await response.json();
+                    console.log(result)
+                    showModal('Medicine Details',result );
+                } else {
+                    console.error('Error:', response.statusText);
+                    showToast('Failed to add medicine', 'Error');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showToast('Failed to add medicine', 'Error');
+            }
+        }
+
+        async function ReomveMedicine(med) {
+            let id =@Model.Id
+            try {
+                showToast('Loading ... ', 'Removing medicine');
+
+                let response = await fetch(`/Medicine/RemoveMedicineJ?id=${id}&med=${med}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id, med: med }) // Adjust the body as needed
+                });
+
+                if (response.ok) {
+                    let result = await response.json();
+
+                    updateMedicines();
+
+                    showToast('Medicine Reomved successfully', 'Success');
+                } else {
+                    console.error('Error:', response.statusText);
+                    showToast('Failed to remove medicine', 'Error');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showToast('Failed to remove medicine', 'Error');
+            }
+        }
+        async function DeleteConfirm(id ) {
+        }
+        function showToast(message, title) {
+
+            const modalBody = document.querySelector('#mod');
+            modalBody.innerHTML = `
+                   <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-start p-3">
+                        <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">${title}</h5>
+
+                        <p class=" mb-5"> ${message}</p>
+
+                        <hr class="mt-2 mb-4"
+                            style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+
+                        <button class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>  `;
+            // Show the modal
+            const medicineModal = new bootstrap.Modal(document.getElementById('item'));
+            medicineModal.show();
+
+
+        }
+        function showModal(message, result) {
+            var s = result
+            var t = 0;
+            var r= ''
+            for (i in s) {
+                console.log(i)
+                r+=`
+
+                                                <tr class=" mb-3">
+                                                    <td>${s[i].name}</td>
+                                                    <td>${s[i].description}</td>
+                                                    <td>
+<button class="btn btn-info"  onclick="addIngredient(${s[i].id})">Add</button>
+</td>
+                                                </tr>
+
+
+            `}
+            const modalBody = document.querySelector('#mod');
+            modalBody.innerHTML = `
+                   <div class="modal fade portfolio-modal " id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-start p-3">
+                        <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">All Ingredients</h5>
+
+                        <hr class="mt-2 mb-4"
+                            style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                        <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Description</td>
+                                                <td>Manage</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                            ${r}
+                                </tbody>
+</table>
+
+                        <hr class="mt-2 mb-4"
+                            style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+
+                        <button class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>  `;
+            // Show the modal
+            const medicineModal = new bootstrap.Modal(document.getElementById('item'));
+            medicineModal.show();
+
+        }
+    </script>
+
+}

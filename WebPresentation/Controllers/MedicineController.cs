@@ -14,7 +14,7 @@ using ApplicationCore.DomainModel;
 
 namespace WebPresentation.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+   [Authorize(Roles = "Admin")]
     public class MedicineController : CRUDController<MedicineModel>
     {
         private readonly IIngredientService _ingredientService;
@@ -44,6 +44,30 @@ namespace WebPresentation.Controllers
             return View(s);
         
         }
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetIngredints(int id)
+        {
+            var s = _ingredientService.GetAll().Result;
+            ViewBag.MedicineId = id;
+            return Ok(s);
+
+        }
+        [Authorize(Roles = "Admin")]
+        public IActionResult ReomveIngredints(int id ,int ing )
+        {
+            _ingredientService.RemoveFromMedicine(new MedicineIngredientModel {IngredientId=ing , MedicineId=id });
+
+            return Ok(new {message = "removed" });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult AddIngredintsT( MedicineIngredientModel medicineIngredientModel)
+        {
+            _ingredientService.AddToMedicine(medicineIngredientModel);
+            return Ok(new { message = "added"});
+        }
+
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -53,6 +77,7 @@ namespace WebPresentation.Controllers
             return RedirectToAction("Details","Medicine", new { Id = med}) ;
         }
 
+        #region json 
 
         [Authorize(Roles ="patient")]
         public async Task<JsonResult>  GetDetails(int? id)
@@ -72,7 +97,9 @@ namespace WebPresentation.Controllers
         }
 
         [Authorize(Roles = "patient")]
+        
         [HttpGet]
+
         public JsonResult GetMedicines()
         {
             var all = _medicineService.GetAll().Result;
@@ -80,6 +107,34 @@ namespace WebPresentation.Controllers
             return new JsonResult(all);
 
         }
+
+        [Authorize(Roles = "patient")]
+        [HttpPost]
+        public JsonResult AddMedicineT(int id, int med)
+        {
+            try
+            {
+                ((IMedicineService)_service).AddToMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
+
+                return Json("Added");
+            }
+            catch
+            {
+
+                return Json("faild");
+            }
+        }
+        [Authorize(Roles = "patient")]
+
+        [HttpPost]
+        public JsonResult RemoveMedicineJ(int id, int med)
+        {
+            ((IMedicineService)_service).RemoveFromMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
+
+            return Json("Reomved");
+        }
+
+        #endregion json 
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DomainModel;
 using ApplicationCore.Interfaces;
 using ApplicationDomain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,6 @@ namespace WebPresentation.Controllers
             _service = service;
 
         }
-
         public async virtual Task<IActionResult> Details(int? id)
         {
 
@@ -105,7 +105,7 @@ namespace WebPresentation.Controllers
                     return View("Error");
 
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Details",new { id=tModel.Id});
             }
             return View(tModel);
         }
@@ -126,8 +126,9 @@ namespace WebPresentation.Controllers
             {
 
                 
-                _service.Create(viewModel);
-                return RedirectToAction(nameof(Index));
+                viewModel= _service.Create(viewModel);
+                return RedirectToAction("Details", new { id = viewModel.Id });
+
             }
             return View(viewModel);
         }

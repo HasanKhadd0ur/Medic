@@ -34,6 +34,7 @@ namespace WebPresentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          
 
             services.AddScoped<DbContext, MedicDbContext>();
             services.AddScoped<Mapper>();
@@ -51,8 +52,14 @@ namespace WebPresentation
 
             services.AddAutoMapper(typeof(ObjectMapper));
             #region ADD Scoped Repository 
+            
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IMedicalStateRepository,MedicalStateRepository>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+
             #endregion ADD Scope dRepository
 
             #region ADD Scoped  Services
@@ -109,8 +116,11 @@ namespace WebPresentation
            
             services.AddSession();
 
-            services.AddControllersWithViews();
-            
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
