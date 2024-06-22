@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebPresentation.Controllers
+namespace API.Controllers
 {
     [Authorize]
     [ApiController]
@@ -30,7 +30,11 @@ namespace WebPresentation.Controllers
         protected String GetUserName() {
             return GetCurrentUser().UserName;
         }
-        
+
+        protected String GetUserEmail()
+        {
+            return GetCurrentUser().Email;
+        }
 
         protected String GetUserId() {
             return GetCurrentUser().Id;

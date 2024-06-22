@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebPresentation.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CrudAPIController<TModel> : BaseController where TModel : DomainBase
+    public class CrudController<TModel> : BaseController where TModel : DomainBase
     {
         protected readonly IService<TModel> _service;
 
-        public CrudAPIController(
+        public CrudController(
             IService<TModel> service,
  
             UserManager<User> userManager)
@@ -23,6 +23,7 @@ namespace WebPresentation.Controllers
             _service = service;
         }
 
+        [HttpGet]
         public async  virtual  Task<IActionResult> GetAll()
         {
             IEnumerable<TModel> models = await _service.GetAll();
@@ -49,7 +50,7 @@ namespace WebPresentation.Controllers
             return Ok(ModifiedModel);
         }
 
-        [HttpPut("delete")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
 
@@ -58,7 +59,7 @@ namespace WebPresentation.Controllers
             return Ok(new { mesage ="deleted"});
         }
 
-        [HttpPost("create")]
+        [HttpPut]
         public IActionResult Create(TModel model)
         {
 

@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebPresentation.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicineAPIController : CrudAPIController<MedicineModel>
+    public class MedicineController : CrudController<MedicineModel>
     {
-        public MedicineAPIController(
+        public MedicineController(
             IMedicineService medicalstateService,
             UserManager<User> userManager)
             : base(medicalstateService, userManager)

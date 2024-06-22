@@ -10,16 +10,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebPresentation.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class MedicalStateApiController : CrudAPIController<MedicalStateModel>
+    public class MedicalStateController : CrudController<MedicalStateModel>
     {
         private readonly IPatientService _patientService;
         
-        public MedicalStateApiController(
+        public MedicalStateController(
             IMedicalStateService medicalstateService,
              IPatientService patientService,
             UserManager<User> userManager)
@@ -30,10 +30,9 @@ namespace WebPresentation.Controllers
 
         public  override async Task<IActionResult> GetAll()
         {
-            string u = GetUserId();
-            var ps = await _patientService.GetAll();
-            var pId=ps.Where(p => p.User.Id == u).FirstOrDefault().Id;
-            var meds = ((IMedicalStateService)_service).GetAllPatientMedicalStates(pId);
+            var ps = await _patientService.GetByUserEmail(GetUserEmail());
+            var pId=ps.Id;
+            var meds = await ((IMedicalStateService)_service).GetAllPatientMedicalStates(pId);
 
             return Ok(meds);
         }

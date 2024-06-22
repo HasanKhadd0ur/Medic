@@ -8,18 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace WebPresentation.Controllers
+namespace API.Controllers
 {
 
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class AccessAPIController : BaseController
+    public class AccessController : BaseController
     {
         private readonly SignInManager<User> _signInManager;
         private readonly IPatientService _patientSerivce;
 
-        public AccessAPIController(UserManager<User> userManager,
+        public AccessController(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IPatientService patientService):base(userManager)
         {
@@ -97,17 +97,17 @@ namespace WebPresentation.Controllers
         }
 
 
-        [HttpGet("log")]
-        public IActionResult i()
-        {
-            return Ok(new { message = "Logout successful" });
-        }
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return Ok(new { message = "Logout successful" });
         }
-    }
 
+        [HttpGet("log")]
+        public IActionResult Log()
+        {
+            return Ok(new { message = "log successful" });
+        }
+    }
 }
