@@ -24,7 +24,7 @@ namespace ApplicationCore.Services
         }
 
 
-        public async void AddToMedicine(MedicineIngredientModel medicineIngredientModel) {
+        public async Task<MedicineIngredientModel> AddToMedicine(MedicineIngredientModel medicineIngredientModel) {
            var medicine = await _unitOfWork.Entity.GetById(medicineIngredientModel.IngredientId,_specification);
             MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientModel);
             medicine.MedicineIngredients.Add(
@@ -32,14 +32,17 @@ namespace ApplicationCore.Services
                 );
             _unitOfWork.Entity.Update(medicine);
             _unitOfWork.Commit();
+            return medicineIngredientModel;
         }
         public async void RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel)
         {
-            var medicine = await _unitOfWork.Entity.GetById(medicineIngredientModel.IngredientId, _specification);
+            var ingredient = await _unitOfWork.Ingredients.GetById(medicineIngredientModel.IngredientId, _specification);
+           
             MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientModel);
-            var m =medicine.MedicineIngredients.Where(p => p.IngredientId == medicineIngredientModel.IngredientId).FirstOrDefault();
-            medicine.MedicineIngredients.Remove(m);
-            _unitOfWork.Entity.Update(medicine);
+            var m =ingredient.MedicineIngredients.Where(p => p.MedicineId == medicineIngredientModel.MedicineId).FirstOrDefault();
+            ingredient.MedicineIngredients.Remove(m);
+
+            _unitOfWork.Entity.Update(ingredient);
             _unitOfWork.Commit();
         }
 
