@@ -17,7 +17,7 @@ namespace ApplicationCore.DomainModel
 
         #region Relations
         public ICollection<MedicalStateModel> MedicalStates { get; set; }
-       // public ICollection<Medicine> Medicines { get; set; }
+        //public ICollection<Medicine> Medicines { get; set; }
        // public ICollection<PatientMedicine> PatientMedicines { get; set; }
         #endregion Relations
     }

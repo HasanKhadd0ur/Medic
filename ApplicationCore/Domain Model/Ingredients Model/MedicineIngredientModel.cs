@@ -12,7 +12,7 @@ namespace ApplicationCore.DomainModel
         public int MedicineId { get; set; }
         public int IngredientId { get; set; }
 
-      //  public MedicineModel Medicine { get; set; }
+        public MedicineModel Medicine { get; set; }
         public IngredientModel Ingredient { get; set; }
     }
 }
