@@ -5,9 +5,9 @@ using WebPresentation.ViewModels;
 
 namespace ApplicationCore.Mappere
 {
-    public class ObjectMapper : Profile
+    public class ViewModelObjectMapper : Profile
     {
-        public ObjectMapper()
+        public ViewModelObjectMapper()
         {
             CreateMap<MedicineViewModel, MedicineModel>()
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))

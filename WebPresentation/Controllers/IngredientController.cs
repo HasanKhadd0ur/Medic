@@ -1,14 +1,10 @@
 ﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using ApplicationCore.DomainModel;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebPresentation.Controllers
 {
@@ -24,9 +20,11 @@ namespace WebPresentation.Controllers
 
             
         }
+        public async Task<IActionResult> GetIngredients()
+        {
+            var s = await _service.GetAll();
+            return Ok(s);
 
-
-
-        
+        }
     }
 }

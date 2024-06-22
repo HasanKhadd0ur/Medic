@@ -67,39 +67,96 @@ namespace WebPresentation.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult AddMedicine(int id)
-        {
-            var all =  _medicineService.GetAll();
-            ViewBag.MedicalStateId = id;
-            return View(all);
-        }
+        //[HttpGet]
+        //public IActionResult AddMedicine(int id)
+        //{
+        //    var all =  _medicineService.GetAll();
+        //    ViewBag.MedicalStateId = id;
+        //    return View(all);
+        //}
+        //[HttpPost]
+        //[ActionName("AddMedicine")]
+        //public IActionResult AddMedicineT(int id, int med)
+        //{
+        //   _medicineService.AddToMedicalState(new MedicalStateMedicineModel{MedicalStateId=id ,MedicineId=med });
 
-        [HttpPost]
-        public IActionResult AddMedicine(int id, int med)
-        {
-           _medicineService.AddToMedicalState(new MedicalStateMedicineModel{MedicalStateId=id ,MedicineId=med });
-
-            return RedirectToAction("Details", "MedicalState", new { Id = id });
-        }
+        //    return RedirectToAction("Details", "MedicalState", new { Id = id });
+        //}
 
 
-        [HttpPost]
-        public IActionResult RemoveMedicine(int id, int med)
-        {
-            _medicineService.RemoveFromMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
+        //[ActionName("RemoveMedicine")]
+        //public IActionResult RemoveMedicinej(int id, int med)
+        //{
+        //    _medicineService.RemoveFromMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
 
-            return RedirectToAction("Details", "MedicalState", new { Id = id });
-        }
+        //    return RedirectToAction("Details", "MedicalState", new { Id = id });
+        //}
 
         #region json 
+
         [HttpGet]
         public JsonResult GetMedicalStateMedicine(int id) {
 
             var r =  _medicalStateService.GetDetails(id).Result.Medicines;
             return Json(r);
         }
-        
+
+        [HttpPost]
+
+        public JsonResult AddMedicine([FromBody]MedicalStateMedicineModel medicalStateMedicineModel)
+        {
+            try
+            {
+                _medicineService.AddToMedicalState(medicalStateMedicineModel);
+
+                return Json("Added");
+            }
+            catch
+            {
+
+                return Json("faild");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RemoveMedicine([FromBody]MedicalStateMedicineModel medicalStateMedicineModel)
+        {
+            _medicineService.RemoveFromMedicalState(medicalStateMedicineModel);
+
+            return Json("Reomved");
+        }
+
+        [Authorize(Roles = "patient")]
+        public async Task<JsonResult> GetDetails(int? id)
+        {
+
+            if (id is null)
+            {
+                return Json("");
+            }
+            else
+            {
+                MedicineModel TModel = await _medicineService.GetDetails((int)id);
+                if (TModel is null)
+                    return Json("");
+                return Json(TModel);
+            }
+        }
+
+        [Authorize(Roles = "patient")]
+
+        [HttpGet]
+
+        public JsonResult GetMedicines()
+        {
+            var all = _medicineService.GetAll().Result;
+
+            return new JsonResult(all);
+
+        }
+
+
+
         #endregion json
     }
 }

@@ -19,6 +19,7 @@ using ApplicationCore.DomainModel;
 using ApplicationCore.Mapper;
 using System;
 using Microsoft.AspNetCore.Http;
+using ApplicationCore.Mappere;
 
 namespace WebPresentation
 {
@@ -50,7 +51,7 @@ namespace WebPresentation
 
             });
 
-            services.AddAutoMapper(typeof(ObjectMapper));
+            services.AddAutoMapper(typeof(ObjectMapper),typeof(ViewModelObjectMapper));
             #region ADD Scoped Repository 
             
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
@@ -108,7 +109,16 @@ namespace WebPresentation
                 options.AccessDeniedPath = "/access/login";
                 options.SlidingExpiration = true;
             });
-
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
             services.AddAuthorization(
                 
                 );

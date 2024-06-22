@@ -1,13 +1,10 @@
 ﻿using ApplicationCore.DomainModel;
 using ApplicationCore.Interfaces;
 using ApplicationDomain.Entities;
-using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebPresentation.Controllers
@@ -15,7 +12,10 @@ namespace WebPresentation.Controllers
     public class CRUDController<T> : BaseController where T : DomainBase
     {
         protected readonly IService<T> _service;
-        public CRUDController(UserManager<User> userManager, IService<T> service)
+        public CRUDController(
+            UserManager<User> userManager,
+            IService<T> service
+            )
             :base(userManager)
         {
 
@@ -60,7 +60,7 @@ namespace WebPresentation.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+     //   [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             _service.Delete(id);

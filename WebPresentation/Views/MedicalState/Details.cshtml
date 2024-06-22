@@ -35,25 +35,26 @@
                         </div>
                         <div class="col-10">
                             <div class="card-body p-4">
-                                <h6>Information</h6>
+                                <h6> Information:</h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    <div class="col-8 mb-3">
+                                    <div class="col-6 mb-3">
                                         <h6>Description</h6>
                                         <p class="text">@Model.StateDescription</p>
                                     </div>
-                                    <div class="col-8 mb-3">
+                                    <div class="col-4 mb-3">
                                         <h6>Medicines Count:@Model.Medicines.Count()</h6>
-                                        <a class="btn btn-primary m-1" asp-controller="MedicalState" asp-action="AddMedicine" asp-route-id="@Model.Id">Add Medicine</a>
+
                                         <a class="btn btn-primary m-1" asp-controller="MedicalState" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
                                         <a class="btn btn-danger m-1" asp-controller="MedicalState" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                                        
+                                        <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @Model.StateName From your medical Cases", "Reomve",@Model.Id)'>Delete Confirm</button>
+
                                     </div>
                                 </div>
                                 <h6>Medicines : </h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    <table class="table table-bordered">
+                                    <table id="Ingredients_" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <td>#</td>
@@ -67,22 +68,22 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody id="Ingredients_">
+                                        <tbody id="cc">
                                             @foreach (var ing in Model.Medicines)
                                             {
-                                            <tr class=" mb-3">
-                                                <td>@(a+=1)</td>
-                                                <td>@ing.TradeName</td>
-                                                <td>@ing.Description</td>
-                                                <td>@ing.Price</td>
-                                                <td>@ing.Dosage</td>
-                                                <td>@ing.ManufactureName</td>
-                                                <td>
-                                                    <button class="btn btn-danger" ondblclick="ReomveMedicine(@ing.Id)">Delete</button>
-                                                    <button class="btn btn-primary" onclick="DetailMedicine( @ing.Id)">Details</button>
+                                                <tr class=" mb-3">
+                                                    <td>@(a+=1)</td>
+                                                    <td>@ing.TradeName</td>
+                                                    <td>@ing.Description</td>
+                                                    <td>@ing.Price</td>
+                                                    <td>@ing.Dosage</td>
+                                                    <td>@ing.ManufactureName</td>
+                                                    <td>
+                                                        <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName From this medical Case" , "ReomveMedicine" ,@ing.Id)'>Delete</button>
+                                                        <button class="btn btn-primary" onclick="DetailMedicine( @ing.Id)">Details</button>
 
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -90,31 +91,14 @@
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>Go To list </h6>
-                                        <a asp-action="Index">Back to List</a>
+                                        <a asp-action="Index">GO Back </a>
 
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="row pt-1">
 
-                                    <table id="g" class="tabl table-bordered ">
-                                        <thead>
-                                            <tr class="mb-3">
-                                                <td>ID</td>
-                                                <td>tradeName</td>
-                                                <td>description</td>
-                                                <td>price</td>
-                                                <td>dosage</td>
-                                                <td>Manufacture Name </td>
-                                                <td>
-                                                    Manage
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="medicines-table"></tbody>
-                                    </table>
                                     <button onclick="fetchMedicines()" class="btn btn-primary">Get All Medicine </button>
-
 
                                 </div>
                             </div>
@@ -126,19 +110,54 @@
     </div>
 </section>
 
-<section class="page-section mb-4 mt-4">
+<section style="background-color: #f4f5f7;">
+    <div class="container  h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="row g-0">
 
+                    <div class="row d-flex justify-content-center align-items-center h-100">
 
-        <div id="mod">
-            
+                        <div id="medicines-table">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 </section>
-@section Scripts {
-    <script>
+<div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body text-start p-3">
+                <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">title</h5>
+
+                <p class=" mb-5"> message</p>
+
+                <hr class="mt-2 mb-4"
+                    style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+
+                    <button class="btn btn-info"  data-dismiss="modal" aria-label="Close">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @section Scripts {
+        <script>
         async function fetchMedicines() {
             try {
                 debugger
-                let response = await fetch('/Medicine/GetMedicines'); // Adjust the endpoint as needed
+                let response = await fetch('/MedicalState/GetMedicines'); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
                     populateTable(medicines, 'medicines-table');
@@ -165,12 +184,28 @@
                 console.error('Fetch error:', error);
             }
         }
-
         function populateTable(medicines,tableName) {
 
 
             let tableBody = document.querySelector('#' + tableName);
-            tableBody.innerHTML = ''; // Clear any existing rows
+            tableBody.innerHTML = `
+            <table class="table">
+               <thead>
+          <tr class="mb-3">
+            <td>ID</td>
+            <td>tradeName</td>
+            <td>description</td>
+            <td>price</td>
+            <td>dosage</td>
+            <td>Manufacture Name </td>
+            <td>
+            Manage
+            </td>
+              </tr>
+
+            </thead ><tbody id="b"> </tbody></table>`;
+
+            tableBody = document.querySelector('#b');
 
             medicines.forEach(medicine => {
                 let row = document.createElement('tr');
@@ -206,18 +241,17 @@
                 tableBody.appendChild(row);
             });
         }
-
         async function addMedicine(med) {
-            let id =@Model.Id
+            let id =@Model.Id;
             try {
-       //         showToast('Loading ... ', 'Adding medicine');
+               showToast('Loading ... ', 'Adding medicine');
 
-                let response = await fetch(`/Medicine/AddMedicineT?id=${id}&med=${med}`, {
+                let response = await fetch(`/MedicalState/AddMedicine`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ id: id, med: med }) // Adjust the body as needed
+                    body: JSON.stringify({ MedicalStateId: id, MedicineId: med }) // Adjust the body as needed
                 });
 
                 if (response.ok) {
@@ -237,7 +271,7 @@
             let id =@Model.Id
             try {
                 debugger
-                let response = await fetch(`/Medicine/GetDetails/${med}`, {
+                let response = await fetch(`/MedicalState/GetDetails/${med}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -257,18 +291,18 @@
                 showToast('Failed to add medicine', 'Error');
             }
         }
-
         async function ReomveMedicine(med) {
             let id =@Model.Id
+            debugger
             try {
         //        showToast('Loading ... ', 'Removing medicine');
 
-                let response = await fetch(`/Medicine/RemoveMedicineJ?id=${id}&med=${med}`, {
+                let response = await fetch(`/MedicalState/RemoveMedicine`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ id: id, med: med }) // Adjust the body as needed
+                    body: JSON.stringify({ MedicalStateId: id, MedicineId: med }) // Adjust the body as needed
                 });
 
                 if (response.ok) {
@@ -286,14 +320,34 @@
                 showToast('Failed to remove medicine', 'Error');
             }
         }
-        async function DeleteConfirm(id ) {
+        async function Reomve(med) {
+            debugger
+            try {
+        //        showToast('Loading ... ', 'Removing medicine');
+
+                let response = await fetch(`/MedicalState/Delete/${med}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                   // let result = await response.json();
+
+                    document.location.href="/MedicalState/"
+                    showToast('Medicine Reomved successfully', 'Success');
+                } else {
+                    console.error('Error:', response.statusText);
+                    showToast('Failed to remove medicine', 'Error');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showToast('Failed to remove medicine', 'Error');
+            }
         }
-        function showToast(message, title) {
-         //   const Modal = new bootstrap.Modal(document.getElementById('item'));
-        //    Modal.close();
-//            Modal.hide();
-       //     Modal.toggle();
-            //Modal.dispose();
+        async function DeleteConfirm(title, message, action,param) {
+            debugger
             const modalBody = document.querySelector('#mod');
             modalBody.innerHTML = `
                    <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
@@ -309,7 +363,47 @@
                     </div>
                     <div class="modal-body text-start p-3">
                         <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">${title}</h5>
-    
+
+                        <p class=" mb-5"> ${message}</p>
+
+                        <hr class="mt-2 mb-4"
+                            style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+
+                        <button class="btn btn-danger" onclick="${action}(${param})">Delete</button>
+
+                        <button class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>  `;
+            // Show the modal
+            const medicineModal = new bootstrap.Modal(document.getElementById('item'));
+            medicineModal.show();
+
+        }
+            function showToast(message, title) {
+                const Modal = new bootstrap.Modal(document.getElementById('item'));
+            //    Modal.close();
+            if (Modal) Modal.hide();  
+       //     Modal.toggle();
+            //Modal.dispose();
+            const modalBody = document.querySelector('#item');
+            modalBody.innerHTML = `
+                   <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-start p-3">
+                        <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">${title}</h5>
+
                         <p class=" mb-5"> ${message}</p>
 
                         <hr class="mt-2 mb-4"
@@ -329,6 +423,10 @@
         }
         function showModal(message, result) {
             debugger
+            const Modal = new bootstrap.Modal(document.getElementById('item'));
+            //    Modal.close();
+            try { Modal.hide(); } catch { }
+
             let m = result["manufactureName"]
             console.log(m)
             var s = result.medicineIngredients
@@ -346,7 +444,7 @@
                                 <p class="text-muted mb-0">${s[i].ratio}</p>
                             </div>
             `}
-            const modalBody = document.querySelector('#mod');
+            const modalBody = document.querySelector('#item');
             modalBody.innerHTML = `
                    <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
              aria-hidden="true">
@@ -398,6 +496,6 @@
             medicineModal.show();
 
         }
-    </script>
-    
-}
+        </script>
+
+    }
