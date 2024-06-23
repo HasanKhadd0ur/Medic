@@ -2,16 +2,19 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "_AdminLayout";
-
+    
 }
-<div style="padding:120px ;">
 
-    <h1>Edit</h1>
 
-    <h4>Project</h4>
-    <hr />
-    <div class="row p-120">
+<div class="modal-header">
+    <h5 class="modal-title" id="modalEditLabel">Edit Medicine</h5>
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="row ">
         <div class="col-md-4">
             <form asp-action="Edit" class="form-group ">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

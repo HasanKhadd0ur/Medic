@@ -1,18 +1,19 @@
 ﻿@model MedicineModel;
 
-@{
+@*@{
     ViewData["Title"] = "Edit";
     Layout = "_AdminLayout";
 
-}
-<div style="padding:120px ;">
-
-    <h1>Edit</h1>
-
-    <h4>Project</h4>
-    <hr />
-    <div class="row p-120">
-        <div class="col-md-4">
+}*@
+<div class="modal-header">
+    <h5 class="modal-title" id="modalEditLabel">Edit Medicine</h5>
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-10 offset-1">
             <form asp-action="Edit" class="form-group ">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group row">
@@ -27,7 +28,7 @@
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    
+
                 </div>
                 <div class="form-group row">
                     <div class="col ">
@@ -84,16 +85,17 @@
 
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </form>
         </div>
     </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

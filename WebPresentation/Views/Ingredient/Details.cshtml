@@ -16,11 +16,10 @@
                             <img src="~/img/portfolio/instagram.png"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.Name</h5>
-                           
-                            <a asp-action="Edit" asp-route-id="@Model.Id">
-                                <i class="far fa-edit mb-5"></i>
-                             </a> 
-                            
+
+                            <button class="btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
+                            <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
+
                             <a asp-action="Index">
 
                                 <i class="far fa-backward">
@@ -49,3 +48,26 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Content loaded via AJAX -->
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            // Load the Edit form in the modal
+            $('.btn-edit').on('click', function () {
+                var id = $(this).data('id');
+                $('#modal-edit').find('.modal-content').load('/Ingredient/Dummy/' + id);
+                $('#modal-edit').modal('show');
+            });
+        });
+    </script>
+
+}

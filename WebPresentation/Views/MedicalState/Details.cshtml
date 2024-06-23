@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Medical State Details ";
 
+    ViewData["Controller"] = "MedicalState";
 
     var a = 0;
 
@@ -21,10 +22,7 @@
                             </div>
                             <h5>@Model.StateName</h5>
                             <p>AT: @(Model.PrescriptionTime )</p>
-                            <a asp-action="Edit" asp-controller="MedicalState" asp-route-id="@Model.Id">
-                                <i class="far fa-edit mb-5"></i>
-                            </a>
-
+                            
                             <a asp-action="Index">
 
                                 <i class="far fa-backward">
@@ -45,10 +43,9 @@
                                     <div class="col-4 mb-3">
                                         <h6>Medicines Count:@Model.Medicines.Count()</h6>
 
-                                        <a class="btn btn-primary m-1" asp-controller="MedicalState" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                                        <a class="btn btn-danger m-1" asp-controller="MedicalState" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                                        <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @Model.StateName From your medical Cases", "Reomve",@Model.Id)'>Delete Confirm</button>
-
+                                        <button class="btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
+                                        <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
+                                        
                                     </div>
                                 </div>
                                 <h6>Medicines : </h6>
@@ -57,7 +54,7 @@
                                     <table id="Ingredients_" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <td>#</td>
+                                                <td>No.</td>
                                                 <td>Name</td>
                                                 <td>Description</td>
                                                 <td>Price</td>
@@ -98,7 +95,7 @@
                                 <hr />
                                 <div class="row pt-1">
 
-                                    <button onclick="fetchMedicines()" class="btn btn-primary">Get All Medicine </button>
+                                    <button onclick="fetchMedicines()" class="btn btn-primary">Get Medicines </button>
 
                                 </div>
                             </div>
@@ -126,32 +123,33 @@
         </div>
     </div>
 </section>
-<div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                        <i class="fas fa-times"></i>
-                    </span>
-                </button>
-            </div>
-            <div class="modal-body text-start p-3">
-                <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">title</h5>
+<div id="item-container">
+    <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body text-start p-3">
+                    <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">${title}</h5>
 
-                <p class=" mb-5"> message</p>
+                    <p class=" mb-5"> ${message}</p>
 
-                <hr class="mt-2 mb-4"
-                    style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
-                <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+                    <hr class="mt-2 mb-4"
+                        style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                    <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
 
-                    <button class="btn btn-info"  data-dismiss="modal" aria-label="Close">Close</button>
+                        <button class="btn btn-info" data-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    </div></div>
     @section Scripts {
         <script>
         async function fetchMedicines() {
@@ -169,7 +167,7 @@
             }
         }
         async function updateMedicines() {
-               let id =@Model.Id
+               let id =@Model.Id;
 
             try {
                 debugger
@@ -268,7 +266,7 @@
             }
         }
         async function DetailMedicine(med) {
-            let id =@Model.Id
+            let id =@Model.Id;
             try {
                 debugger
                 let response = await fetch(`/MedicalState/GetDetails/${med}`, {
@@ -292,8 +290,8 @@
             }
         }
         async function ReomveMedicine(med) {
-            let id =@Model.Id
-            debugger
+            let id =@Model.Id;
+            debugger;
             try {
         //        showToast('Loading ... ', 'Removing medicine');
 
@@ -348,7 +346,7 @@
         }
         async function DeleteConfirm(title, message, action,param) {
             debugger
-            const modalBody = document.querySelector('#mod');
+            const modalBody = document.querySelector('#item-container');
             modalBody.innerHTML = `
                    <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
              aria-hidden="true">
@@ -383,14 +381,16 @@
 
         }
             function showToast(message, title) {
-                const Modal = new bootstrap.Modal(document.getElementById('item'));
+               const Modal = bootstrap.Modal.getInstance(document.getElementById('item'));
             //    Modal.close();
-            if (Modal) Modal.hide();  
+           // if (Modal) Modal.hide();
        //     Modal.toggle();
-            //Modal.dispose();
-            const modalBody = document.querySelector('#item');
+            Modal.dispose();
+                const emedicineModal = new bootstrap.Modal(document.getElementById('item'));
+                emedicineModal.hide();
+            const modalBody = document.querySelector('#item-container');
             modalBody.innerHTML = `
-                   <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
+        <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -415,17 +415,18 @@
                 </div>
             </div>
         </div>  `;
-            // Show the modal
-            const medicineModal = new bootstrap.Modal(document.getElementById('item'));
+                // Show the modal
+               const medicineModal = new bootstrap.Modal(document.getElementById('item'));
             medicineModal.show();
-
+               // let c = document.getElementById('item')
+               // c.classList.add('show')
 
         }
         function showModal(message, result) {
             debugger
-            const Modal = new bootstrap.Modal(document.getElementById('item'));
+    //        const Modal = new bootstrap.Modal(document.getElementById('item'));
             //    Modal.close();
-            try { Modal.hide(); } catch { }
+      //      try { Modal.hide(); } catch { }
 
             let m = result["manufactureName"]
             console.log(m)
@@ -444,7 +445,7 @@
                                 <p class="text-muted mb-0">${s[i].ratio}</p>
                             </div>
             `}
-            const modalBody = document.querySelector('#item');
+            const modalBody = document.querySelector('#item-container');
             modalBody.innerHTML = `
                    <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
              aria-hidden="true">

@@ -51,12 +51,7 @@ namespace WebPresentation.Controllers
             if (ModelState.IsValid)
             {
                 var uId = GetUserId();
-                var p = _patientService.GetAll(
-                     ).Result
-                    .Where(
-                        u => u.User.Id == uId
-                        )
-                    .FirstOrDefault().Id;
+                var p = _patientService.GetByUserId(uId).Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
                 var n= ((IMedicalStateService)_service).AddToPateint(p,medicalState);
@@ -150,12 +145,11 @@ namespace WebPresentation.Controllers
         public JsonResult GetMedicines()
         {
             var all = _medicineService.GetAll().Result;
-
             return new JsonResult(all);
 
         }
 
-
+       
 
         #endregion json
     }

@@ -15,6 +15,8 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <link href="/favicon.png" rel="icon">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <!-- Custom fonts for this theme -->
     <link href="~/fonts/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -134,7 +136,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid ">
-                    
+
 
                     @RenderBody()
 
@@ -161,6 +163,44 @@
     <script src="/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     @RenderSection("Scripts", required: false);
+
+
+
+
+
+    <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Content loaded via AJAX -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Content loaded via AJAX -->
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Load the Edit form in the modal
+            $('.btn-edit').on('click', function () {
+                var id = $(this).data('id');
+                var controller = `@ViewData["Controller"]`;
+                $('#modal-edit').find('.modal-content').load(`/${controller}/Edit/` + id);
+             $('#modal-edit').modal('show');
+            });
+
+            $('.btn-delete').on('click', function () {
+                var id = $(this).data('id');
+                var controller = `@ViewData["Controller"]`;
+                $('#modal-delete').find('.modal-content').load(`/${controller}/Delete/` + id);
+                $('#modal-delete').modal('show');
+            });
+        });
+
+    </script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="~/js/jquery.min.js"></script>

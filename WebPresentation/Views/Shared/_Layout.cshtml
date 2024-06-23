@@ -34,7 +34,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-              <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
 
                 @ViewData["userName"]
             </a>
@@ -48,7 +48,7 @@
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="Index" asp-controller="MedicalState">Medicines</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"asp-action="Index" asp-controller="Home">Home</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="Index" asp-controller="Home">Home</a>
                     </li>
 
                     <partial name="_LoginPartial" />
@@ -72,7 +72,7 @@
                     <h4 class="text-uppercase mb-4">Location</h4>
                     <p class="lead mb-0">
 
-                       ####
+                        ####
 
                     </p>
                 </div>
@@ -131,6 +131,41 @@
     <!-- Custom scripts for this template -->
     <script src="~/js/freelancer.min.js"></script>
     @RenderSection("Scripts", required: false)
+
+
+    <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Content loaded via AJAX -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Content loaded via AJAX -->
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Load the Edit form in the modal
+            $('.btn-edit').on('click', function () {
+                var id = $(this).data('id');
+                var controller = `@ViewData["Controller"]`;
+                $('#modal-edit').find('.modal-content').load(`/${controller}/Edit/` + id);
+                $('#modal-edit').modal('show');
+            });
+
+            $('.btn-delete').on('click', function () {
+                var id = $(this).data('id');
+                var controller = `@ViewData["Controller"]`;
+                $('#modal-delete').find('.modal-content').load(`/${controller}/Delete/` + id);
+                $('#modal-delete').modal('show');
+            });
+        });
+    </script>
+
 </body>
 
 </html>

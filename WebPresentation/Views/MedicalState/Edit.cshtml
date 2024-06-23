@@ -1,4 +1,4 @@
-﻿@model  MedicalStateModel
+﻿@model MedicalStateModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,50 +6,55 @@
 
 }
 
-<section class="page-section" style="background-color: #f4f5f7;">
+
+<div class="modal-header">
+    <h5 class="modal-title" id="modalEditLabel">Edit Medicine</h5>
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-8 col-lg-8 mb-4 mb-lg-0 p-4">
-                <div class="card mb-3" style="border-radius: .5rem;">
-                                <form asp-action="Edit" asp-controller="MedicalState">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <div class="col-5">
-                                            <label asp-for="StateName" class="control-label"></label>
-                                            <input asp-for="StateName" class="form-control" />
-                                            <span asp-validation-for="StateName" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-5">
-                                            <label asp-for="PrescriptionTime" class="control-label"></label>
-                                            <input asp-for="PrescriptionTime" class="form-control" />
-                                            <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="StateDescription" class="control-label"></label>
-                                        <textarea asp-for="StateDescription" class="form-control" >
-                                           </textarea>
-                                        <span asp-validation-for="StateDescription" class="text-danger"></span>
-
-                                    </div>
-                                    <div>
-                                    </div>  <input type="hidden" asp-for="Id" />
-
-                                    <div class="form-group">
-                                        <input hidden value="@ViewBag.id" name="pId" />
-                                        <input type="submit" value="Save" class="btn btn-primary" />
-                                    </div>
-                                    <input hidden value="@Model.PatientId" asp-for="@Model.PatientId" />
-                                </form>
-                      
-                            <a asp-action="Index">Back to List</a>
+                  <form asp-action="Edit" asp-controller="MedicalState">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <div class="col-5">
+                                <label asp-for="StateName" class="control-label"></label>
+                                <input asp-for="StateName" class="form-control" />
+                                <span asp-validation-for="StateName" class="text-danger"></span>
+                            </div>
+                            <div class="col-5">
+                                <label asp-for="PrescriptionTime" class="control-label"></label>
+                                <input asp-for="PrescriptionTime" class="form-control" />
+                                <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
+                            </div>
                         </div>
-                      
-               
-              </div>
-            </div>
-        </div>
-</section>
-                        @section Scripts {
-                            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-                        }
+                        <div class="form-group">
+                            <label asp-for="StateDescription" class="control-label"></label>
+                            <textarea asp-for="StateDescription" class="form-control">
+                                           </textarea>
+                            <span asp-validation-for="StateDescription" class="text-danger"></span>
+
+                        </div>
+                        <div>
+                        </div>  <input type="hidden" asp-for="Id" />
+
+                                <div class="form-group">
+                                    <input hidden value="@ViewBag.id" name="pId" />
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                        <input hidden value="@Model.PatientId" asp-for="@Model.PatientId" />
+                    </form>
+
+                    <a asp-action="Index">Back to List</a>
+                </div>
+
+
+    </div>
+    </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -22,6 +22,18 @@ namespace WebPresentation.Controllers
             _service = service;
 
         }
+        public IActionResult Dummy(int id)
+        {
+            return PartialView(id);
+        }
+
+        // Post method to edit a medicine
+        [HttpPost]
+        public IActionResult Dummy(int id, string s)
+        {
+                return RedirectToAction(nameof(Details),new { Id= id});
+        }
+
         public async virtual Task<IActionResult> Details(int? id)
         {
 
@@ -49,7 +61,7 @@ namespace WebPresentation.Controllers
                 return View("NotFound");
             }
 
-            return View(TModel);
+            return PartialView(TModel);
         }
 
         public async virtual Task<IActionResult> Index()
@@ -80,7 +92,7 @@ namespace WebPresentation.Controllers
             {
                 return View("NotFound");
             }
-            return View(tModel);
+            return PartialView(tModel);
         }
 
         [HttpPost]
@@ -107,7 +119,7 @@ namespace WebPresentation.Controllers
                 }
                 return RedirectToAction("Details",new { id=tModel.Id});
             }
-            return View(tModel);
+            return PartialView(tModel);
         }
 
         public IActionResult Create()

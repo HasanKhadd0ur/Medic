@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Medicine Details ";
-
+    ViewData["Controller"] = "Medicine";
     Layout = "_AdminLayout";
     var a = 0;
 }
+
 <section class="page-section">
     <div class="container  h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -18,10 +19,8 @@
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                             <h5>@Model.TradeName</h5>
                             <p>Category: @(Model.Category is null ? "":Model.Category.Name)</p>
-                            <a asp-action="Edit" asp-route-id="@Model.Id">
-                                <i class="far fa-edit mb-5"></i>
-                            </a>
-
+                            <button class="btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
+                            <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">
@@ -47,18 +46,20 @@
                                                 <td>#</td>
                                                 <td>Name</td>
                                                 <td>Description</td>
+                                                <td>Ratio</td>
                                                 <td>Manage</td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var ing in Model.Ingredients)
+                                            @foreach (var ing in Model.MedicineIngredients)
                                             {
                                             <tr class=" mb-3">
                                                 <td>@(a+=1)</td>
-                                                <td>@ing.Name</td>
-                                                <td>@ing.Description</td>
+                                                <td>@ing.Ingredient.Name</td>
+                                                <td>@ing.Ingredient.Description</td>
+                                                <td>@ing.Ratio</td>
                                                 <td>
-                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.Name From this medicine", "ReomveIngredient",@ing.Id)'>Delete</button>
+                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.Ingredient.Name From this medicine", "ReomveIngredient",@ing.Id)'>Delete</button>
                                                 </td>
 
                                             </tr>
@@ -123,12 +124,13 @@
             }
         }
         async function updateIngredients() {
-               let id =@Model.Id;
-
+            let id =@Model.Id;
+            debugger;
             try {
-                let response = await fetch(`/Ingredient/GetIngredients`); // Adjust the endpoint as needed
+                let response = await fetch(`/Medicine/GetDetails/${id}`); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
+                    medicines = medicines.medicineIngredients
                     populateTable(medicines, 'Ingredients_');
                 } else {
                     console.error('Error:', response.statusText);
@@ -148,6 +150,7 @@
                 <tr>
                     <td>Name</td>
                     <td>Description</td>
+                    ${tableName=="t" ?" ":"<td>Ratio</td>"}
                     <td>Manage</td>
 
                 </tr>
@@ -162,6 +165,7 @@
                 row.innerHTML = `
                     <td>${medicine.name}</td>
                     <td>${medicine.description}</td>
+                    ${tableName == "t" ? " " : medicine.ratio}
                     `;
                 row.innerHTML +=
                     (tableName != "t") ?
@@ -219,7 +223,7 @@
 
         }
         async function addIngredientT(med) {
-            let id =@Model.Id
+            let id =@Model.Id;
             try {
                 var r = document.getElementById('r').value;
                 console.log(r)
@@ -246,7 +250,7 @@
             }
         }
         async function DetailMedicine(med) {
-            let id =@Model.Id
+            let id =@Model.Id;
             try {
                 debugger
                 let response = await fetch(`/Medicine/GetDetails/${med}`, {
@@ -271,9 +275,9 @@
         }
 
         async function ReomveIngredient(med) {
-            let id =@Model.Id
+            let id =@Model.Id;
             try {
-                showToast('Loading ... ', 'Removing medicine');
+               /// showToast('Loading ... ', 'Removing medicine');
 
                 let response = await fetch(`/Medicine/ReomveIngredient`, {
                     method: 'POST',
@@ -286,7 +290,7 @@
                 if (response.ok) {
                     let result = await response.json();
 
-                    updateMedicines();
+                    updateIngredients();
 
                     showToast('Medicine Reomved successfully', 'Success');
                 } else {

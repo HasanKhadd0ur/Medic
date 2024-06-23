@@ -184,3 +184,4 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.ge
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\Dummy.cshtml.g.cs

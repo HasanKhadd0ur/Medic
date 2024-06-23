@@ -13,20 +13,15 @@ namespace WebPresentation.Controllers
     public class MedicineController : CRUDController<MedicineModel>
     {
         private readonly IIngredientService _ingredientService;
-        private readonly IMedicineService _medicineService;
-        private readonly IPatientService _patientService;
-
+        
         public MedicineController(UserManager<User> userManager,
             IMedicineService medicineService ,
-            IIngredientService ingredientService ,
-            IPatientService patientService
-
+            IIngredientService ingredientService 
+            
             ):base(userManager ,medicineService)
         {
             _ingredientService =ingredientService;
-            _medicineService = medicineService;
-            _patientService =patientService;
-
+            
         }
 
 
@@ -34,9 +29,9 @@ namespace WebPresentation.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public  IActionResult ReomveIngredient([FromBody] MedicineIngredientModel medicineIngredientModel)
+        public async  Task<IActionResult> ReomveIngredient([FromBody] MedicineIngredientModel medicineIngredientModel)
         {
-             _ingredientService.RemoveFromMedicine(medicineIngredientModel);
+             await _ingredientService.RemoveFromMedicine(medicineIngredientModel);
 
             return Ok(new {message = "removed" });
         }

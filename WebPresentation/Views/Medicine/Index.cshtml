@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
 
+    ViewData["Controller"] = "Medicine";
     Layout = "_AdminLayout";
 }
 
@@ -100,13 +101,14 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-pen-to-square text-bg-info"></i></a>
+
+                    <button class="btn btn-warning btn-edit" data-id="@item.Id">Edit</button>
+                    <button class="btn btn-danger btn-delete" data-id="@item.Id">Delete</button>
+
                     <a asp-action="Details" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-address-card"></i></a>
-                    <a asp-action="Delete" asp-controller="Medicine" asp-route-id="@item.Id"><i class="far fa-trash-can text-bg-danger"></i></a>
                 </td>
             </tr>
             }
         </tbody>
     </table>
 </div>
-
