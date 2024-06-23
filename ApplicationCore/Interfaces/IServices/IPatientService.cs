@@ -15,7 +15,9 @@ namespace ApplicationCore.Interfaces.IServices
         public Task<IEnumerable<MedicalStateModel>> GetPatientMedicalStates(int patientId);
         public Task<MedicalStateModel> GetMedicalStateDetails(int id);
         public Task<PatientModel> GetByUserEmail(String email );
-    //    public Task<IEnumerable<PatientModel>>GetAll();
+        public Task<PatientModel> GetByUserId(String email);
+
+        //    public Task<IEnumerable<PatientModel>>GetAll();
         public void AddMedicalState(int patientId, MedicalStateModel medicalState);
        // public Patient GetDetails(int id);
       //  public void Insert(PatientModel patient);

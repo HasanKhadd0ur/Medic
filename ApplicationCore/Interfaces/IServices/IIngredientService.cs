@@ -11,7 +11,7 @@ namespace ApplicationCore.Interfaces.IServices
     public interface IIngredientService  : IService<IngredientModel>
     {
         public Task<MedicineIngredientModel> AddToMedicine(MedicineIngredientModel medicineIngredientModel);
-        public void RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel);
+        public Task RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel);
 
     }
 }

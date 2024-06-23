@@ -66,5 +66,11 @@ namespace ApplicationCore.Services
             return _mapper.Map<PatientModel>(ps.Where(p => p.User.Email == email).FirstOrDefault());
 
         }
+        public async Task<PatientModel> GetByUserId(string id)
+        {
+            var ps = await _unitOfWork.Entity.GetAll(_specification);
+            return _mapper.Map<PatientModel>(ps.Where(p => p.User.Id == id).FirstOrDefault());
+
+        }
     }
 }

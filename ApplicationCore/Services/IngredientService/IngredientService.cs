@@ -34,7 +34,7 @@ namespace ApplicationCore.Services
             _unitOfWork.Commit();
             return medicineIngredientModel;
         }
-        public async void RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel)
+        public async Task  RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel)
         {
             var ingredient = await _unitOfWork.Ingredients.GetById(medicineIngredientModel.IngredientId, _specification);
            
