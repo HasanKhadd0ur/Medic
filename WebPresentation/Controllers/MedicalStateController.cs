@@ -3,18 +3,19 @@ using ApplicationCore.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
+using WebPresentation.ViewModels;
+using AutoMapper;
+using System.Collections.Generic;
+using ApplicationDomain.Exceptions;
 
 namespace WebPresentation.Controllers
 {
 
     [Authorize(Roles = "patient")]
-    public class MedicalStateController : CRUDController<MedicalStateModel>
+    public class MedicalStateController : CRUDController<MedicalStateDTO,MedicalStateViewModel>
     {
         private readonly IMedicalStateService _medicalStateService;
         private readonly IPatientService _patientService;
@@ -24,8 +25,9 @@ namespace WebPresentation.Controllers
         public MedicalStateController(UserManager<User> userManager,
             IMedicalStateService medicalStateService ,
             IPatientService patientService ,
-            IMedicineService medicineService
-            ) : base(userManager,medicalStateService)
+            IMedicineService medicineService,
+            IMapper mapper
+            ) : base(userManager,medicalStateService,mapper)
         {
             _medicalStateService = medicalStateService;
             _patientService =patientService;
@@ -34,11 +36,13 @@ namespace WebPresentation.Controllers
 
         public async override Task<IActionResult> Index( )
         {
-                var u = GetUserId();
-            var p = await _patientService.GetAll();
-                 var pId= p.Where(p => p.User.Id == u).FirstOrDefault().Id;
-                var meds =await ((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
-                return View(meds);
+            
+            var u = GetUserId();
+            var p = await _patientService.GetByUserId(u);
+            var pId= p.Id;
+            var meds =await ((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
+                
+            return View(_mapper.Map<IEnumerable<MedicalStateViewModel>>(meds));
             
         }
 
@@ -46,7 +50,7 @@ namespace WebPresentation.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public override IActionResult Create(MedicalStateModel medicalState, int id)
+        public override IActionResult Create(MedicalStateViewModel medicalState, int id)
         {
             if (ModelState.IsValid)
             {
@@ -54,102 +58,93 @@ namespace WebPresentation.Controllers
                 var p = _patientService.GetByUserId(uId).Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
-                var n= ((IMedicalStateService)_service).AddToPateint(p,medicalState);
+                var n= ((IMedicalStateService)_service).AddToPateint(p,_mapper.Map<MedicalStateDTO>(medicalState));
                 
                 return RedirectToAction("Details", "MedicalState" , new { Id =n.Id });
             }
             return View(medicalState);
         }
 
-
-        //[HttpGet]
-        //public IActionResult AddMedicine(int id)
-        //{
-        //    var all =  _medicineService.GetAll();
-        //    ViewBag.MedicalStateId = id;
-        //    return View(all);
-        //}
-        //[HttpPost]
-        //[ActionName("AddMedicine")]
-        //public IActionResult AddMedicineT(int id, int med)
-        //{
-        //   _medicineService.AddToMedicalState(new MedicalStateMedicineModel{MedicalStateId=id ,MedicineId=med });
-
-        //    return RedirectToAction("Details", "MedicalState", new { Id = id });
-        //}
-
-
-        //[ActionName("RemoveMedicine")]
-        //public IActionResult RemoveMedicinej(int id, int med)
-        //{
-        //    _medicineService.RemoveFromMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
-
-        //    return RedirectToAction("Details", "MedicalState", new { Id = id });
-        //}
-
+        
         #region json 
 
         [HttpGet]
-        public JsonResult GetMedicalStateMedicine(int id) {
+        public async Task<IActionResult> GetMedicalStateMedicine(int id) {
 
-            var r =  _medicalStateService.GetDetails(id).Result.Medicines;
-            return Json(r);
+            var all = await _medicalStateService.GetDetails(id);
+            return Ok(new { message = "Succed", result = all.Medicines });
         }
 
         [HttpPost]
 
-        public JsonResult AddMedicine([FromBody]MedicalStateMedicineModel medicalStateMedicineModel)
+        public IActionResult AddMedicine([FromBody]MedicalStateMedicineVModel medicalStateMedicine)
         {
             try
             {
+                var medicalStateMedicineModel = _mapper.Map<MedicalStateMedicineDTO>(medicalStateMedicine);
                 _medicineService.AddToMedicalState(medicalStateMedicineModel);
 
-                return Json("Added");
+                return Ok(new { message = "Succed", result = "add" }); 
             }
+            catch(DomainException e )
+            {
+
+                return NotFound(new { message = e.Message, result = "faild" });
+            }
+
             catch
             {
 
-                return Json("faild");
+                return NotFound(new { message = "Error ", result = "faild" });
             }
         }
 
         [HttpPost]
-        public JsonResult RemoveMedicine([FromBody]MedicalStateMedicineModel medicalStateMedicineModel)
+        public IActionResult RemoveMedicine([FromBody]MedicalStateMedicineVModel medicalStateMedicine)
         {
-            _medicineService.RemoveFromMedicalState(medicalStateMedicineModel);
-
-            return Json("Reomved");
-        }
-
-        [Authorize(Roles = "patient")]
-        public async Task<JsonResult> GetDetails(int? id)
-        {
-
-            if (id is null)
+            MedicalStateMedicineDTO medicalStateMedicineModel = _mapper.Map<MedicalStateMedicineDTO>(medicalStateMedicine);
+            try
             {
-                return Json("");
+                _medicineService.RemoveFromMedicalState(medicalStateMedicineModel);
+
+                return Ok(new { message = "Succed", result = "removed" });
+
             }
-            else
+
+
+            catch (DomainException e)
             {
-                MedicineModel TModel = await _medicineService.GetDetails((int)id);
-                if (TModel is null)
-                    return Json("");
-                return Json(TModel);
+
+                return NotFound(new { message = e.Message, result = "faild" });
+            }
+
+            catch
+            {
+
+                return NotFound(new { message = "Error ", result = "faild" });
             }
         }
-
-        [Authorize(Roles = "patient")]
 
         [HttpGet]
-
-        public JsonResult GetMedicines()
+        public async Task<IActionResult> GetALLMedicines()
         {
-            var all = _medicineService.GetAll().Result;
-            return new JsonResult(all);
+            var all = await _medicineService.GetAll();
+
+            return Ok(new { message = "Succed", result = all });
 
         }
+        public async Task<IActionResult> GetMedicineDetails(int? id )
+        {
+            if (id is null )
+                return Ok(new { message = "No ID Provided", result = "Faild" });
 
-       
+            var all = await _medicineService.GetDetails((int)id);
+            if(all is null )
+                return NotFound(new { message = "No Data Found", result = "Faild" });
+
+            return Ok(new { message = "Succed", result = all });
+
+        }
 
         #endregion json
     }

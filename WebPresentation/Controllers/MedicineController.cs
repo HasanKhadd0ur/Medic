@@ -1,69 +1,56 @@
 ﻿using ApplicationDomain.Entities;
 using ApplicationCore.Interfaces.IServices;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
 using System.Threading.Tasks;
+using WebPresentation.ViewModels;
+using AutoMapper;
 
 namespace WebPresentation.Controllers
 {
    [Authorize(Roles = "Admin")]
-    public class MedicineController : CRUDController<MedicineModel>
+    public class MedicineController : CRUDController<MedicineDTO,MedicineViewModel>
     {
         private readonly IIngredientService _ingredientService;
         
-        public MedicineController(UserManager<User> userManager,
+        public MedicineController(
+            UserManager<User> userManager,
             IMedicineService medicineService ,
-            IIngredientService ingredientService 
+            IIngredientService ingredientService,
+            IMapper mapper
             
-            ):base(userManager ,medicineService)
+            ):base(userManager ,medicineService,mapper)
         {
             _ingredientService =ingredientService;
-            
-        }
-
-
-
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async  Task<IActionResult> ReomveIngredient([FromBody] MedicineIngredientModel medicineIngredientModel)
-        {
-             await _ingredientService.RemoveFromMedicine(medicineIngredientModel);
-
-            return Ok(new {message = "removed" });
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> AddIngredints([FromBody] MedicineIngredientModel medicineIngredientModel)
-        {
-            await _ingredientService.AddToMedicine(medicineIngredientModel);
-            return Ok(new { message = "added"});
         }
 
 
 
         #region json 
 
-        //[Authorize(Roles = "Admin")]
-        //public IActionResult AddIngredints(int id)
-        //{
-        //    var s = _ingredientService.GetAll().Result;
-        //    ViewBag.MedicineId = id;
-        //    return View(s);
+        [HttpPost]
+        public async  Task<IActionResult> ReomveIngredient([FromBody] MedicineIngredientDTO medicineIngredientModel)
+        {
+             await _ingredientService.RemoveFromMedicine(medicineIngredientModel);
 
-        //}
-        //[Authorize(Roles = "Admin")]
-        //[HttpPost]
-        //public IActionResult AddIngredints(int id, int med, int ratio)
-        //{
-        //    _ingredientService.AddToMedicine(new MedicineIngredientModel { Id = id, MedicineId = med, Ratio = ratio });
-        //    return RedirectToAction("Details", "Medicine", new { Id = med });
-        //}
+            return Ok(new {message = "removed" ,result ="Successed"});
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> AddIngredient([FromBody] MedicineIngredientDTO medicineIngredientModel)
+        {
+            await _ingredientService.AddToMedicine(medicineIngredientModel);
+            return Ok(new { message = "added", result = "Successed" });
+        }
+        public async Task<IActionResult> GetMedcineIngredient(int id) {
+
+            var r = await ((IMedicineService)_service).GetMedicineIngredients(id);
+
+            return Ok(new { message = "removed", result = r });
+
+        }
         #endregion json 
 
     }

@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using WebPresentation.Models;
 using ApplicationCore.Interfaces.IServices;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
+using AutoMapper;
+using WebPresentation.ViewModels;
+using System.Threading.Tasks;
 
 namespace WebPresentation.Controllers
 {
@@ -18,41 +17,36 @@ namespace WebPresentation.Controllers
 [Authorize(Roles ="patient")]
     public class HomeController : BaseController
     {
+        private readonly IMapper _mapper;
         private readonly IPatientService _patientService;
         
         public HomeController(
                 UserManager<User> userManager,
-                IPatientService patientService
+                IPatientService patientService,
+                IMapper mapper
             ):base(userManager)
         {
+            _mapper = mapper;
             _patientService = patientService;
             
         }
 
-        private PatientModel _getCurrentPatient() {
-            var u = GetCurrentUser();
+        private async Task<PatientViewModel> getCurrentPatient() {
+
             var userId = GetUserId();
-
-            var patient = _patientService
-                .GetAll(
-                 ).Result
-                .Where(
-                    u => u.User.Id == userId
-                    )
-                .FirstOrDefault();
-            return patient;
+            var patient =await  _patientService.GetByUserId(userId);
+            return _mapper.Map<PatientViewModel>(patient);
 
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-
-            return View(_getCurrentPatient());
+            var t =await  getCurrentPatient();
+            return View(t);
         }
-
 
         public   IActionResult Details(int? id ) {
 
-            return View(_getCurrentPatient());
+            return View(getCurrentPatient());
         
         }
 

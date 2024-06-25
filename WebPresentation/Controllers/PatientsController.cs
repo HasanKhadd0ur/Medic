@@ -1,25 +1,26 @@
-﻿using ApplicationCore.DomainModel;
+﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Entities;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebPresentation.ViewModel.Identity;
+using WebPresentation.ViewModels;
 
 namespace WebPresentation.Controllers
 {
     [Authorize(Roles ="Admin")]
-    public class PatientsController : CRUDController<PatientModel>
+    public class PatientsController : CRUDController<PatientDTO,PatientViewModel>
     {
 
 
-        public PatientsController(UserManager<User> userManager,
-            IPatientService patientService
-            ) : base(userManager, patientService)
+        public PatientsController(
+            UserManager<User> userManager,
+            IPatientService patientService,
+            IMapper mapper
+            ) : base(userManager, patientService,mapper)
         {
 
         }

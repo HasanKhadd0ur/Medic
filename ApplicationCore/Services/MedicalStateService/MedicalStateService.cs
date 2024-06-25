@@ -4,12 +4,12 @@ using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Abstraction;
 using ApplicationDomain.Specification;
 using AutoMapper;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
 using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public class MedicalStateService :ServiceBase<MedicalState ,MedicalStateModel>, IMedicalStateService
+    public class MedicalStateService :ServiceBase<MedicalState ,MedicalStateDTO>, IMedicalStateService
     {
         
         public MedicalStateService(
@@ -18,23 +18,23 @@ namespace ApplicationCore.Services
             ):base(unitOfWork,Mapper)
         {
             _specification = new MedicalStateWithMedicinesSpecification();
-        
         }
-        public MedicalStateModel AddToPateint(int patientId , MedicalStateModel medicalStateModel)
+        
+        public MedicalStateDTO AddToPateint(int patientId , MedicalStateDTO medicalStateDto)
         {
-            medicalStateModel.PatientId = patientId;
+            medicalStateDto.PatientId = patientId;
             
-            var im =medicalStateModel;
+            var im = medicalStateDto;
             
             var r = _unitOfWork.Entity.Insert(_mapper.Map<MedicalState>(im));
             _unitOfWork.Commit();
-            return _mapper.Map<MedicalStateModel>(r);
+            return _mapper.Map<MedicalStateDTO>(r);
         }
 
         
-        public async Task<IEnumerable<MedicalStateModel>> GetAllPatientMedicalStates(int patientId)
+        public async Task<IEnumerable<MedicalStateDTO>> GetAllPatientMedicalStates(int patientId)
         {
-           return _mapper.Map<IEnumerable<MedicalStateModel>>(
+           return _mapper.Map<IEnumerable<MedicalStateDTO>>(
 
                 await _unitOfWork.MedicalStates.GetByPatient(patientId, _specification)
                

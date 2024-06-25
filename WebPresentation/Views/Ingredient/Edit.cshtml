@@ -1,4 +1,4 @@
-﻿@model IngredientModel;
+﻿@model IngredientViewModel;
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,8 +7,8 @@
 
 
 <div class="modal-header">
-    <h5 class="modal-title" id="modalEditLabel">Edit Medicine</h5>
-    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+    <h5 class="modal-title" id="modalEditLabel">Edit Ingredient</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
@@ -32,14 +32,13 @@
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+    
 </div>
 
 @section Scripts {

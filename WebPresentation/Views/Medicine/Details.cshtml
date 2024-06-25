@@ -1,4 +1,4 @@
-﻿@model MedicineModel
+﻿@model MedicineViewModel
 
 @{
     ViewData["Title"] = "Medicine Details ";
@@ -59,7 +59,7 @@
                                                 <td>@ing.Ingredient.Description</td>
                                                 <td>@ing.Ratio</td>
                                                 <td>
-                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.Ingredient.Name From this medicine", "ReomveIngredient",@ing.Id)'>Delete</button>
+                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.Ingredient.Name From this medicine", "ReomveIngredient",@ing.IngredientId)'>Delete</button>
                                                 </td>
 
                                             </tr>
@@ -109,11 +109,11 @@
         async function fetchAll() {
             try {
                 debugger
-                let response = await fetch('/Ingredient/GetIngredients'); // Adjust the endpoint as needed
+                let response = await fetch('/Ingredient/GetAll'); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
                     //   showModal('',medicines);
-                    populateTable(medicines,'t')
+                    populateTable(medicines.result,'t')
                 } else {
                     console.error('Error:', response.statusText);
                     showToast(medicines, 'error');
@@ -127,7 +127,7 @@
             let id =@Model.Id;
             debugger;
             try {
-                let response = await fetch(`/Medicine/GetDetails/${id}`); // Adjust the endpoint as needed
+                let response = await fetch(`/Medicine/GetMedcineIngredient/${id}`); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
                     medicines = medicines.medicineIngredients
@@ -173,11 +173,12 @@
                         `
                 <td>
 
-                    <button class="btn btn-danger" ondblclick="ReomveIngredient(${medicine.id})">Delete</button>
-                    </td>
+                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete ${medicine.name}From this medicine", "ReomveIngredient",${medicine.ingredient.id})'>Delete</button>
+
+</td>
                 ` :
                         `<td>
-                        <button class="btn btn-primary" onclick="addIngredient( ${medicine.id})">Add</button>
+                        <button class="btn btn-primary" onclick="addIngredient( ${medicine.id})" data-dismiss="modal" aria-label="Close">Add</button>
 
                     </td>
                 `
@@ -211,7 +212,9 @@
                             style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
                     <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
 
-                        <button class="btn btn-info" onclick="addIngredientT(${med})">Add</button>
+                        <button class="btn btn-info" onclick="addIngredientT(${med})"  data-dismiss="modal" aria-label="Close">Add</button>
+                        <button class="btn btn-primary"  data-dismiss="modal" aria-label="Close">Close</button>
+
                     </div>
                 </div>
             </div>
@@ -228,7 +231,7 @@
                 var r = document.getElementById('r').value;
                 console.log(r)
 
-                let response = await fetch(`/Medicine/AddIngredints`, {
+                let response = await fetch(`/Medicine/AddIngredient`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -327,7 +330,7 @@
                             style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
                     <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
 
-                        <button class="btn btn-danger" onclick="${action}(${param})">Delete</button>
+                        <button class="btn btn-danger" onclick="${action}(${param})" data-dismiss="modal" aria-label="Close">Delete</button>
 
                         <button class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">Close</button>
                     </div>

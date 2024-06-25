@@ -8,12 +8,12 @@ namespace ApplicationDomain.Exceptions
 {
     public class DomainException : Exception
     {
-        internal DomainException(string businessMessage)
+         public DomainException(string businessMessage)
             : base(businessMessage)
         {
         }
 
-        internal DomainException(string message, Exception innerException)
+        public DomainException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

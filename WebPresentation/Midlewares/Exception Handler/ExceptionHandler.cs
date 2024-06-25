@@ -25,6 +25,7 @@ namespace WebPresentation.Midlewares
             }
             catch (Exception ex)
             {
+
             }
         }
 

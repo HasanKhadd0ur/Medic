@@ -15,8 +15,6 @@ namespace WebPresentation.ViewModels
         public User User { get; set; }
         public String BIO { get; set; }
 
-        #region Navigations
         public ICollection<MedicalStateViewModel> MedicalStates { get; set; }
-        #endregion Navigations
     }
 }

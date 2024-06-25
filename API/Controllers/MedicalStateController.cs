@@ -1,4 +1,4 @@
-﻿using ApplicationCore.DomainModel;
+﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +15,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class MedicalStateController : CrudController<MedicalStateModel>
+    public class MedicalStateController : CrudController<MedicalStateDTO>
     {
         private readonly IPatientService _patientService;
         

@@ -1,35 +1,50 @@
-﻿using ApplicationCore.DomainModel;
+﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces;
 using ApplicationDomain.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace WebPresentation.Controllers
 {
-    public class CRUDController<T> : BaseController where T : DomainBase
+    public class CRUDController<TDto,TVModel> : BaseController where TDto : DTOBase where TVModel : ViewModels.BaseViewModel
     {
-        protected readonly IService<T> _service;
+        protected readonly IMapper _mapper;
+        protected readonly IService<TDto> _service;
+        protected Func<TDto, bool> Criteria;
         public CRUDController(
             UserManager<User> userManager,
-            IService<T> service
+            IService<TDto> service,
+            IMapper mapper
             )
             :base(userManager)
         {
-
+            _mapper = mapper;
             _service = service;
 
         }
-        public IActionResult Dummy(int id)
+
+        public async virtual Task<IActionResult> Index()
+        {
+            var DetailDto = await _service.GetAll();
+            IEnumerable<TVModel> model = _mapper.Map<IEnumerable<TVModel>>(DetailDto);
+
+            return View(model);
+
+        }
+
+        public IActionResult DummyPartial(int id)
         {
             return PartialView(id);
         }
 
-        // Post method to edit a medicine
         [HttpPost]
-        public IActionResult Dummy(int id, string s)
+        public IActionResult DummyPartial(int id, string s)
         {
                 return RedirectToAction(nameof(Details),new { Id= id});
         }
@@ -39,77 +54,78 @@ namespace WebPresentation.Controllers
 
             if (id is null)
             {
-                return View("NotFound");
+                return PartialView("_PartialNotFound");
             }
             else
             {
-                T TModel = await _service.GetDetails((int)id);
-                if (TModel is null)
-                    return View("NotFound");
-                return View(TModel);
+                TDto DetailDto = await _service.GetDetails((int)id);
+                if (DetailDto is null)
+                    return PartialView("_PartialNotFound");
+                TVModel model = _mapper.Map<TVModel>(DetailDto);
+                return View(model);
             }
         }
-
 
         public async Task< IActionResult> Delete(int id)
         {
 
-            var TModel = await _service.GetDetails(id);
+            TDto DetailDto = await _service.GetDetails(id);
 
-            if (TModel == null)
+            if (DetailDto == null)
             {
                 return View("NotFound");
             }
-
-            return PartialView(TModel);
+            TVModel model = _mapper.Map<TVModel>(DetailDto);
+            return PartialView(model);
         }
-
-        public async virtual Task<IActionResult> Index()
-        {
-            var s = await _service.GetAll();
-            return View(s);
-        }
-
 
         [HttpPost, ActionName("Delete")]
-     //   [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             _service.Delete(id);
             return RedirectToAction("Index");
         }
 
-        // GET: Projects/Edit/5
-        public IActionResult Edit(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return View("NotFound");
+                return PartialView("_PartialNotFound");
             }
-
-            T tModel = _service.GetDetails((int)id).Result;
-            if (tModel == null)
+            try
             {
-                return View("NotFound");
+                TDto tModel = await _service.GetDetails((int)id);
+                if (tModel == null)
+                {
+                    return PartialView("_PartialNotFound");
+                }
+                TVModel model = _mapper.Map<TVModel>(tModel);
+
+                return PartialView(model);
+
             }
-            return PartialView(tModel);
+            catch {
+                return PartialView("PartialNotFound");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, T tModel)
+        public IActionResult Edit(int id, TVModel viewModel)
         {
-            if (id != tModel.Id)
+            if (id != viewModel.Id)
             {
 
                 return NotFound();
             }
-
+            TDto dto = null;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    tModel = _service.Update(tModel);
+                    dto = _mapper.Map<TDto>(viewModel);
+                    dto = _service.Update(dto);
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -117,9 +133,11 @@ namespace WebPresentation.Controllers
                     return View("Error");
 
                 }
-                return RedirectToAction("Details",new { id=tModel.Id});
+                return RedirectToAction("Details",new { id=dto.Id});
             }
-            return PartialView(tModel);
+            TVModel model = _mapper.Map<TVModel>(dto);
+
+            return PartialView(model);
         }
 
         public IActionResult Create()
@@ -127,22 +145,53 @@ namespace WebPresentation.Controllers
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual IActionResult Create(T viewModel, int id)
+        public virtual IActionResult Create(TVModel viewModel, int id)
         {
             if (ModelState.IsValid)
             {
 
-                
-                viewModel= _service.Create(viewModel);
+                TDto dto = _mapper.Map<TDto>(viewModel);
+                dto= _service.Create(dto);
+                viewModel = _mapper.Map<TVModel>(dto);
+
                 return RedirectToAction("Details", new { id = viewModel.Id });
 
             }
             return View(viewModel);
         }
+   
+        #region json format 
+
+        [HttpGet]
+        public virtual async Task<IActionResult> GetDetails(int? id)
+        {
+
+            if (id is null)
+            {
+                return Ok(new { message= "No ID Provided" , result= "Faild" });
+            }
+            else
+            {
+                TDto model = await _service.GetDetails((int)id);
+                if (model is null)
+                    return Ok(new { message = "No Data Found ", result = "Faild" });
+
+                return Ok(new { message = "Succed", result = model });
+            }
+        }
+
+
+        [HttpGet]
+        public virtual async Task<IActionResult> GetALL()
+        {
+            var all = await _service.GetAll();
+
+            return  Ok(new { message = "Succed", result = all });
+
+        }
+
+        #endregion json format 
     }
 }

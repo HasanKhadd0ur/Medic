@@ -1,4 +1,4 @@
-﻿using ApplicationCore.DomainModel;
+﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicineController : CrudController<MedicineModel>
+    public class MedicineController : CrudController<MedicineDTO>
     {
         public MedicineController(
             IMedicineService medicalstateService,
@@ -28,7 +28,7 @@ namespace API.Controllers
         {
             try
             {
-                ((IMedicineService)_service).AddToMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
+                ((IMedicineService)_service).AddToMedicalState(new MedicalStateMedicineDTO { MedicalStateId = id, MedicineId = med });
 
                 return Ok(new {message= "Added"});
             }
@@ -42,7 +42,7 @@ namespace API.Controllers
         [HttpPost("RemoveMedicineJ")]
         public IActionResult RemoveMedicineJ(int id, int med)
         {
-            ((IMedicineService)_service).RemoveFromMedicalState(new MedicalStateMedicineModel { MedicalStateId = id, MedicineId = med });
+            ((IMedicineService)_service).RemoveFromMedicalState(new MedicalStateMedicineDTO { MedicalStateId = id, MedicineId = med });
 
             return Ok(new { message = "REmoved" });
         }

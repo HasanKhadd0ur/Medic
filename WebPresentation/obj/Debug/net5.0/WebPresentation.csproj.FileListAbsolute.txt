@@ -185,3 +185,4 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCo
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\Dummy.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_PatrtialNotFound.cshtml.g.cs

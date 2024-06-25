@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.DomainModel
+namespace ApplicationCore.DTOs
 {
-    public class MedicineIngredientModel : DomainBase
+    public class MedicineIngredientDTO : DTOBase
     {
         public int Ratio { get; set; }
         public int MedicineId { get; set; }
         public int IngredientId { get; set; }
 
-        public MedicineModel Medicine { get; set; }
-        public IngredientModel Ingredient { get; set; }
+        public MedicineDTO Medicine { get; set; }
+        public IngredientDTO Ingredient { get; set; }
     }
 }

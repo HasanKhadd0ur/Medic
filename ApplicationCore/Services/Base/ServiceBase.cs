@@ -1,4 +1,4 @@
-﻿using ApplicationCore.DomainModel;
+﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces;
 using ApplicationDomain.Abstraction;
 using ApplicationDomain.Exceptions;
@@ -6,15 +6,13 @@ using ApplicationDomain.Entities;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-    public class ServiceBase<TEntity,TModel> : IService<TModel> where  TEntity : EntityBase  where TModel : DomainBase 
+    public class ServiceBase<TEntity,TDto> : IService<TDto> where  TEntity : EntityBase  where TDto : DTOBase 
     {
-        protected readonly IMapper _mapper;
+        protected  IMapper _mapper;
         protected readonly IUnitOfWork<TEntity> _unitOfWork;
 
         protected ISpecification<TEntity> _specification;
@@ -29,30 +27,30 @@ namespace ApplicationCore.Services
             _mapper = mapper;
         
         }
-        public async Task<IEnumerable<TModel>> GetAll()
+        public async Task<IEnumerable<TDto>> GetAll()
         {
                 var r = await _unitOfWork.Entity.GetAll(
                 _specification
                  );
-            return _mapper.Map<IEnumerable<TModel>>(r);
+            return _mapper.Map<IEnumerable<TDto>>(r);
         }
-        public TModel Create(TModel model )
+        public TDto Create(TDto model )
         {
 
             TEntity entity = _unitOfWork.Entity.Insert(_mapper.Map<TEntity>(model));
             _unitOfWork.Commit();
-            return _mapper.Map<TModel>(entity);
+            return _mapper.Map<TDto>(entity);
         }
 
-        public TModel Update(TModel model)
+        public TDto Update(TDto model)
         {
 
             TEntity entity = _unitOfWork.Entity.Update(_mapper.Map<TEntity>(model));
             _unitOfWork.Commit();
-            return _mapper.Map<TModel>(entity);
+            return _mapper.Map<TDto>(entity);
         }
 
-        public async Task<TModel> GetDetails(int id)
+        public async Task<TDto> GetDetails(int id)
         {
 
             var model = await _unitOfWork.Entity.GetById(id,
@@ -60,7 +58,7 @@ namespace ApplicationCore.Services
             if (model is null) {
                 throw new NotFoundException();
             }
-            return _mapper.Map<TModel>(model);
+            return _mapper.Map<TDto>(model);
 
         }
 
@@ -70,6 +68,28 @@ namespace ApplicationCore.Services
             _unitOfWork.Commit();
         }
 
+        public async Task<IEnumerable<TDto>> GetByCriteria(Func<TDto, bool> Cretira)
+        {
+            Func<TEntity, bool> t = MapFunc(Cretira);
+            var ol = _specification.Criteria;
 
+            _specification.Criteria = expr =>t.Invoke(expr);
+
+            var result =await _unitOfWork.Entity.GetAll(_specification);
+            _specification.Criteria = ol;
+
+
+            return _mapper.Map<IEnumerable<TDto>>(result);
+        }
+        public Func<EntityBase, bool> MapFunc(Func<TDto, bool> dtoFunc)
+        {
+            return entity =>
+            {
+                // Map the EntityBase instance to a DTO instance
+                var dto = _mapper.Map<TDto>(entity);
+                // Invoke the original function on the mapped DTO
+                return dtoFunc(dto);
+            };
+        }
     }
 }

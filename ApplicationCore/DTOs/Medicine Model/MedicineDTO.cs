@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.DomainModel
+namespace ApplicationCore.DTOs
 {
-    public class MedicineModel : DomainBase
+    public class MedicineDTO : DTOBase
     {
 
         public String TradeName { get; set; }
@@ -18,12 +18,10 @@ namespace ApplicationCore.DomainModel
         public int Price { get; set; }
         public String Image { get; set; }
         public int Dosage { get; set; }
-        public CategoryModel Category { get; set; }
-        public MedicineTypeModel MedicineType { get; set; }
-        public ICollection<IngredientModel> Ingredients { get; set; }
-     //  public ICollection<MedicalStateModel> MedicalStates { get; set; }
-     //   public ICollection<MedicalStateMedicineModel> MedicalStateMedicines { get; set; }
-        public ICollection<MedicineIngredientModel> MedicineIngredients { get; set; }
+        public CategoryDTO Category { get; set; }
+        public MedicineTypeDTO MedicineType { get; set; }
+        public ICollection<IngredientDTO> Ingredients { get; set; }
+        public ICollection<MedicineIngredientDTO> MedicineIngredients { get; set; }
 
     }
 }

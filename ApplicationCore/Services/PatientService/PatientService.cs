@@ -10,11 +10,11 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
 
 namespace ApplicationCore.Services
 {
-    public class PatientService : ServiceBase<Patient ,PatientModel> , IPatientService
+    public class PatientService : ServiceBase<Patient ,PatientDTO> , IPatientService
     {
         private MedicalStateWithMedicinesSpecification _medicalStateSpecification;
         
@@ -27,10 +27,10 @@ namespace ApplicationCore.Services
             _medicalStateSpecification = new MedicalStateWithMedicinesSpecification();
         }
 
-        public async Task<IEnumerable<MedicalStateModel>> GetPatientMedicalStates(int patientId) {
+        public async Task<IEnumerable<MedicalStateDTO>> GetPatientMedicalStates(int patientId) {
 
 
-            return _mapper.Map<IEnumerable<MedicalStateModel>>(
+            return _mapper.Map<IEnumerable<MedicalStateDTO>>(
                 await _unitOfWork.MedicalStates
                 .GetByPatient(
                 patientId, _medicalStateSpecification
@@ -38,14 +38,14 @@ namespace ApplicationCore.Services
 
         }
         
-        public async Task< MedicalStateModel> GetMedicalStateDetails(int id)
+        public async Task< MedicalStateDTO> GetMedicalStateDetails(int id)
         {
            
-            return _mapper.Map<MedicalStateModel>(await  _unitOfWork.MedicalStates.GetById(id,_medicalStateSpecification));
+            return _mapper.Map<MedicalStateDTO>(await  _unitOfWork.MedicalStates.GetById(id,_medicalStateSpecification));
 
         }
 
-        public void AddMedicalState (int patientId, MedicalStateModel medicalState) {
+        public void AddMedicalState (int patientId, MedicalStateDTO medicalState) {
             var ptient = _unitOfWork.Entity.GetById(patientId,_specification).Result;
             
             
@@ -60,16 +60,16 @@ namespace ApplicationCore.Services
             return _unitOfWork.Entity.GetById(id) is null ? false : true;
         }
 
-        public async  Task<PatientModel> GetByUserEmail(string email)
+        public async  Task<PatientDTO> GetByUserEmail(string email)
         {
             var ps = await  _unitOfWork.Entity.GetAll(_specification);
-            return _mapper.Map<PatientModel>(ps.Where(p => p.User.Email == email).FirstOrDefault());
+            return _mapper.Map<PatientDTO>(ps.Where(p => p.User.Email == email).FirstOrDefault());
 
         }
-        public async Task<PatientModel> GetByUserId(string id)
+        public async Task<PatientDTO> GetByUserId(string id)
         {
             var ps = await _unitOfWork.Entity.GetAll(_specification);
-            return _mapper.Map<PatientModel>(ps.Where(p => p.User.Id == id).FirstOrDefault());
+            return _mapper.Map<PatientDTO>(ps.Where(p => p.User.Id == id).FirstOrDefault());
 
         }
     }

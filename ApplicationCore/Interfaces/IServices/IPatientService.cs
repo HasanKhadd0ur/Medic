@@ -1,24 +1,20 @@
-﻿using ApplicationCore.DomainModel;
-using ApplicationDomain.Entities;
+﻿using ApplicationCore.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.IServices
 {
-    public interface IPatientService :IService<PatientModel>
+    public interface IPatientService :IService<PatientDTO>
     {
 
-        public Task<IEnumerable<MedicalStateModel>> GetPatientMedicalStates(int patientId);
-        public Task<MedicalStateModel> GetMedicalStateDetails(int id);
-        public Task<PatientModel> GetByUserEmail(String email );
-        public Task<PatientModel> GetByUserId(String email);
+        public Task<IEnumerable<MedicalStateDTO>> GetPatientMedicalStates(int patientId);
+        public Task<MedicalStateDTO> GetMedicalStateDetails(int id);
+        public Task<PatientDTO> GetByUserEmail(String email );
+        public Task<PatientDTO> GetByUserId(String email);
 
         //    public Task<IEnumerable<PatientModel>>GetAll();
-        public void AddMedicalState(int patientId, MedicalStateModel medicalState);
+        public void AddMedicalState(int patientId, MedicalStateDTO medicalState);
        // public Patient GetDetails(int id);
       //  public void Insert(PatientModel patient);
       //  public void Update(Patient patient);

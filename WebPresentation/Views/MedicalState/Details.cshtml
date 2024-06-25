@@ -1,7 +1,7 @@
-﻿@model MedicalStateModel
+﻿@model MedicalStateViewModel
 
 @{
-    ViewData["Title"] = "Medical State Details ";
+    ViewData["Title"] = "Medical Case Details ";
 
     ViewData["Controller"] = "MedicalState";
 
@@ -76,7 +76,7 @@
                                                     <td>@ing.Dosage</td>
                                                     <td>@ing.ManufactureName</td>
                                                     <td>
-                                                        <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName From this medical Case" , "ReomveMedicine" ,@ing.Id)'>Delete</button>
+                                                        <button class="btn btn-danger" onclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName From this medical Case" , "ReomveMedicine" ,@ing.Id)'>Delete</button>
                                                         <button class="btn btn-primary" onclick="DetailMedicine( @ing.Id)">Details</button>
 
                                                     </td>
@@ -95,7 +95,7 @@
                                 <hr />
                                 <div class="row pt-1">
 
-                                    <button onclick="fetchMedicines()" class="btn btn-primary">Get Medicines </button>
+                                    <button onclick="fetchMedicines()" class="btn btn-primary">Get All Medicines </button>
 
                                 </div>
                             </div>
@@ -136,9 +136,9 @@
                     </button>
                 </div>
                 <div class="modal-body text-start p-3">
-                    <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">${title}</h5>
+                    <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel">title</h5>
 
-                    <p class=" mb-5"> ${message}</p>
+                    <p class=" mb-5"> message</p>
 
                     <hr class="mt-2 mb-4"
                         style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
@@ -155,10 +155,10 @@
         async function fetchMedicines() {
             try {
                 debugger
-                let response = await fetch('/MedicalState/GetMedicines'); // Adjust the endpoint as needed
+                let response = await fetch('/MedicalState/GetAllMedicines'); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
-                    populateTable(medicines, 'medicines-table');
+                    populateTable(medicines.result, 'medicines-table');
                 } else {
                     console.error('Error:', response.statusText);
                 }
@@ -174,7 +174,7 @@
                 let response = await fetch(`/MedicalState/GetMedicalStateMedicine/?id=${id}`); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
-                    populateTable(medicines, 'Ingredients_');
+                    populateTable(medicines.result, 'Ingredients_');
                 } else {
                     console.error('Error:', response.statusText);
                 }
@@ -187,7 +187,7 @@
 
             let tableBody = document.querySelector('#' + tableName);
             tableBody.innerHTML = `
-            <table class="table">
+            <table id="${tableName}" class="table">
                <thead>
           <tr class="mb-3">
             <td>ID</td>
@@ -201,9 +201,9 @@
             </td>
               </tr>
 
-            </thead ><tbody id="b"> </tbody></table>`;
+            </thead ><tbody id="${tableName +"b"}"> </tbody></table>`;
 
-            tableBody = document.querySelector('#b');
+            tableBody = document.querySelector("#" + tableName + "b");
 
             medicines.forEach(medicine => {
                 let row = document.createElement('tr');
@@ -224,8 +224,8 @@
                         `
                 <td>
 
-                    <button class="btn btn-danger" ondblclick="ReomveMedicine(${medicine.id})">Delete</button>
-                    <button class="btn btn-primary" onclick="DetailMedicine( ${medicine.id})">Details</button>
+                           <button class="btn btn-primary" onclick="DetailMedicine( ${medicine.id})">Details</button>
+                            <button class="btn btn-danger" onclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete ${medicine.name} From this medical Case" , "ReomveMedicine" ,${medicine.id})'>Delete</button>
 
                     </td>
                 ` :
@@ -242,7 +242,7 @@
         async function addMedicine(med) {
             let id =@Model.Id;
             try {
-               showToast('Loading ... ', 'Adding medicine');
+            //   showToast('Loading ... ', 'Adding medicine');
 
                 let response = await fetch(`/MedicalState/AddMedicine`, {
                     method: 'POST',
@@ -255,9 +255,10 @@
                 if (response.ok) {
                     let result = await response.json();
                     updateMedicines();
-                    showToast('Medicine added successfully', 'Success');
+                    showToast(result.message, 'Success');
                 } else {
                     console.error('Error:', response.statusText);
+                    if (response)
                     showToast('Failed to add medicine', 'Error');
                 }
             } catch (error) {
@@ -269,7 +270,7 @@
             let id =@Model.Id;
             try {
                 debugger
-                let response = await fetch(`/MedicalState/GetDetails/${med}`, {
+                let response = await fetch(`/MedicalState/GetMedicineDetails/${med}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -279,7 +280,7 @@
                 if (response.ok) {
                     let result = await response.json();
                     console.log(result)
-                    showModal('Medicine Details',result );
+                    showModal('Medicine Details', result.result);
                 } else {
                     console.error('Error:', response.statusText);
                     showToast('Failed to add medicine', 'Error');
@@ -318,32 +319,6 @@
                 showToast('Failed to remove medicine', 'Error');
             }
         }
-        async function Reomve(med) {
-            debugger
-            try {
-        //        showToast('Loading ... ', 'Removing medicine');
-
-                let response = await fetch(`/MedicalState/Delete/${med}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                   // let result = await response.json();
-
-                    document.location.href="/MedicalState/"
-                    showToast('Medicine Reomved successfully', 'Success');
-                } else {
-                    console.error('Error:', response.statusText);
-                    showToast('Failed to remove medicine', 'Error');
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                showToast('Failed to remove medicine', 'Error');
-            }
-        }
         async function DeleteConfirm(title, message, action,param) {
             debugger
             const modalBody = document.querySelector('#item-container');
@@ -368,7 +343,7 @@
                             style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
                     <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
 
-                        <button class="btn btn-danger" onclick="${action}(${param})">Delete</button>
+                        <button class="btn btn-danger" onclick="${action}(${param})" data-dismiss="modal" aria-label="Close">Delete</button>
 
                         <button class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">Close</button>
                     </div>
@@ -381,11 +356,11 @@
 
         }
             function showToast(message, title) {
-               const Modal = bootstrap.Modal.getInstance(document.getElementById('item'));
+       //        const Modal = bootstrap.Modal.getInstance(document.getElementById('item'));
             //    Modal.close();
            // if (Modal) Modal.hide();
        //     Modal.toggle();
-            Modal.dispose();
+         //   Modal.dispose();
                 const emedicineModal = new bootstrap.Modal(document.getElementById('item'));
                 emedicineModal.hide();
             const modalBody = document.querySelector('#item-container');

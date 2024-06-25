@@ -1,4 +1,4 @@
-﻿using ApplicationCore.DomainModel;
+﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces;
 using ApplicationDomain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +10,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CrudController<TModel> : BaseController where TModel : DomainBase
+    public class CrudController<TModel> : BaseController where TModel : DTOBase
     {
         protected readonly IService<TModel> _service;
 

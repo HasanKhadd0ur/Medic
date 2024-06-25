@@ -15,7 +15,7 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using ApplicationDomain.Abstraction;
 using ApplicationDomain.Repositories;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
 using ApplicationCore.Mapper;
 using System;
 using Microsoft.AspNetCore.Http;

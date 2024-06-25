@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.DomainModel
+namespace ApplicationCore.DTOs
 {
-    public class MedicineTypeModel : DomainBase
+    public class MedicineTypeDTO : DTOBase
     {
         public String TypeName { get; set; }
-      //  public ICollection<MedicineModel> Medicines { get; set; }
     }
 }

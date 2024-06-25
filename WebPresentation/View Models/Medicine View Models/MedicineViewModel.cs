@@ -1,9 +1,5 @@
-﻿using ApplicationDomain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebPresentation.ViewModels
 {
@@ -18,8 +14,8 @@ namespace WebPresentation.ViewModels
         public int Price { get; set; }
         public String Image { get; set; }
         public int Dosage { get; set; }
-        public String Category { get; set; }
-        public String MedicineType { get; set; }
+        public CategoryViewModel Category { get; set; }
+        public MedicineTypeViewModel MedicineType { get; set; }
         public ICollection<IngredientViewModel> Ingredients { get; set; }
         public ICollection<MedicineIngredientViewModel> MedicineIngredients { get; set; }
 

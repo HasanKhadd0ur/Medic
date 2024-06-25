@@ -3,17 +3,15 @@ using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.IServices;
 using ApplicationDomain.Abstraction;
 using ApplicationDomain.Specification;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace ApplicationCore.Services
 {
-    public class IngredientService : ServiceBase<Ingredient,IngredientModel> , IIngredientService
+    public class IngredientService : ServiceBase<Ingredient,IngredientDTO> , IIngredientService
     {
         public IngredientService(
             IUnitOfWork<Ingredient> unitOfWork,
@@ -24,22 +22,23 @@ namespace ApplicationCore.Services
         }
 
 
-        public async Task<MedicineIngredientModel> AddToMedicine(MedicineIngredientModel medicineIngredientModel) {
-           var medicine = await _unitOfWork.Entity.GetById(medicineIngredientModel.IngredientId,_specification);
-            MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientModel);
+        public async Task AddToMedicine(MedicineIngredientDTO medicineIngredientDto) {
+           var medicine = await _unitOfWork.Entity.GetById(medicineIngredientDto.IngredientId,_specification);
+            MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientDto);
             medicine.MedicineIngredients.Add(
                 medicineIngredient
                 );
             _unitOfWork.Entity.Update(medicine);
             _unitOfWork.Commit();
-            return medicineIngredientModel;
+       
         }
-        public async Task  RemoveFromMedicine(MedicineIngredientModel medicineIngredientModel)
+
+        public async Task  RemoveFromMedicine(MedicineIngredientDTO medicineIngredientDto)
         {
-            var ingredient = await _unitOfWork.Ingredients.GetById(medicineIngredientModel.IngredientId, _specification);
+            var ingredient = await _unitOfWork.Ingredients.GetById(medicineIngredientDto.IngredientId, _specification);
            
-            MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientModel);
-            var m =ingredient.MedicineIngredients.Where(p => p.MedicineId == medicineIngredientModel.MedicineId).FirstOrDefault();
+            MedicineIngredient medicineIngredient = _mapper.Map<MedicineIngredient>(medicineIngredientDto);
+            var m =ingredient.MedicineIngredients.Where(p => p.MedicineId == medicineIngredientDto.MedicineId).FirstOrDefault();
             ingredient.MedicineIngredients.Remove(m);
 
             _unitOfWork.Entity.Update(ingredient);

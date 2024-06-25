@@ -53,7 +53,7 @@ namespace API.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                PatientModel p =await  _patientSerivce.GetByUserEmail(Input.Email);
+                PatientDTO p =await  _patientSerivce.GetByUserEmail(Input.Email);
 
                 return Ok(new {patient =p});
             }
@@ -75,7 +75,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                PatientModel p = await _patientSerivce.GetByUserEmail(model.Email);
+                PatientDTO p = await _patientSerivce.GetByUserEmail(model.Email);
 
                 return Ok(new
                 {

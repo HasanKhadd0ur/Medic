@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.DomainModel
+namespace ApplicationCore.DTOs
 { 
-    public class MedicalStateModel : DomainBase
+    public class MedicalStateDTO : DTOBase
     {
         public int PatientId { get; set; }
-
         public String StateName { get; set; }
         public String StateDescription { get; set; }
         public DateTime PrescriptionTime { get; set; }
-        public ICollection<MedicineModel> Medicines { get; set; }
-       // public ICollection<MedicalStateMedicineModel> MedicalStateMedicines { get; set; }
-
+        public ICollection<MedicineDTO> Medicines { get; set; }
+       
     }
 }

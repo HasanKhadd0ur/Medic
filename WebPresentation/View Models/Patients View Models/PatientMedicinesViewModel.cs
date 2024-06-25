@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebPresentation.ViewModel
+namespace WebPresentation.ViewModels
 {
     public class PatientMedicinesViewModel
     {

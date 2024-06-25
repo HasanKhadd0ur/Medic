@@ -2,31 +2,26 @@
 using ApplicationCore.Interfaces.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using ApplicationCore.DomainModel;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using ApplicationCore.DTOs;
+using WebPresentation.ViewModels;
+using AutoMapper;
 
 namespace WebPresentation.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class IngredientController : CRUDController<IngredientModel>
+    public class IngredientController : CRUDController<IngredientDTO,IngredientViewModel>
     {
 
-        public IngredientController(UserManager<User> userManager,
-            IIngredientService ingredientSercie
-            ) : base(userManager,ingredientSercie)
+        public IngredientController(
+            UserManager<User> userManager,
+            IIngredientService ingredientSercie,
+            IMapper mapper
+            ) : base(userManager,ingredientSercie,mapper)
         
         {
 
             
         }
-        public async Task<IActionResult> GetIngredients()
-        {
-            var s = await _service.GetAll();
-            return Ok(s);
-
-        }
-
-
+        
     }
 }

@@ -1,18 +1,15 @@
-﻿using ApplicationCore.DomainModel;
-using ApplicationDomain.Entities;
-using System;
+﻿using ApplicationCore.DTOs;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.IServices
 {
-    public interface IMedicineService :IService<MedicineModel>
+    public interface IMedicineService :IService<MedicineDTO>
     {
-        public MedicineModel GetMedicineIngredentisDetails(int medicineId);
-        public void AddToMedicalState(MedicalStateMedicineModel medicalStateMedicineModel);
-        public void RemoveFromMedicalState(MedicalStateMedicineModel medicalStateMedicineModel);
+        public MedicineDTO GetMedicineIngredentisDetails(int medicineId);
+        public void AddToMedicalState(MedicalStateMedicineDTO medicalStateMedicineModel);
+        public void RemoveFromMedicalState(MedicalStateMedicineDTO medicalStateMedicineModel);
+        public Task<IEnumerable<MedicineIngredientDTO>> GetMedicineIngredients( int id);
 
     }
 }

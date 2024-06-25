@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ApplicationCore.DomainModel;
+using ApplicationCore.DTOs;
 
 namespace WebPresentation.Controllers
 {

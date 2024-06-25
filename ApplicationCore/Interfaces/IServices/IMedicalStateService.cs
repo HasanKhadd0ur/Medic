@@ -1,17 +1,13 @@
-﻿using ApplicationCore.DomainModel;
-using ApplicationDomain.Entities;
-using System;
+﻿using ApplicationCore.DTOs;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.IServices
 {
-    public interface IMedicalStateService : IService<MedicalStateModel>
+    public interface IMedicalStateService : IService<MedicalStateDTO>
     {
-        public Task<IEnumerable<MedicalStateModel>> GetAllPatientMedicalStates(int patientId);
-        public MedicalStateModel AddToPateint(int patientId , MedicalStateModel medicalState);
+        public Task<IEnumerable<MedicalStateDTO>> GetAllPatientMedicalStates(int patientId);
+        public MedicalStateDTO AddToPateint(int patientId , MedicalStateDTO medicalState);
         
       
     }

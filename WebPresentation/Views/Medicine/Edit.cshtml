@@ -1,4 +1,4 @@
-﻿@model MedicineModel;
+﻿@model MedicineViewModel;
 
 @*@{
     ViewData["Title"] = "Edit";
@@ -7,7 +7,7 @@
 }*@
 <div class="modal-header">
     <h5 class="modal-title" id="modalEditLabel">Edit Medicine</h5>
-    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col ">
-                        <label for="Category.Name" class="control-label"></label>
+                        <label for="Category.Name"  class="control-label">Category</label>
                         <input asp-for="Category.Name" class="form-control" />
                         <span asp-validation-for="Category.Name" class="text-danger"></span>
 
@@ -85,7 +85,7 @@
 
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
