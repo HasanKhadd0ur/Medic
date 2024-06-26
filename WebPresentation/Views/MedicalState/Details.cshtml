@@ -12,73 +12,63 @@
 <section id="toast-container" class="page-section" style="background-color: #f4f5f7;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-10 col-lg-10 mb-4 mb-lg-0">
+            <div class="col-12 col-lg-10 mb-4 mb-lg-0">
                 <div class="card mb-3" style="border-radius: .5rem;">
                     <div class="row g-0">
-                        <div class="col-10 gradient-custom text-center text-black"
-                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <div class="icon-box">
-                                <div class="icon " style="color: #5e54b3"><i class="fas fa-heartbeat  fa-8x "></i></div>
+                        <div class="col-12 gradient-custom text-center text-black p-4"
+                             style="border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+                            <div class=" icon-box mb-3">
+                                <div class="icon" style="color: #5e54b3;">
+                                    <i class="fas fa-heartbeat fa-4x"></i>
+                                </div>
                             </div>
-                            <h5>@Model.StateName</h5>
-                            <p>AT: @(Model.PrescriptionTime )</p>
-                            
-                            <a asp-action="Index">
+                            <h3>@Model.StateName</h3>
+                            <p>AT: @(Model.PrescriptionTime.ToString("dd MMM yyyy HH:mm"))</p>
+                            <button class="m-1 btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
+                            <button class="m-1 btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
 
-                                <i class="far fa-backward">
-
-                                </i>
-                                Go Back
-                            </a>
                         </div>
-                        <div class="col-10">
+                        <div class="col-12">
                             <div class="card-body p-4">
-                                <h6> Information:</h6>
+                                <h5>Information:</h5>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
-                                        <h6>Description</h6>
-                                        <p class="text">@Model.StateDescription</p>
+                                        <h6 class="">Description</h6>
+                                        <p class="text-muted">@Model.StateDescription</p>
                                     </div>
                                     <div class="col-4 mb-3">
-                                        <h6>Medicines Count:@Model.Medicines.Count()</h6>
-
-                                        <button class="btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
-                                        <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
-                                        
+                                        <h6>Medicines Count: @Model.Medicines.Count()</h6>
                                     </div>
                                 </div>
-                                <h6>Medicines : </h6>
+                                <h5>Medicines:</h5>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    <table id="Ingredients_" class="table table-bordered">
-                                        <thead>
+                                    <table id="Ingredients_" class="table table-bordered table-hover">
+                                        <thead class="thead-light">
                                             <tr>
-                                                <td>No.</td>
-                                                <td>Name</td>
-                                                <td>Description</td>
-                                                <td>Price</td>
-                                                <td>dosage</td>
-                                                <td>Manfacture Name</td>
-                                                <td>Manage</td>
-
-
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Dosage</th>
+                                                <th>Manufacture Name</th>
+                                                <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody id="cc">
                                             @foreach (var ing in Model.Medicines)
                                             {
-                                                <tr class=" mb-3">
+                                                <tr>
                                                     <td>@(a+=1)</td>
                                                     <td>@ing.TradeName</td>
                                                     <td>@ing.Description</td>
-                                                    <td>@ing.Price</td>
+                                                    <td>@ing.Price.ToString("C")</td>
                                                     <td>@ing.Dosage</td>
                                                     <td>@ing.ManufactureName</td>
                                                     <td>
-                                                        <button class="btn btn-danger" onclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName From this medical Case" , "ReomveMedicine" ,@ing.Id)'>Delete</button>
-                                                        <button class="btn btn-primary" onclick="DetailMedicine( @ing.Id)">Details</button>
-
+                                                        <button class="btn btn-danger btn-sm" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName from this medical case?", "RemoveMedicine", @ing.Id)'>Delete</button>
+                                                        <button class="btn btn-info btn-sm" onclick="DetailMedicine(@ing.Id)">Details</button>
                                                     </td>
                                                 </tr>
                                             }
@@ -86,17 +76,16 @@
                                     </table>
                                 </div>
                                 <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>Go To list </h6>
-                                        <a asp-action="Index">GO Back </a>
-
+                                    <div class="col-12 mb-3">
+                                        <h6>Go To List</h6>
+                                        <a asp-action="Index" class="btn btn-secondary">Go Back</a>
                                     </div>
                                 </div>
                                 <hr />
                                 <div class="row pt-1">
-
-                                    <button onclick="fetchMedicines()" class="btn btn-primary">Get All Medicines </button>
-
+                                    <div class="col-12">
+                                        <button onclick="fetchMedicines()" class="btn btn-primary">Get Medicines</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -108,15 +97,12 @@
 </section>
 
 <section style="background-color: #f4f5f7;">
-    <div class="container  h-100">
+    <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col">
-                <div class="row g-0">
+            <div class="col-12 col-lg-10 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
 
-                    <div class="row d-flex justify-content-center align-items-center h-100">
-
-                        <div id="medicines-table">
-                        </div>
+                    <div id="medicines-table">
                     </div>
                 </div>
             </div>

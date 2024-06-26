@@ -5,14 +5,28 @@
     ViewData["Controller"] = "MedicalState";
 }
 <section class="page-section">
-    <h3>Create New <a asp-action="Create" asp-controller="MedicalState">Create</a></h3>
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h3>Create New <a asp-action="Create" asp-controller="MedicalState" class="btn btn-success ml-2">Create</a></h3>
+            </div>
+        </div>
+    </div>
 
     @if (Model.Count() == 0)
     {
-        <h2 class="text-center">You dont have any  MedicalState</h2>
-        <img src="~/img/portfolio/noData.jpg" class="figure-img" />
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2 class="text-danger">You don't have any Medical State</h2>
+                <img src="~/img/portfolio/noData.jpg" class="figure-img img-fluid rounded mx-auto d-block" alt="No Data" style="max-width: 300px; margin-top: 20px;" />
+                <p class="lead text-muted mt-3">It looks like you haven't added any medical states yet. Start adding some to see them here!</p>
+
+            </div>
+        </div>
     }
     else
+
+
 
         @foreach (var item in Model)
         {
@@ -30,9 +44,9 @@
                                     </div>
                                     <h5>@item.StateName</h5>
                                     <p>Prescriped At  : @item.PrescriptionTime</p>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">
-                                        <i class="far fa-edit mb-5"></i>
-                                    </a>
+                                    <button class="btn btn-warning btn-edit" data-id="@item.Id">Edit</button>
+                                    <button class="btn btn-danger btn-delete" data-id="@item.Id">Delete</button>
+
 
                                     <a asp-action="Index">
 
@@ -57,7 +71,7 @@
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
-                                                <a asp-action="Index">Back to Home</a>
+                                                <a href="~/">Back to Home</a>
 
                                             </div>
                                             <div class="col-6 mb-3">
@@ -75,6 +89,8 @@
                     </div>
                 </div>
             </div>
+
+
 
         }
 </section>

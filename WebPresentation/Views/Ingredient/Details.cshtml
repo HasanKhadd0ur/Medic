@@ -2,42 +2,42 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewData["Controller"] = "Ingredient";
     Layout = "_AdminLayout";
 
 }
 <section class="vh-100" style="background-color: #f4f5f7;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-6 mb-4 mb-lg-0">
-                <div class="card mb-3" style="border-radius: .5rem;">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
                     <div class="row g-0">
-                        <div class="col-md-4 gradient-custom text-center text-black"
-                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="~/img/portfolio/instagram.png"
-                                 alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                            <h5>@Model.Name</h5>
+                        <div class="col-md-4 gradient-custom text-center text-white py-4"
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; background-color: #6a58a1;">
+                            <img src="~/img/portfolio/ingredients.png"
+                                 alt="Avatar" class="img-fluid my-4" style="width: 120px; border-radius: 50%;" />
+                            <h5 class="mb-0">@Model.Name</h5>
+                            <div class="mt-3">
+                                <button class="btn btn-warning btn-edit m-1" data-id="@Model.Id">Edit</button>
+                                <button class="btn btn-danger btn-delete m-1" data-id="@Model.Id">Delete</button>
 
-                            <button class="btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
-                            <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
-
-                            <a asp-action="Index">
-
-                                <i class="far fa-backward">
-
-                                </i>
-                            </a>
+                                <a asp-action="Index" class="btn btn-sm btn-outline-light">
+                                    <i class="far fa-backward me-1"></i> Back to List
+                                </a>
+                            </div>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">
-                                <h6>Information</h6>
-                                <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>Description</h6>
+                                <h5 class="card-title">Information</h5>
+                                <hr class="my-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold mb-1">Description:</p>
                                         <p class="text-muted">@Model.Description</p>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>Price</h6>
+                                    <div class="col-md-6">
+                                        <p class="fw-bold mb-1">Price:</p>
+                                        <p class="text-muted">Not available</p>
                                     </div>
                                 </div>
                             </div>
@@ -48,26 +48,3 @@
         </div>
     </div>
 </section>
-
-<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <!-- Content loaded via AJAX -->
-        </div>
-    </div>
-</div>
-
-@section scripts {
-    <script>
-        $(document).ready(function () {
-
-            // Load the Edit form in the modal
-            $('.btn-edit').on('click', function () {
-                var id = $(this).data('id');
-                $('#modal-edit').find('.modal-content').load('/Ingredient/Dummy/' + id);
-                $('#modal-edit').modal('show');
-            });
-        });
-    </script>
-
-}

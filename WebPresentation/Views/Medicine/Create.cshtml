@@ -3,79 +3,86 @@
 @{
     ViewData["Title"] = "Create";
 
-    
+
     Layout = "_AdminLayout";
 }
 
-<h1>Create</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Create New Medicine</h1>
 
-<h4>Project</h4>
-<hr />
-<div class="row">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row">
-                <div class="col-5">
-                    <label asp-for="TradeName" class="control-label"></label>
-                    <input asp-for="TradeName" class="form-control" />
-                    <span asp-validation-for="TradeName" class="text-danger"></span>
-                </div>
-                <div class="col-5">
-                    <label asp-for="ScintificName" class="control-label"></label>
-                    <input asp-for="ScintificName" class="form-control" />
-                    <span asp-validation-for="ScintificName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-5">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="col-5">
-                    <label asp-for="SideEffect" class="control-label"></label>
-                    <input asp-for="SideEffect" class="form-control" />
-                    <span asp-validation-for="SideEffect" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="Dosage" class="control-label"></label>
-                <input asp-for="Dosage" class="form-control" />
-                <span asp-validation-for="Dosage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="col-5">
-                    <label for="Category"  class="control-label">Category</label>
-                    <input asp-for="Category.Name" class="form-control" />
-                    <span asp-validation-for="Category.Name" class="text-danger"></span>
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                </div>
-                <div class="col-5">
-                    <label asp-for="ManufactureName" class="control-label"></label>
-                    <input asp-for="ManufactureName" class="form-control" />
-                    <span asp-validation-for="ManufactureName" class="text-danger"></span>
+                        <div class="form-group row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="TradeName" class="control-label">Trade Name</label>
+                                <input asp-for="TradeName" class="form-control" />
+                                <span asp-validation-for="TradeName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="ScintificName" class="control-label">Scientific Name</label>
+                                <input asp-for="ScintificName" class="form-control" />
+                                <span asp-validation-for="ScintificName" class="text-danger"></span>
+                            </div>
+                        </div>
 
-                </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="control-label">Description</label>
+                            <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
 
+                        <div class="form-group row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="SideEffect" class="control-label">Side Effects</label>
+                                <input asp-for="SideEffect" class="form-control" />
+                                <span asp-validation-for="SideEffect" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Dosage" class="control-label">Dosage</label>
+                                <input asp-for="Dosage" class="form-control" />
+                                <span asp-validation-for="Dosage" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Category.Name" class="control-label">Category</label>
+                                <input asp-for="Category.Name" class="form-control" />
+                                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="ManufactureName" class="control-label">Manufacturer</label>
+                                <input asp-for="ManufactureName" class="form-control" />
+                                <span asp-validation-for="ManufactureName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Image" class="control-label">Image URL</label>
+                            <input asp-for="Image" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="MedicineType.TypeName" class="control-label">Medicine Type</label>
+                            <input asp-for="MedicineType.TypeName" class="form-control" />
+                            <span asp-validation-for="MedicineType.TypeName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                            <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MedicineType.TypeName" class="control-label"></label>
-                <input asp-for="MedicineType.TypeName" class="form-control" />
-                <span asp-validation-for="MedicineType.TypeName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

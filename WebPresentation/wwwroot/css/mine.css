@@ -1,0 +1,36 @@
+﻿/*#log_doctor {
+ 
+    position:relative;
+    right:70px;
+    overflow:hidden;
+}*/
+/*#log_patient{
+
+    width:300px;
+    height:400px;
+    position:relative;
+    top:70px;
+
+
+}
+*/
+.title_profile:hover{
+
+    color:white;
+
+
+}
+.hover_box:hover{
+    border-radius:30px;
+    
+
+
+
+
+}
+.hover_box{
+    text-decoration:none;
+    color:white;
+
+
+}

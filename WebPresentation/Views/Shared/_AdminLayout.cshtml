@@ -112,19 +112,6 @@
                             </nav>
                         </div>
 
-                        <!-- Medical State Managment -->
-                        <a class="nav-link collapsed" asp-action="Index" asp-controller="Medicine" data-bs-toggle="collapse" data-bs-target="#MPages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Medical States
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="MPages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link">Add Medical State </a>
-                                <a class="nav-link">ALL Medical State </a>
-                            </nav>
-                        </div>
-
                         <div class="sb-sidenav-footer">
                             <div class="small">Logged in as:@UserManager.GetUserName(User)</div>
 
@@ -209,7 +196,7 @@
     <script src="~/js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="~/js/freelancer.min.js"></script>
+    @*<script src="~/js/freelancerAd.min.js"></script>*@
     <!-- Custom scripts for this template -->
 </body>
 </html>

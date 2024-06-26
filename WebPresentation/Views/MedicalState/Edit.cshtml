@@ -14,46 +14,42 @@
     </button>
 </div>
 <div class="modal-body">
-    <div class="container py-5 h-100">
+    <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-                  <form asp-action="Edit" asp-controller="MedicalState">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <div class="col-5">
-                                <label asp-for="StateName" class="control-label"></label>
+            <div class="col p-2">
+                <div class="card mb-3 shadow-sm" style="border-radius: .5rem;">
+                    
+                    <div class="card-body">
+                        <form asp-action="Edit" asp-controller="MedicalState">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group mb-3">
+                                <label asp-for="StateName" class="form-label">State Name</label>
                                 <input asp-for="StateName" class="form-control" />
                                 <span asp-validation-for="StateName" class="text-danger"></span>
                             </div>
-                            <div class="col-5">
-                                <label asp-for="PrescriptionTime" class="control-label"></label>
+                            <div class="form-group mb-3">
+                                <label asp-for="PrescriptionTime" class="form-label">Prescription Time</label>
                                 <input asp-for="PrescriptionTime" class="form-control" />
                                 <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="StateDescription" class="control-label"></label>
-                            <textarea asp-for="StateDescription" class="form-control">
-                                           </textarea>
-                            <span asp-validation-for="StateDescription" class="text-danger"></span>
-
-                        </div>
-                        <div>
-                        </div>  <input type="hidden" asp-for="Id" />
-
-                                <div class="form-group">
-                                    <input hidden value="@ViewBag.id" name="pId" />
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                    <input type="submit" value="Save" class="btn btn-primary" />
-                                </div>
-                        <input hidden value="@Model.PatientId" asp-for="@Model.PatientId" />
-                    </form>
-
+                            <div class="form-group mb-3">
+                                <label asp-for="StateDescription" class="form-label">State Description</label>
+                                <textarea asp-for="StateDescription" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="StateDescription" class="text-danger"></span>
+                            </div>
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="PatientId" />
+                            <div class="form-group text-center">
+                                <input type="submit" value="Save" class="btn btn-primary me-2" />
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-
+            </div>
+        </div>
     </div>
     </div>
-    @section Scripts {
+ @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }

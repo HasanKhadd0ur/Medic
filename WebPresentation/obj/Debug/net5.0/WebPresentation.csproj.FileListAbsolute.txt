@@ -15,6 +15,8 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Humanizer.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
@@ -46,6 +48,7 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.VisualSt
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\System.Composition.AttributedModel.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\System.Composition.Convention.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\System.Composition.Hosting.dll
@@ -165,11 +168,13 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medici
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\Details.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\Edit.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Medicine\Index.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\Dummy.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\NotFound.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_PatrtialNotFound.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
@@ -181,8 +186,4 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.dl
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\ref\WebPresentation.dll
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.pdb
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.genruntimeconfig.cache
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-C:\Users\HASAN\Desktop\Medic\WebPresentation\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\Dummy.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_PatrtialNotFound.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Patients\Index.cshtml.g.cs

@@ -8,47 +8,48 @@
 }
 
 <section class="page-section" style="background-color: #f4f5f7;">
+
+
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-8 col-lg-8 mb-4 mb-lg-0">
-                <div class="card mb-3" style="border-radius: .5rem;">
-                    
-                        <div class="row">
-                            <div class="col-md-4">
-                                <form asp-action="Create" asp-controller="MedicalState">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label asp-for="StateName" class="control-label"></label>
-                                            <input asp-for="StateName" class="form-control" />
-                                            <span asp-validation-for="StateName" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label asp-for="PrescriptionTime" class="control-label"></label>
-                                            <input asp-for="PrescriptionTime" class="form-control" />
-                                            <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="StateDescription" class="control-label"></label>
-                                        <input asp-for="StateDescription" class="form-control" />
-                                        <span asp-validation-for="StateDescription" class="text-danger"></span>
+            <div class="col-12 col-md-8 col-lg-6 mb-4 mb-lg-0">
+                <div class="card shadow-sm" style="border-radius: .5rem;">
+                    <div class="card-header text-center bg-primary text-white" style="border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+                        <h4>Create Medical State</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create" asp-controller="MedicalState">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                            <div class="form-group mb-3">
+                                <label asp-for="StateName" class="form-label"></label>
+                                <input asp-for="StateName" class="form-control" />
+                                <span asp-validation-for="StateName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="PrescriptionTime" class="form-label"></label>
+                                <input asp-for="PrescriptionTime" class="form-control" />
+                                <span asp-validation-for="PrescriptionTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label asp-for="StateDescription" class="form-label"></label>
+                                <input asp-for="StateDescription" class="form-control" />
+                                <span asp-validation-for="StateDescription" class="text-danger"></span>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-block">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a asp-action="Index" class="btn btn-link">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Create" class="btn btn-primary" />
-                                    </div>
-                                </form>
-                          
-                        </div>
+</section>
 
-                        <div>
-                            <a asp-action="Index">Back to List</a>
-                        </div>
-                        </div></div></div></div></div></section>
-
-                        @section Scripts {
-                            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-                        }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -12,90 +12,93 @@
     </button>
 </div>
 <div class="modal-body">
-    <div class="row">
-        <div class="col-md-10 offset-1">
-            <form asp-action="Edit" class="form-group ">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label asp-for="TradeName" class="control-label "></label>
-                        <input asp-for="TradeName" class="form-control" />
-                        <span asp-validation-for="TradeName" class="text-danger"></span>
-                    </div>
 
-                    <div class="col">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
+    <div class="container ">
+        <div class="row justify-content-center">
+            <div class="">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form asp-action="Edit" class="row g-3">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                            <div class="col-md-6">
+                                <label asp-for="TradeName" class="form-label">Trade Name</label>
+                                <input asp-for="TradeName" class="form-control" />
+                                <span asp-validation-for="TradeName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Description" class="form-label">Description</label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="MedicineType" class="form-label">Description</label>
+                                <input asp-for="MedicineType" class="form-control" />
+                                <span asp-validation-for="MedicineType" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label asp-for="Dosage" class="form-label">Dosage</label>
+                                <input asp-for="Dosage" class="form-control" />
+                                <span asp-validation-for="Dosage" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Price" class="form-label">Price</label>
+                                <input asp-for="Price" class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Category.Name" class="form-label">Category</label>
+                                <input asp-for="Category.Name" class="form-control" />
+                                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="ManufactureName" class="form-label">Manufacturer</label>
+                                <input asp-for="ManufactureName" class="form-control" />
+                                <span asp-validation-for="ManufactureName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="ScintificName" class="form-label">Scientific Name</label>
+                                <input asp-for="ScintificName" class="form-control" />
+                                <span asp-validation-for="ScintificName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="MedicineType.TypeName" class="form-label">Medicine Type</label>
+                                <input asp-for="MedicineType.TypeName" class="form-control" />
+                                <span asp-validation-for="MedicineType.TypeName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="SideEffect" class="form-label">Side Effects</label>
+                                <textarea asp-for="SideEffect" class="form-control" rows="3"></textarea>
+                                <span asp-validation-for="SideEffect" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Image" class="form-label">Image URL</label>
+                                <input asp-for="Image" class="form-control" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <input type="hidden" asp-for="Id" />
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                             </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col ">
-                        <label asp-for="Dosage" class="control-label"></label>
-                        <input asp-for="Dosage" class="form-control" />
-                        <span asp-validation-for="Dosage" class="text-danger"></span>
-
-                    </div>
-                    <div class="col">
-                        <label asp-for="Price" class="control-label"></label>
-                        <input asp-for="Price" class="form-control" />
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col ">
-                        <label for="Category.Name"  class="control-label">Category</label>
-                        <input asp-for="Category.Name" class="form-control" />
-                        <span asp-validation-for="Category.Name" class="text-danger"></span>
-
-                    </div>
-                    <div class="col">
-                        <label asp-for="ManufactureName" class="control-label"></label>
-                        <input asp-for="ManufactureName" class="form-control" />
-                        <span asp-validation-for="ManufactureName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col ">
-                        <label asp-for="ScintificName" class="control-label"></label>
-                        <input asp-for="ScintificName" class="form-control" />
-                        <span asp-validation-for="ScintificName" class="text-danger"></span>
-
-                    </div>
-                    <div class="col">
-                        <label asp-for="MedicineType.TypeName" class="control-label"></label>
-                        <input asp-for="MedicineType.TypeName" class="form-control" />
-                        <span asp-validation-for="MedicineType.TypeName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col ">
-                        <label asp-for="SideEffect" class="control-label"></label>
-                        <input asp-for="SideEffect" class="form-control" />
-                        <span asp-validation-for="SideEffect" class="text-danger"></span>
-
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Image" class="control-label"></label>
-                    <input asp-for="Image" class="form-control" />
-                    <span asp-validation-for="Image" class="text-danger"></span>
-                </div>
-
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-
-
-</div>
-
+    </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
