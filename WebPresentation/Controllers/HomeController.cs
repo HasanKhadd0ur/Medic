@@ -43,10 +43,18 @@ namespace WebPresentation.Controllers
             var t =await  getCurrentPatient();
             return View(t);
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var t = await getCurrentPatient();
+            if (id != t.Id) {
+                return View("Error");
+            }
+            return View(t);
+        }
 
-        public   IActionResult Details(int? id ) {
-
-            return View(getCurrentPatient());
+        public async Task<IActionResult> Details(int? id ) {
+            var t = await getCurrentPatient();
+            return View(t);
         
         }
 

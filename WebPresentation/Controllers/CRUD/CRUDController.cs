@@ -54,13 +54,13 @@ namespace WebPresentation.Controllers
 
             if (id is null)
             {
-                return PartialView("_PartialNotFound");
+                return PartialView("PartialNotFound");
             }
             else
             {
                 TDto DetailDto = await _service.GetDetails((int)id);
                 if (DetailDto is null)
-                    return PartialView("_PartialNotFound");
+                    return PartialView("PartialNotFound");
                 TVModel model = _mapper.Map<TVModel>(DetailDto);
                 return View(model);
             }
@@ -73,7 +73,7 @@ namespace WebPresentation.Controllers
 
             if (DetailDto == null)
             {
-                return View("NotFound");
+                return PartialView("PartialNotFound");
             }
             TVModel model = _mapper.Map<TVModel>(DetailDto);
             return PartialView(model);
@@ -91,14 +91,14 @@ namespace WebPresentation.Controllers
         {
             if (id == null)
             {
-                return PartialView("_PartialNotFound");
+                return PartialView("PartialNotFound");
             }
             try
             {
                 TDto tModel = await _service.GetDetails((int)id);
                 if (tModel == null)
                 {
-                    return PartialView("_PartialNotFound");
+                    return PartialView("PartialNotFound");
                 }
                 TVModel model = _mapper.Map<TVModel>(tModel);
 

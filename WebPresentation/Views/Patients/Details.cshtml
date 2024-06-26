@@ -6,14 +6,19 @@
 
 
     ViewData["userName"] = Model.User.FirstName + " " + Model.User.LastName;
+    Layout = "_AdminLayout";
 
     ViewData["title"] = "Edit";
     ViewBag.Avatar = Model.User.Avatar;
 
-    ViewData["Controller"] = "Home";
+    ViewData["Controller"] = "Patients";
     ViewBag.owner = Model;
-    
+
 }
+
+
+
+
 
 
 
@@ -97,7 +102,7 @@
 
                         </div>
                     </div>
-                    <div class="mt-5 text-center"><a class="btn btn-primary profile-button" asp-action="Index">Go Home</a></div>
+                    <div class="mt-5 text-center"><a asp-action="Index" asp-controller="Home" class="btn btn-primary profile-button" type="button">Go Home</a></div>
                 </div>
             </div>
             <div class="col-md-4">

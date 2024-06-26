@@ -174,7 +174,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
-C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_PatrtialNotFound.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
@@ -187,3 +186,6 @@ C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\ref\WebPresentatio
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.pdb
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\WebPresentation.genruntimeconfig.cache
 C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Patients\Index.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Patients\Details.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Shared\PatrtialNotFound.cshtml.g.cs
+C:\Users\HASAN\Desktop\Medic\WebPresentation\obj\Debug\net5.0\Razor\Views\Patients\Delete.cshtml.g.cs
