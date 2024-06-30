@@ -43,7 +43,7 @@ namespace WebPresentation.Controllers
             if (ModelState.IsValid)
             {
                 var uId = GetUserId();
-                var p = _patientService.GetByUserId(uId).Id;
+                var p = _patientService.GetByUserId(uId).Result.Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
                 var n= ((IMedicalStateService)_service).AddToPateint(p,_mapper.Map<MedicalStateDTO>(medicalState));

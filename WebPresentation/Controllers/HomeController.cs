@@ -10,6 +10,8 @@ using ApplicationCore.DTOs;
 using AutoMapper;
 using WebPresentation.ViewModels;
 using System.Threading.Tasks;
+using WebPresentation.Filters.ImageLoad;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebPresentation.Controllers
 {
@@ -45,14 +47,47 @@ namespace WebPresentation.Controllers
             return View(t);
         }
         [Authorize(Roles = "patient")]
-        public async Task<IActionResult> Edit(int id)
+
+        public async Task<IActionResult> Edit()
         {
             var t = await getCurrentPatient();
-            if (id != t.Id) {
-                return View("Error");
-            }
+            
+
             return View(t);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ImageLoadFilter]
+        public IActionResult Edit(int id, [FromForm] PatientViewModel viewModel)
+        {
+            if (id != viewModel.Id)
+            {
+
+                return NotFound();
+            }
+            PatientDTO dto;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    dto = _mapper.Map<PatientDTO>(viewModel);
+                    dto.User.Avatar= viewModel.ImageName;
+                    dto = _patientService.Update(dto);
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return View("Error");
+
+                }
+                return RedirectToAction("Details", new { id = dto.Id });
+            }
+
+            return View(viewModel);
+        }
+
         [Authorize(Roles = "patient")]
         public async Task<IActionResult> Details(int? id ) {
             var t = await getCurrentPatient();

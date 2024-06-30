@@ -67,7 +67,7 @@
                                                     <td>@ing.Dosage</td>
                                                     <td>@ing.ManufactureName</td>
                                                     <td>
-                                                        <button class="btn btn-danger btn-sm" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName from this medical case?", "RemoveMedicine", @ing.Id)'>Delete</button>
+                                                        <button class="btn btn-danger btn-sm" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName from this medical case?", @ing.Id)'>Delete</button>
                                                         <button class="btn btn-info btn-sm" onclick="DetailMedicine(@ing.Id)">Details</button>
                                                     </td>
                                                 </tr>
@@ -211,7 +211,7 @@
                 <td>
 
                            <button class="btn btn-primary" onclick="DetailMedicine( ${medicine.id})">Details</button>
-                            <button class="btn btn-danger" onclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete ${medicine.name} From this medical Case" , "ReomveMedicine" ,${medicine.id})'>Delete</button>
+                            <button class="btn btn-danger" onclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete ${medicine.name} From this medical Case" ,${medicine.id})'>Delete</button>
 
                     </td>
                 ` :
@@ -305,7 +305,7 @@
                 showToast('Failed to remove medicine', 'Error');
             }
         }
-        async function DeleteConfirm(title, message, action,param) {
+        async function DeleteConfirm(title, message,param) {
             debugger
             const modalBody = document.querySelector('#item-container');
             modalBody.innerHTML = `
@@ -329,7 +329,7 @@
                             style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
                     <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
 
-                        <button class="btn btn-danger" onclick="${action}(${param})" data-dismiss="modal" aria-label="Close">Delete</button>
+                        <button class="btn btn-danger" onclick="RemoveMedicine(${param})" data-dismiss="modal" aria-label="Close">Delete</button>
 
                         <button class="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">Close</button>
                     </div>

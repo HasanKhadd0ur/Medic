@@ -1,106 +1,58 @@
-﻿@model PatientViewModel
-
-
-
+﻿@model PatientViewModel;
 
 @{
-
-
-    ViewData["userName"] = Model.User.FirstName + " " + Model.User.LastName;
-
-    ViewData["title"] = "Edit";
-    ViewBag.Avatar = Model.User.Avatar;
-
-    ViewData["Controller"] = "Home";
-    ViewBag.owner = Model;
+    ViewData["Title"] = "Edit";
 
 }
 
+    <div class="container page-section">
+        <div class="row justify-content-center">
+            <div class="">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form asp-action="Edit" class="row g-3" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
-
-
-
-<style>
-    .form-control:focus {
-        box-shadow: none;
-        border-color: #BA68C8
-    }
-
-    .profile-button {
-        background: rgb(99, 39, 120);
-        box-shadow: none;
-        border: none
-    }
-
-        .profile-button:hover {
-            background: #682773
-        }
-
-        .profile-button:focus {
-            background: #682773;
-            box-shadow: none
-        }
-
-        .profile-button:active {
-            background: #682773;
-            box-shadow: none
-        }
-
-    .back:hover {
-        color: #682773;
-        cursor: pointer
-    }
-
-    .labels {
-        font-size: 11px
-    }
-
-    .add-experience:hover {
-        background: #BA68C8;
-        color: #fff;
-        cursor: pointer;
-        border: solid 1px #BA68C8
-    }
-</style>
-
-<section class="page-section">
-    <form method="post" asp-action="Edit" asp-controller="Home">
-        <div class="container rounded bg-white mt-5 mb-5">
-            <div class="row">
-                <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <img class="rounded-circle mt-5" width="150px" src="/img/@Model.User.Avatar"><span class="font-weight-bold">@Model.User.FirstName</span><span class="text-black-50">@Model.User.Email</span><span> </span>
-                    </div>
-                </div>
-                <div class="col-md-5 border-right">
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Profile Settings</h4>
-                        </div>
-                        <div class="row mt-2">
                             <div class="col-md-6">
-                                <label asp-for="@Model.User.FirstName" class="labels"></label>
-                                <input asp-for="@Model.User.FirstName" class="form-control">
+                                <label asp-for="BIO" class="form-label">Patient Personal info</label>
+                                <input asp-for="BIO" class="form-control" />
+                                <span asp-validation-for="BIO" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-6">
-                                <label class="labels" asp-for="@Model.User.LastName"></label>
-                                <input type="text" class="form-control" asp-for="@Model.User.LastName">
+                                <label asp-for="User.FirstName" class="form-label"></label>
+                                <input asp-for="User.FirstName" class="form-control" />
+                                <span asp-validation-for="User.FirstName" class="text-danger"></span>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels" asp-for="@Model.BIO"></label><input type="text" class="form-control" asp-for="@Model.BIO"></div>
-                            <div class="col-md-12"><label class="labels" asp-for="@Model.User.UserName"></label><input type="text" class="form-control" asp-for="@Model.User.UserName"></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels" asp-for="@Model.User.Avatar"></label><input type="text" class="form-control" asp-for="@Model.User.Avatar"></div>
+                            
 
-                        </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" role="submit" type="button">Save Profile</button></div>
+                            <div class="col-md-6">
+                                <label asp-for="User.LastName" class="form-label"></label>
+                                <input asp-for="User.LastName" class="form-control" />
+                                <span asp-validation-for="User.LastName" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="col-12">
+                                <label asp-for="ImageFile" class="form-label">Image File</label>
+                                <input type="file"  asp-for="ImageFile" class="form-control" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="User.Id" />
+                                <input type="hidden" asp-for="UserId" />
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-</section>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -27,7 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Patients\" />
+    <Content Update="Views\Home\Edit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

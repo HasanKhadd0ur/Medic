@@ -22,8 +22,14 @@ namespace ApplicationCore.Mappere
                 .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients))
                 .ForMember(dest => dest.MedicineIngredients, opt => opt.MapFrom(src => src.MedicineIngredients));
 
-            CreateMap<PatientDTO, PatientViewModel>().ReverseMap();
-            
+
+            CreateMap<PatientViewModel, PatientDTO>();
+            CreateMap<PatientDTO, PatientViewModel>()
+                .ForMember(dest => dest.ImageName, opt => opt.MapFrom(src => src.User.Avatar))
+                .ForMember(dest => dest.ImageFile, opt => opt.Ignore());
+
+            ;
+
             CreateMap<IngredientViewModel, IngredientDTO>().ReverseMap();
             CreateMap<MedicineIngredientDTO, MedicineIngredientViewModel>().ReverseMap();
 

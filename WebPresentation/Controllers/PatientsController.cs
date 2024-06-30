@@ -32,20 +32,21 @@ namespace WebPresentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                    var user = new User
-                    {
-                        NormalizedEmail = Input.Email,
-                        FirstName = Input.FirstName,
-                        LastName = Input.LastName,
-                        Avatar = Input.Avatar,
-                        UserName = Input.Email,
-                        Email = Input.Email,
-                        Patient = Input.Patient,
-                        CreationTime = DateTime.Now,
+                var patient = _mapper.Map<Patient>(Input.Patient);
+                var user = new User
+                {
+                    NormalizedEmail = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Avatar = Input.ImageName,
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    Patient = patient,
+                    CreationTime = DateTime.Now,
 
-                    };
+                };
 
-                    var result  =_userManager.CreateAsync(user, Input.Password).Result;
+                var result  =_userManager.CreateAsync(user, Input.Password).Result;
 
                     if (result.Succeeded) {
                         return RedirectToAction("Index", "Patients");
