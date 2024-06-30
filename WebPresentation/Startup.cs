@@ -20,6 +20,7 @@ using ApplicationCore.Mapper;
 using System;
 using Microsoft.AspNetCore.Http;
 using ApplicationCore.Mappere;
+using WebPresentation.Filters.ModelStateValidation;
 
 namespace WebPresentation
 {
@@ -126,6 +127,7 @@ namespace WebPresentation
            
             services.AddSession();
 
+            services.AddScoped<StateValidationFilter>();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
@@ -165,8 +167,11 @@ namespace WebPresentation
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-            });
+                endpoints.MapControllerRoute(
+                    name: "notFound",
+                    pattern: "{*url}",
+                    defaults: new { controller = "Home", action = "NotFoundPage" });
+             });
         }
     }
 }

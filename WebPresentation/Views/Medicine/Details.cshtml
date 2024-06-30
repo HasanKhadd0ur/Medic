@@ -158,9 +158,9 @@
                     <td>Manage</td>
 
                 </tr>
-            </thead ><tbody id="b"> </tbody></table>`;
+            </thead ><tbody id="${tableName + "b"}" > </tbody></table>`;
 
-             tableBody = document.querySelector('#b');
+            tableBody = document.querySelector("#" + tableName + "b");
 
             medicines.forEach(medicine => {
                 let row = document.createElement('tr');

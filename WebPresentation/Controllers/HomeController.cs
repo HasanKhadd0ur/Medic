@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace WebPresentation.Controllers
 {
 
-[Authorize(Roles ="patient")]
+
     public class HomeController : BaseController
     {
         private readonly IMapper _mapper;
@@ -38,11 +38,13 @@ namespace WebPresentation.Controllers
             return _mapper.Map<PatientViewModel>(patient);
 
         }
+        [Authorize(Roles = "patient")]
         public async Task<IActionResult> Index()
         {
             var t =await  getCurrentPatient();
             return View(t);
         }
+        [Authorize(Roles = "patient")]
         public async Task<IActionResult> Edit(int id)
         {
             var t = await getCurrentPatient();
@@ -51,14 +53,18 @@ namespace WebPresentation.Controllers
             }
             return View(t);
         }
-
+        [Authorize(Roles = "patient")]
         public async Task<IActionResult> Details(int? id ) {
             var t = await getCurrentPatient();
             return View(t);
         
         }
+        [AllowAnonymous]
+        public  IActionResult NotFoundPage() {
+            return View("NotFound");
+        }
 
-
+        [Authorize(Roles = "patient")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -9,14 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
+using WebPresentation.Filters.ModelStateValidation;
 namespace WebPresentation.Controllers
 {
     public class CRUDController<TDto,TVModel> : BaseController where TDto : DTOBase where TVModel : ViewModels.BaseViewModel
     {
         protected readonly IMapper _mapper;
         protected readonly IService<TDto> _service;
-        protected Func<TDto, bool> Criteria;
+        private Func<TDto, bool> _criteriaProtected;
+        protected Func<TDto, bool> _criteria {
+            get {
+                if (_criteriaProtected == null) {
+                    _criteriaProtected = GetCriteria(); 
+                }
+                return _criteriaProtected;        
+            } set { _criteriaProtected = value; } }
         public CRUDController(
             UserManager<User> userManager,
             IService<TDto> service,
@@ -28,10 +35,13 @@ namespace WebPresentation.Controllers
             _service = service;
 
         }
+        protected virtual Func<TDto,bool> GetCriteria() {
+            return dto => true ; 
+        }
 
         public async virtual Task<IActionResult> Index()
         {
-            var DetailDto = await _service.GetAll();
+            var DetailDto = await _service.GetByCriteria(GetCriteria());
             IEnumerable<TVModel> model = _mapper.Map<IEnumerable<TVModel>>(DetailDto);
 
             return View(model);
@@ -49,20 +59,26 @@ namespace WebPresentation.Controllers
                 return RedirectToAction(nameof(Details),new { Id= id});
         }
 
+
         public async virtual Task<IActionResult> Details(int? id)
         {
 
             if (id is null)
             {
-                return PartialView("PartialNotFound");
+                return View("NotFound");
             }
             else
             {
                 TDto DetailDto = await _service.GetDetails((int)id);
                 if (DetailDto is null)
-                    return PartialView("PartialNotFound");
-                TVModel model = _mapper.Map<TVModel>(DetailDto);
-                return View(model);
+                    return View("NotFound");
+                if (_criteria(DetailDto))
+                {
+                    TVModel model = _mapper.Map<TVModel>(DetailDto);
+                    return View(model);
+                }
+                return View("NotFound");
+
             }
         }
 
@@ -71,7 +87,7 @@ namespace WebPresentation.Controllers
 
             TDto DetailDto = await _service.GetDetails(id);
 
-            if (DetailDto == null)
+            if (DetailDto == null || !_criteria(DetailDto))
             {
                 return PartialView("PartialNotFound");
             }
@@ -95,8 +111,9 @@ namespace WebPresentation.Controllers
             }
             try
             {
+                
                 TDto tModel = await _service.GetDetails((int)id);
-                if (tModel == null)
+                if (tModel == null || !_criteria(tModel))
                 {
                     return PartialView("PartialNotFound");
                 }
@@ -112,6 +129,7 @@ namespace WebPresentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [StateValidationFilter]
         public IActionResult Edit(int id, TVModel viewModel)
         {
             if (id != viewModel.Id)
@@ -135,9 +153,8 @@ namespace WebPresentation.Controllers
                 }
                 return RedirectToAction("Details",new { id=dto.Id});
             }
-            TVModel model = _mapper.Map<TVModel>(dto);
-
-            return PartialView(model);
+            
+            return View(viewModel);
         }
 
         public IActionResult Create()
@@ -147,13 +164,18 @@ namespace WebPresentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [StateValidationFilter]
         public virtual IActionResult Create(TVModel viewModel, int id)
         {
             if (ModelState.IsValid)
             {
 
                 TDto dto = _mapper.Map<TDto>(viewModel);
-                dto= _service.Create(dto);
+                if (viewModel == null || !_criteria(dto))
+                {
+                    return View(viewModel);
+                }
+                dto = _service.Create(dto);
                 viewModel = _mapper.Map<TVModel>(dto);
 
                 return RedirectToAction("Details", new { id = viewModel.Id });
@@ -175,7 +197,7 @@ namespace WebPresentation.Controllers
             else
             {
                 TDto model = await _service.GetDetails((int)id);
-                if (model is null)
+                if (model is null || !_criteria(model))
                     return Ok(new { message = "No Data Found ", result = "Faild" });
 
                 return Ok(new { message = "Succed", result = model });

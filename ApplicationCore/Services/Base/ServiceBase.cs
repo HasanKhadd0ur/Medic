@@ -7,6 +7,8 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace ApplicationCore.Services
 {
@@ -70,16 +72,11 @@ namespace ApplicationCore.Services
 
         public async Task<IEnumerable<TDto>> GetByCriteria(Func<TDto, bool> Cretira)
         {
-            Func<TEntity, bool> t = MapFunc(Cretira);
-            var ol = _specification.Criteria;
-
-            _specification.Criteria = expr =>t.Invoke(expr);
-
+            
+            
             var result =await _unitOfWork.Entity.GetAll(_specification);
-            _specification.Criteria = ol;
-
-
-            return _mapper.Map<IEnumerable<TDto>>(result);
+            
+            return (_mapper.Map<IEnumerable<TDto>>(result)).Where(Cretira);
         }
         public Func<EntityBase, bool> MapFunc(Func<TDto, bool> dtoFunc)
         {

@@ -34,20 +34,8 @@ namespace WebPresentation.Controllers
             _medicineService = medicineService;
         }
 
-        public async override Task<IActionResult> Index( )
-        {
-            
-            var u = GetUserId();
-            var p = await _patientService.GetByUserId(u);
-            var pId= p.Id;
-            var meds =await ((IMedicalStateService )_service).GetAllPatientMedicalStates(pId);
-                
-            return View(_mapper.Map<IEnumerable<MedicalStateViewModel>>(meds));
-            
-        }
 
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public override IActionResult Create(MedicalStateViewModel medicalState, int id)
@@ -64,8 +52,14 @@ namespace WebPresentation.Controllers
             }
             return View(medicalState);
         }
+        protected override Func<MedicalStateDTO, bool> GetCriteria()
+        {
 
-        
+            var u = _patientService.GetByUserId(GetUserId()).Result.Id;
+            _criteria = p => p.PatientId == u;
+            return _criteria;
+        }
+
         #region json 
 
         [HttpGet]
@@ -77,37 +71,45 @@ namespace WebPresentation.Controllers
 
         [HttpPost]
 
-        public IActionResult AddMedicine([FromBody]MedicalStateMedicineVModel medicalStateMedicine)
+        public async Task<IActionResult> AddMedicine([FromBody]MedicalStateMedicineVModel medicalStateMedicine)
         {
             try
             {
+                var medical = await _medicalStateService.GetDetails(medicalStateMedicine.MedicalStateId);
+                if(!_criteria(medical))
+                    return Ok(new { message = "You try to add a medicine for other patient and this is wrong , you shouldn't add a medicine for others", result = "faild" });
+
                 var medicalStateMedicineModel = _mapper.Map<MedicalStateMedicineDTO>(medicalStateMedicine);
                 _medicineService.AddToMedicalState(medicalStateMedicineModel);
 
-                return Ok(new { message = "Succed", result = "add" }); 
+                return Ok(new { message = "The medicine Added Successfully", result = "add" }); 
             }
             catch(DomainException e )
             {
 
-                return NotFound(new { message = e.Message, result = "faild" });
+                return Ok(new { message = e.Message, result = "faild" });
             }
 
             catch
             {
 
-                return NotFound(new { message = "Error ", result = "faild" });
+                return Ok(new { message = "Some thing went wrong", result = "faild" });
             }
         }
 
         [HttpPost]
-        public IActionResult RemoveMedicine([FromBody]MedicalStateMedicineVModel medicalStateMedicine)
+        public async Task<IActionResult> RemoveMedicine([FromBody]MedicalStateMedicineVModel medicalStateMedicine)
         {
             MedicalStateMedicineDTO medicalStateMedicineModel = _mapper.Map<MedicalStateMedicineDTO>(medicalStateMedicine);
             try
             {
+                var medical = await _medicalStateService.GetDetails(medicalStateMedicine.MedicineId);
+                if (!_criteria(medical))
+                    return Ok(new { message = "You try to Reomve a medicine for other patient and this is wrong , you shouldn't remove a medicine for others maybe this kill him", result = "faild" });
+
                 _medicineService.RemoveFromMedicalState(medicalStateMedicineModel);
 
-                return Ok(new { message = "Succed", result = "removed" });
+                return Ok(new { message = "the medicine reomved Successfully", result = "removed" });
 
             }
 
@@ -115,13 +117,13 @@ namespace WebPresentation.Controllers
             catch (DomainException e)
             {
 
-                return NotFound(new { message = e.Message, result = "faild" });
+                return Ok(new { message = e.Message, result = "faild" });
             }
 
             catch
             {
 
-                return NotFound(new { message = "Error ", result = "faild" });
+                return Ok(new { message = "something went wrong", result = "faild" });
             }
         }
 
