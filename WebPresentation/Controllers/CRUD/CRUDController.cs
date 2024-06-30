@@ -9,7 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using WebPresentation.Filters.ImageLoad;
 using WebPresentation.Filters.ModelStateValidation;
+using WebPresentation.Services;
+using WebPresentation.ViewModels;
+
 namespace WebPresentation.Controllers
 {
     public class CRUDController<TDto,TVModel> : BaseController where TDto : DTOBase where TVModel : ViewModels.BaseViewModel
@@ -129,19 +133,20 @@ namespace WebPresentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [StateValidationFilter]
-        public IActionResult Edit(int id, TVModel viewModel)
+        [ImageLoadFilter]
+        public IActionResult Edit(int id, [FromForm]  TVModel viewModel)
         {
             if (id != viewModel.Id)
             {
 
                 return NotFound();
             }
-            TDto dto = null;
+            TDto dto ;
             if (ModelState.IsValid)
             {
                 try
                 {
+
                     dto = _mapper.Map<TDto>(viewModel);
                     dto = _service.Update(dto);
 
