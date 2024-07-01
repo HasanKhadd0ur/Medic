@@ -18,7 +18,7 @@
             <div class="">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <form asp-action="Edit" class="row g-3">
+                        <form asp-action="Edit" class="row g-3" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="col-md-6">
@@ -32,12 +32,7 @@
                                 <input asp-for="Description" class="form-control" />
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
-                            <div class="col-md-6">
-                                <label asp-for="MedicineType" class="form-label">Description</label>
-                                <input asp-for="MedicineType" class="form-control" />
-                                <span asp-validation-for="MedicineType" class="text-danger"></span>
-                            </div>
-
+                            
 
                             <div class="col-md-6">
                                 <label asp-for="Dosage" class="form-label">Dosage</label>
@@ -81,17 +76,18 @@
                                 <span asp-validation-for="SideEffect" class="text-danger"></span>
                             </div>
 
+                            
                             <div class="col-12">
-                                <label asp-for="Image" class="form-label">Image URL</label>
-                                <input asp-for="Image" class="form-control" />
-                                <span asp-validation-for="Image" class="text-danger"></span>
+                                <label asp-for="ImageFile" class="form-label">Image File</label>
+                                <input type="file"  asp-for="ImageFile" class="form-control" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
                             </div>
 
                             <div class="col-12 mt-4">
                                 <input type="hidden" asp-for="Id" />
                                 <button type="submit" class="btn btn-primary">Save</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                             </div>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ namespace WebPresentation.Filters.ModelStateValidation
             if (!context.ModelState.IsValid)
             {
                 Controller controller = context.Controller as Controller;
+                
                 if (controller != null)
                 {
                     var model = context.ActionArguments.Values.Where(p=> p is not int    ).FirstOrDefault();

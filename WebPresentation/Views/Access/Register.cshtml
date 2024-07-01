@@ -28,7 +28,7 @@
 <section class="page-section bg-primary text-black mb-0">
 
     <h3 class="mb-5 text-uppercase text-center">Patient Registration</h3>
-    <form method="post" asp-controller="Access" asp-action="Register">
+    <form method="post" asp-controller="Access" asp-action="Register"  enctype="multipart/form-data">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col">
@@ -84,8 +84,8 @@
                                     <div class="form-group row mb-4">
 
                                         <div data-mdb-input-init class="form-outline col">
-                                            <input type="text" asp-for="@Model.Avatar" class="form-control form-control-lg" />
-                                            <label class="form-label" asp-for="@Model.Avatar">Image</label>
+                                            <input type="file" asp-for="@Model.ImageFile" class="form-control form-control-lg" />
+                                            <label class="form-label" asp-for="@Model.ImageFile">Image File</label>
                                         </div>
                                     </div>
 

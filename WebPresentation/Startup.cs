@@ -21,6 +21,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using ApplicationCore.Mappere;
 using WebPresentation.Filters.ModelStateValidation;
+using WebPresentation.Services;
 
 namespace WebPresentation
 {
@@ -126,7 +127,7 @@ namespace WebPresentation
             #endregion ADD Authentication Schema 
            
             services.AddSession();
-
+            services.AddScoped<IImageService,ImageService>();
             services.AddScoped<StateValidationFilter>();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

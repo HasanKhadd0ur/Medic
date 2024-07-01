@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WebPresentation.Filters.ImageLoad;
+using AutoMapper;
 
 namespace WebPresentation.Controllers
 {
@@ -12,13 +14,15 @@ namespace WebPresentation.Controllers
 
     public class AccessController : Controller
     {
-
+        private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
         public AccessController(SignInManager<User> signInManager,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IMapper mapper )
         {
+            _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -68,6 +72,7 @@ namespace WebPresentation.Controllers
             return View();
         }
         [HttpPost]
+        [ImageLoadFilter]
         public async Task<IActionResult> Register(RegisterationInputModel Input)
         {
             Input.ReturnUrl ??= Url.Content("/Home/Index");
@@ -75,14 +80,15 @@ namespace WebPresentation.Controllers
             ViewBag.ReturUrl = Input.ReturnUrl;
             if (ModelState.IsValid)
             {
+                var patient = _mapper.Map<Patient>(Input.Patient);
                 var user = new User {
                     NormalizedEmail = Input.Email,
                     FirstName=Input.FirstName,
                     LastName=Input.LastName,
-                    Avatar=Input.Avatar,
+                    Avatar=Input.ImageName,
                     UserName = Input.Email,
                     Email = Input.Email,
-                    Patient = Input.Patient,
+                    Patient = patient,
                     CreationTime = DateTime.Now,
                     
                 };

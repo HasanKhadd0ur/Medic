@@ -40,8 +40,8 @@ namespace ApplicationCore.Mapper
                 .ForMember(s=>s.MedicalStateMedicines , op=>op.Ignore())
                 .ForMember(s => s.Patient, op => op.Ignore());
 
-            CreateMap<Category, Category>();
-            CreateMap<Category, Category>()
+            CreateMap<Category, CategoryDTO>();
+            CreateMap<CategoryDTO, Category>()
                 .ForMember(dest => dest.Medicines, opt => opt.Ignore())
                 ;
             CreateMap<MedicineType, MedicineTypeDTO>().ReverseMap();
