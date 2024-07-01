@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationDomain.Entities;
 using AutoMapper;
+using WebPresentation.ViewModel.Identity;
 using WebPresentation.ViewModels;
 
 namespace ApplicationCore.Mappere
@@ -39,6 +40,8 @@ namespace ApplicationCore.Mappere
            
             CreateMap<CategoryDTO, CategoryViewModel>().ReverseMap();
             CreateMap<MedicineTypeDTO, MedicineTypeViewModel>().ReverseMap();
+            CreateMap<RegisterInputDTO, RegisterationInputModel>().ReverseMap();
+            CreateMap<LoginInputDTO, LoginInuptModel>().ReverseMap();
 
             CreateMap<MedicalStateMedicineDTO, MedicalStateMedicineVModel>().ReverseMap();
 

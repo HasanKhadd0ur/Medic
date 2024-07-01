@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Http;
 using ApplicationCore.Mappere;
 using WebPresentation.Filters.ModelStateValidation;
 using WebPresentation.Services;
+using ApplicationCore.Interfaces.IAuthentication;
+using ApplicationCore.Authentication;
 
 namespace WebPresentation
 {
@@ -37,10 +39,22 @@ namespace WebPresentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
-
+            #region ADD DB Context
             services.AddScoped<DbContext, MedicDbContext>();
+            services.AddDbContext<MedicDbContext>(
+                options => {
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                });
+
+            # endregion ADD DB Context            
+
+            #region Mapper Config
             services.AddScoped<Mapper>();
+            services.AddAutoMapper(typeof(ObjectMapper), typeof(ViewModelObjectMapper));
+
+            #endregion Mpper Config
+            
+            #region Cors
             services.AddCors(options =>
             {
             
@@ -52,9 +66,9 @@ namespace WebPresentation
                         .AllowCredentials());
 
             });
+            #endregion Cors
 
-            services.AddAutoMapper(typeof(ObjectMapper),typeof(ViewModelObjectMapper));
-            #region ADD Scoped Repository 
+            #region ADD Scopped Repository 
             
             services.AddScoped(typeof(IUnitOfWork<>),typeof(UnitOfWork<>));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -63,24 +77,15 @@ namespace WebPresentation
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
 
-            #endregion ADD Scope dRepository
+            #endregion ADD Scopped Repository
 
-            #region ADD Scoped  Services
+            #region ADD Scopped  Services
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IMedicalStateService, MedicalStateService>();
             services.AddScoped<IMedicineService, MedicineService>();
             services.AddScoped<IIngredientService, IngredientService>();
-            #endregion ADD Scoped  Services
+            #endregion ADD Scopped  Services
             
-            #region ADD DB Context
-            services.AddDbContext<MedicDbContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-                ;
-                }
-                ); ;
-
-            # endregion ADD DB Context
-
             #region ADD Identity 
             services
                 .AddIdentity<User, IdentityRole>()
@@ -90,6 +95,7 @@ namespace WebPresentation
             #endregion ADD Identity 
             
             #region ADD Authentication Schema 
+            
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(
                 options =>
@@ -125,13 +131,27 @@ namespace WebPresentation
                 
                 );
             #endregion ADD Authentication Schema 
-           
+
+            #region ADD Session
             services.AddSession();
+            #endregion ADD Session
+
+            #region register image service 
             services.AddScoped<IImageService,ImageService>();
+            #endregion register image service 
+
+            #region ADD atuhentication manager 
+            services.AddScoped<IAuthenticationManager,AuthenticationManager>();
+            #endregion ADD atuhentication manager 
+
             services.AddScoped<StateValidationFilter>();
-            services.AddControllersWithViews().AddNewtonsoftJson(options =>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        );
+            
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(
+                options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
 
         }
