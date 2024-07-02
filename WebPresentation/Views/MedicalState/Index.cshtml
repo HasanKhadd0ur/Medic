@@ -8,7 +8,9 @@
     <div class="container mt-5">
         <div class="row mb-4">
             <div class="col text-center">
-                <h3>Create New <a asp-action="Create" asp-controller="MedicalState" class="btn btn-success ml-2">Create</a></h3>
+                do you have a new Medical case ? 
+                    <button class="btn btn-success ml-2 btn-create" >Create</button>
+
             </div>
         </div>
     </div>
@@ -30,11 +32,11 @@
 
         @foreach (var item in Model)
         {
-            <div class="container py-5 h-100">
+            <div class="container p-4 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-8 mb-4 mb-lg-0">
                         <div class="card mb-3" style="border-radius: .5rem;">
-                            <div class="row g-0">
+                            <div class="p-4 row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-black"
                                      style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
 
@@ -44,28 +46,23 @@
                                     </div>
                                     <h5>@item.StateName</h5>
                                     <p>Prescriped At  : @item.PrescriptionTime</p>
-                                    <button class="btn btn-warning btn-edit" data-id="@item.Id">Edit</button>
-                                    <button class="btn btn-danger btn-delete" data-id="@item.Id">Delete</button>
+                                    <button class="btn btn-sm btn-warning btn-edit" data-id="@item.Id">Edit</button>
+                                    <button class="btn btn-sm btn-danger btn-delete" data-id="@item.Id">Delete</button>
 
-
-                                    <a asp-action="Index">
-
-                                        <i class="far fa-backward">
-
-                                        </i>
-                                        Go Back
-                                    </a>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <h6>Information</h6>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Description</h6>
-                                                <p class="text-muted">@item.StateDescription</p>
+                                            <div class="col-12 mb-3">
+                                                <h6>
+                                                    Description :
+                                                    <span class="text-muted">@item.StateDescription</span>
+
+                                                </h6>
                                             </div>
-                                            <div class="col-6 mb-3">
+                                            <div class="col-12  mb-3">
                                                 <h6>Medicine count :@item.Medicines.Count()</h6>
                                             </div>
                                         </div>

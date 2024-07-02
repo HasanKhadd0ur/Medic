@@ -16,11 +16,11 @@ namespace WebPresentation.ViewModels
         [Required]
         [MinLength(5)]
         public String StateName { get; set; }
-        [Display(Name = "State Name")]
+        [Display(Name = "State Description")]
         [Required]
         public String StateDescription { get; set; }
 
-        [Display(Name = "State Name")]
+        [Display(Name = "Prescription Time")]
         [Required]
         public DateTime PrescriptionTime { get; set; }
         public ICollection<MedicineViewModel> Medicines { get; set; }

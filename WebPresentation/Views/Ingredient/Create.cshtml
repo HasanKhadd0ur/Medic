@@ -2,17 +2,24 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "_AdminLayout";
+    ViewData["Controller"] = "Ingredient";
 
 }
 
-<section class="page-section" style="background-color: #f4f5f7;">
+
+<div class="modal-header">
+    <h5 class="modal-title" id="modalEditLabel">Create Ingredient</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
     <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                    <div class="card-body">
-                        <h1 class="card-title display-4 mb-4 text-center">Create New Ingredient</h1>
+            <div class="col ">
+                <div class=" shadow-lg p-3 mb-5 bg-white rounded">
+                    <div class="">
                         <hr />
                         <form asp-action="Create" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -36,13 +43,13 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-</section>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

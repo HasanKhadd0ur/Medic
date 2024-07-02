@@ -25,10 +25,13 @@ namespace WebPresentation.Services
 
         public async Task<string> SaveImageAsync(IFormFile file,String folderName)
         {
+            if (file is null)
+                return "";
             var uploadsFolderPath = Path.Combine(_uploadsFolderPath, folderName);
            
 
             var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+            
             var filePath = Path.Combine(uploadsFolderPath, uniqueFileName);
 
             if (file.Length > 0)

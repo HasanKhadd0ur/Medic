@@ -10,6 +10,11 @@ namespace ApplicationCore.Mappere
     {
         public ViewModelObjectMapper()
         {
+
+            CreateMap<ChangePasswordRequest, ChangePasswordViewModel>()
+               .ForMember(dest => dest.ConfirmPassword, opt => opt.Ignore());
+            CreateMap<ChangePasswordViewModel, ChangePasswordRequest>();
+
             CreateMap<MedicineViewModel, MedicineDTO>()
                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ImageName)) // Map ImageName from MedicineViewModel to Image in MedicineDTO
                .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients))

@@ -7,6 +7,7 @@ using ApplicationCore.DTOs;
 using System.Threading.Tasks;
 using WebPresentation.ViewModels;
 using AutoMapper;
+using ApplicationDomain.Exceptions;
 
 namespace WebPresentation.Controllers
 {
@@ -33,18 +34,36 @@ namespace WebPresentation.Controllers
         [HttpPost]
         public async  Task<IActionResult> ReomveIngredient([FromBody] MedicineIngredientDTO medicineIngredientModel)
         {
-             await _ingredientService.RemoveFromMedicine(medicineIngredientModel);
+            try
+            {
+                await _ingredientService.RemoveFromMedicine(medicineIngredientModel);
 
-            return Ok(new {message = "removed" ,result ="Successed"});
+                return Ok(new { message = "The Ingredient Removed Successfully", result = "add" });
+            }
+            catch (DomainException e)
+            {
+                return Ok(new { message = "Faild", result = e.Message });
+
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> AddIngredient([FromBody] MedicineIngredientDTO medicineIngredientModel)
         {
-            await _ingredientService.AddToMedicine(medicineIngredientModel);
-            return Ok(new { message = "added", result = "Successed" });
+            try
+            {
+                await _ingredientService.AddToMedicine(medicineIngredientModel);
+                return Ok(new { message = "The Ingredient Added Successfully", result = "add" });
+
+            }
+            catch (DomainException e ) {
+                return Ok(new { message = "Faild", result =e.Message });
+
+            }
+
+
         }
-        public async Task<IActionResult> GetMedcineIngredient(int id) {
+        public async Task<IActionResult> GetMedicineIngredient(int id) {
 
             var r = await ((IMedicineService)_service).GetMedicineIngredients(id);
 

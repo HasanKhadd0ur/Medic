@@ -13,7 +13,7 @@
             <div class="col col-lg-8 mb-4 mb-lg-0">
                 <div class="card mb-3" style="border-radius: .5rem;">
                     <div class="row g-0">
-                        <div class="col-md-4 gradient-custom text-center text-black"
+                        <div class="col-4 gradient-custom text-center text-black"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                             <img src="~/img/@Model.ImageName"
                                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
@@ -22,37 +22,57 @@
                             <button class="btn btn-warning btn-edit" data-id="@Model.Id">Edit</button>
                             <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-8">
                             <div class="card-body p-4">
                                 <h6>Information:</h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <h6>Description</h6>
-                                        <p class="text-muted">@Model.Description</p>
+                                    <div class="col mb-3">
+                                        <h6>
+                                            Description :     <span class="text-muted">@Model.Description</span>
+                                        </h6>
                                     </div>
-                                    <div class="col-6 mb-3">
-                                        <h6>Type:@Model.MedicineType?.TypeName</h6>
-                                        <p class="text-muted">Dosage : @Model.Dosage</p>
-                                        <p class="text-muted">Price : @Model.Price</p>
+                                    <div class="col-12 row mb-3">
+                                        
+                                            <h6 class="col">
+                                                Type :     <span class="text-muted">@Model.MedicineType?.TypeName</span>
+                                            </h6>
+                                        <h6 class="col text-muted">Dosage : <span class="text-muted">@Model.Dosage</span></h6>
+                                        <h6 class="col text-muted">Price : <span class="text-muted">@Model.Price</span></h6>
                                     </div>
                                 </div>
-                                <h6>Ingredients : </h6>
-                                <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
-                                    <table id="Ingredients_" class="table table-bordered">
-                                        <thead>
+
+                            </div>
+
+                        </div>
+                        <div class="col-12 p-3">
+                            <h6>Ingredients : </h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1 p-3">
+                                <table id="Ingredients_" class=" p-4 table table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <td>#</td>
+                                            <td>Name</td>
+                                            <td>Description</td>
+                                            <td>Ratio</td>
+                                            <td>Manage</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.MedicineIngredients.Count == 0)
+                                        {
                                             <tr>
-                                                <td>#</td>
-                                                <td>Name</td>
-                                                <td>Description</td>
-                                                <td>Ratio</td>
-                                                <td>Manage</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var ing in Model.MedicineIngredients)
-                                            {
+
+                                        }
+                                        @foreach (var ing in Model.MedicineIngredients)
+                                        {
                                             <tr class=" mb-3">
                                                 <td>@(a+=1)</td>
                                                 <td>@ing.Ingredient.Name</td>
@@ -63,30 +83,27 @@
                                                 </td>
 
                                             </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row pt-1">
-                                    <div class="col-6 mb-3">
-                                        <a asp-action="Index">Back to List</a>
-
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <a asp-action="AddIngredints" asp-controller="Medicine" asp-route-id="@Model.Id">Add Ingredients </a>
-
-                                    </div>
-
-                                    <div class="col-6 mb-3">
-                                        <button class="btn btn-primary" onclick="fetchAll()">Get All Ingredients </button>
-
-                                    </div>
-
-
-                                </div>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
+                            <hr />
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <a asp-action="Index">Back to List</a>
+
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <button class="btn btn-primary" onclick="fetchAll()">Get All Ingredients </button>
+
+                                </div>
+
+
+                            </div>
+
                         </div>
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -131,10 +148,10 @@
             let id =@Model.Id;
             debugger;
             try {
-                let response = await fetch(`/Medicine/GetMedcineIngredient/${id}`); // Adjust the endpoint as needed
+                let response = await fetch(`/Medicine/GetMedicineIngredient/${id}`); // Adjust the endpoint as needed
                 if (response.ok) {
                     let medicines = await response.json();
-                    medicines = medicines.medicineIngredients
+                    medicines = medicines.result
                     populateTable(medicines, 'Ingredients_');
                 } else {
                     console.error('Error:', response.statusText);
@@ -148,49 +165,70 @@
 
 
             let tableBody = document.querySelector('#' + tableName);
+
             tableBody.innerHTML = `
             <table class="table">
-               <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Description</td>
-                    ${tableName=="t" ?" ":"<td>Ratio</td>"}
-                    <td>Manage</td>
+                <thead class="thead-light">
+                    <tr>
+                        <td>Name</td>
+                        <td>Description</td>${
+                         tableName=="t" ?" ":"<td>Ratio</td>"
+                        }<td>Manage</td>
 
-                </tr>
-            </thead ><tbody id="${tableName + "b"}" > </tbody></table>`;
+                    </tr>
+                </thead >
+                <tbody id="${tableName + "b"}" >
+                </tbody>
+             </table>`;
 
             tableBody = document.querySelector("#" + tableName + "b");
+            if (medicines.length == 0 && tableName != "t") {
 
+                tableBody.innerHTML =`
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                    `
+            }
             medicines.forEach(medicine => {
                 let row = document.createElement('tr');
                 row.classList = "mb-3"
-
-                row.innerHTML = `
+                if (tableName == "t") {
+                    row.innerHTML = `
                     <td>${medicine.name}</td>
                     <td>${medicine.description}</td>
-                    ${tableName == "t" ? " " : medicine.ratio}
-                    `;
-                row.innerHTML +=
-                    (tableName != "t") ?
+                    <td>
+                        <button
+                            class="btn btn-primary" onclick="addIngredient( ${medicine.id})" data-dismiss="modal" aria-label="Close">
+                             Add
+                        </button>
+                     </td> `
 
-                        `
-                <td>
 
-                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete ${medicine.name}From this medicine", "ReomveIngredient",${medicine.ingredient.id})'>Delete</button>
+                } else {
 
-</td>
-                ` :
-                        `<td>
-                        <button class="btn btn-primary" onclick="addIngredient( ${medicine.id})" data-dismiss="modal" aria-label="Close">Add</button>
+                    let m = ` "Are you sure you want to delete ${medicine.ingredient.name}From this medicine"`;
+                    row.innerHTML = `
+                    <td>${medicine.ingredient.name}</td>
+                    <td>${medicine.ingredient.description}</td>
+                    ${ medicine.ratio}
+                    <td>
 
-                    </td>
-                `
+                        <button
+                            class="btn btn-danger" onclick='DeleteConfirm("Delete Confirm",${m}, "ReomveIngredient", ${medicine.ingredient.id})'>
+                            Delete
+                         </button >
+                    </td >`;
 
-                tableBody.appendChild(row);
+                }
+
+                  tableBody.appendChild(row);
             });
 
-            tableBody.innerHTML += ``;
 
         }
         function addIngredient(med) {
@@ -201,7 +239,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close input" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">
                                 <i class="fas fa-times"></i>
                             </span>
@@ -246,7 +284,7 @@
                 if (response.ok) {
                     let result = await response.json();
                     updateIngredients();
-                    showToast('Medicine added successfully', 'Success');
+                    showToast(result.message, result.result);
                 } else {
                     console.error('Error:', response.statusText);
                     showToast('Failed to add medicine', 'Error');
@@ -296,10 +334,10 @@
 
                 if (response.ok) {
                     let result = await response.json();
-
+                    showToast(result.message, result.result);
                     updateIngredients();
 
-                    showToast('Medicine Reomved successfully', 'Success');
+
                 } else {
                     console.error('Error:', response.statusText);
                     showToast('Failed to remove medicine', 'Error');

@@ -1,7 +1,6 @@
 ﻿using ApplicationCore.DTOs;
 using ApplicationCore.Interfaces.IAuthentication;
 using ApplicationDomain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -42,7 +41,34 @@ namespace ApplicationCore.Authentication
 
         }
 
-        public async Task<IdentityResult> Register(RegisterInputDTO registerInputDTO)
+        public async Task<AuthenticationResult> ChangePassword(ChangePasswordRequest changePasswordRequest)
+        {
+            var user = await _userManager.FindByEmailAsync(changePasswordRequest.Email);
+            if (user == null)
+            {
+                var r = new AuthenticationResult(false);
+                r.AddError("the email not exists ");
+                return r;
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, changePasswordRequest.CurrentPassword, changePasswordRequest.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                var resul = new AuthenticationResult(false);
+                foreach (var err in changePasswordResult.Errors)
+                {
+                    resul.AddError(err.Description);
+                }
+                await _signInManager.RefreshSignInAsync(user);
+
+                return resul;
+
+
+            }
+            return new AuthenticationResult(true);
+        }
+
+            public async Task<AuthenticationResult> Register(RegisterInputDTO registerInputDTO)
         {
             var patient = new Patient {
                 BIO =registerInputDTO.Patient.BIO              
@@ -68,16 +94,23 @@ namespace ApplicationCore.Authentication
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return IdentityResult.Success;
+                    return new AuthenticationResult(true);
                 }
                 else {
-
-                    return result;
+                    var resul = new AuthenticationResult(false);
+                    foreach (var err in result.Errors) {
+                        resul.AddError(err.Description);
+                    }
+                    return resul;
                 }
             }
-        
+            var res = new AuthenticationResult(false);
+            foreach (var err in result.Errors)
+            {
+                res.AddError(err.Description);
+            }
+            return res;
 
-            return result;
         }
 
         public async Task SignIn(User user, bool isPersisted)

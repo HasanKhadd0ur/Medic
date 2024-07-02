@@ -16,7 +16,8 @@ namespace ApplicationCore.Services
 
         public MedicineService(
             IUnitOfWork<Medicine> medicineUnitOfWork,
-            IMapper Mapper )
+            IMapper Mapper 
+            )
             :base(medicineUnitOfWork  , Mapper)
         {
             _specification = new MedicineWithIngredientsSpecification();
@@ -24,12 +25,13 @@ namespace ApplicationCore.Services
         }
 
 
-
         public  void AddToMedicalState(MedicalStateMedicineDTO medicalStateMedicineDto)
         {
             var medicalState =  _unitOfWork.Entity.GetById(medicalStateMedicineDto.MedicineId, _specification).Result;
+            
             if (medicalState.MedicalStateMedicines is null)
                 medicalState.MedicalStateMedicines = new List<MedicalStateMedicine>();
+            
             foreach (var i in medicalState.MedicalStateMedicines)
             {
                 if (
@@ -54,28 +56,37 @@ namespace ApplicationCore.Services
         public void RemoveFromMedicalState(MedicalStateMedicineDTO medicalStateMedicineDto)
         {
             var medicalState = _unitOfWork.MedicalStates.GetById(medicalStateMedicineDto.MedicalStateId, _medicalSpecification).Result;
-            if (medicalState.MedicalStateMedicines is null)
+           
+            if (medicalState.MedicalStateMedicines is null) {
+
                 throw new DomainException("you dont have this medicine");
+
+            }
             var d = _unitOfWork.Entity.GetById(medicalStateMedicineDto.MedicineId, _specification).Result;
-    
-           if(!  medicalState.Medicines.Remove(d))
-            throw new DomainException("you dont have this medicine");
+
+            if (!medicalState.Medicines.Remove(d)) {
+
+                throw new DomainException("you dont have this medicine");
+            }
             _unitOfWork.MedicalStates.Update(medicalState);
             _unitOfWork.Commit();
         }
 
         public MedicineDTO GetMedicineIngredentisDetails(int medicineId) {
 
-            return _mapper.Map<MedicineDTO>(_unitOfWork.Entity
-                .GetById(medicineId ,
-                   _specification));
+            return _mapper.Map<MedicineDTO>(
+                        _unitOfWork.Entity
+                            .GetById(medicineId ,
+                                     _specification
+                             )
+                        );
 
         }
 
         public async Task<IEnumerable<MedicineIngredientDTO>> GetMedicineIngredients(int id)
         {
             var r = await _unitOfWork.Medicines.GetById(id,_specification);
-            return _mapper.Map<IEnumerable<MedicineIngredientDTO>>( r.Ingredients);
+            return _mapper.Map<IEnumerable<MedicineIngredientDTO>>( r.MedicineIngredients);
         }
     }
 }

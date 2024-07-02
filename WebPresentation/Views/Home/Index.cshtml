@@ -15,7 +15,7 @@
     ViewData["userName"] = Model.User.FirstName + " " + Model.User.LastName;
     ViewBag.Avatar = Model.User.Avatar;
 
-    ViewData["Controller"] = "Home";
+    ViewData["Controller"] = "MedicalState";
     ViewBag.owner = Model;
     var DummyModel = new MedicalState { StateName="state name" , StateDescription="Description" , PrescriptionTime=DateTime.Now};
 
@@ -61,9 +61,8 @@
                     <div class="icon"><i class="fas fa-heartbeat"></i></div>
                     <h4> New Medical State</h4>
                     <p>Click on the Create Button to Create a new Medical State</p>
-                    <a asp-controller="Medicalstate" asp-action="Create" class="btn btn-primary">
-                        Create
-                    </a>
+                    <button class="btn btn-primary ml-2 btn-create">Create  </button>
+
                 </div>
 
             </div>
@@ -144,6 +143,7 @@
         <h2 class="  text-center text-uppercase text-secondary mb-0">For Account Details :  </h2><br />
         <a class="btn btn-secondary" asp-action="Details" asp-controller="Home">Detail Your profile</a>
         <a class="btn btn-primary" asp-action="Edit" asp-controller="Home">Edit Your profile</a>
+        <a class="btn btn-primary" asp-action="ChangePassword" asp-controller="Access">Changeyour password </a>
 
         <!-- Icon Divider -->
 
@@ -152,26 +152,26 @@
 </section>
 
 <!-- Contact Section -->
-<section class="page-section" id="Create">
-    <div class="container">
+<!--<section class="page-section" id="Create">
+    <div class="container">-->
 
         <!-- Contact Section Heading -->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Create New Medical State</h2>
+        <!--<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Create New Medical State</h2>-->
 
         <!-- Icon Divider -->
-        <div class="divider-custom">
+        <!--<div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon">
                 <i class="fas fa-star"></i>
             </div>
             <div class="divider-custom-line"></div>
-        </div>
+        </div>-->
 
         <!-- Contact Section Form -->
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
+        <!--<div class="row">
+            <div class="col-lg-8 mx-auto">-->
                 <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                <form name="sentMessage" id="contactForm" novalidate="novalidate"
+                <!--<form name="sentMessage" id="contactForm" novalidate="novalidate"
                       method="post" asp-controller="MedicalState" asp-action="Create">
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls mb-0 pb-2">
@@ -204,7 +204,7 @@
         </div>
 
     </div>
-</section>
+</section>-->
 
 <!-- Modals -->
 @foreach (var item in Model.MedicalStates)

@@ -9,18 +9,20 @@ using WebPresentation.Filters.ImageLoad;
 using AutoMapper;
 using ApplicationCore.Interfaces.IAuthentication;
 using ApplicationCore.DTOs;
+using WebPresentation.ViewModels;
 
 namespace WebPresentation.Controllers
 {
     [AllowAnonymous]
 
-    public class AccessController : Controller
+    public class AccessController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly IAuthenticationManager _authenticationManager;
         
         public AccessController(IAuthenticationManager authenticationManager,
-            IMapper mapper )
+            IMapper mapper,
+            UserManager<User> userManager ):base(userManager)
         {
             _mapper = mapper;
             _authenticationManager = authenticationManager;
@@ -76,14 +78,14 @@ namespace WebPresentation.Controllers
                 
                 var result = await _authenticationManager.Register(registerInput);
               
-                if (result.Succeeded)
+                if (result.Success)
                 { 
                     return LocalRedirect(Input.ReturnUrl);
                     
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError(string.Empty, error);
                 }
             }
 
@@ -102,5 +104,30 @@ namespace WebPresentation.Controllers
                 return Redirect("/Home/Index");
             }
         }
+
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var dto = _mapper.Map<ChangePasswordRequest>(model);
+            dto.Email = GetCurrentUser().Email;
+            var result =await _authenticationManager.ChangePassword(dto);
+            if (!result.Success)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return View(model);
+            }
+
+         
+            return RedirectToAction("index","home");
+        }
+
     }
-    }
+
+}

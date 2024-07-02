@@ -59,7 +59,7 @@ namespace WebPresentation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ImageLoadFilter]
-        public IActionResult Edit(int id, [FromForm] PatientViewModel viewModel)
+        public async Task<IActionResult> Edit(int id, [FromForm] PatientViewModel viewModel)
         {
             if (id != viewModel.Id)
             {
@@ -75,7 +75,17 @@ namespace WebPresentation.Controllers
                     dto = _mapper.Map<PatientDTO>(viewModel);
                     dto.User.Avatar= viewModel.ImageName;
                     dto = _patientService.Update(dto);
-
+                    {
+                        var t = GetCurrentUser();
+                        dto.User.UserName = t.UserName;
+                        dto.User.CreationTime = t.CreationTime;
+                        dto.User.Email = t.Email;
+                    }
+                    //dto.User.Patient = _mapper.Map<Patient>(dto);
+                    //var r =await _userManager.UpdateAsync(dto.User);
+                //    if (!r.Succeeded) {
+                //        return View(viewModel);
+                //    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

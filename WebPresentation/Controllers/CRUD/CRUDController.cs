@@ -28,6 +28,7 @@ namespace WebPresentation.Controllers
                 }
                 return _criteriaProtected;        
             } set { _criteriaProtected = value; } }
+   
         public CRUDController(
             UserManager<User> userManager,
             IService<TDto> service,
@@ -100,8 +101,15 @@ namespace WebPresentation.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            TDto DetailDto = await _service.GetDetails(id);
+
+            if (DetailDto == null || !_criteria(DetailDto))
+            {
+                return PartialView("PartialNotFound");
+            }
+
             _service.Delete(id);
             return RedirectToAction("Index");
         }
@@ -139,7 +147,7 @@ namespace WebPresentation.Controllers
             if (id != viewModel.Id)
             {
 
-                return NotFound();
+                return PartialView("PartialNotFound");
             }
             TDto dto ;
             if (ModelState.IsValid)
@@ -156,37 +164,38 @@ namespace WebPresentation.Controllers
                     return View("Error");
 
                 }
-                return RedirectToAction("Details",new { id=dto.Id});
+                return Json(new { success = true, redirectUrl = Url.Action("Details", new { id = viewModel.Id }) });
+
             }
-            
-            return View(viewModel);
+
+            return PartialView(viewModel);
         }
 
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [StateValidationFilter]
+        [ImageLoadFilter]
         public virtual IActionResult Create(TVModel viewModel, int id)
         {
-            if (ModelState.IsValid)
+            TDto dto = _mapper.Map<TDto>(viewModel);
+            
+            if (viewModel == null || !_criteria(dto))
             {
-
-                TDto dto = _mapper.Map<TDto>(viewModel);
-                if (viewModel == null || !_criteria(dto))
-                {
-                    return View(viewModel);
-                }
-                dto = _service.Create(dto);
-                viewModel = _mapper.Map<TVModel>(dto);
-
-                return RedirectToAction("Details", new { id = viewModel.Id });
-
+                return PartialView(viewModel);
             }
-            return View(viewModel);
+            
+            dto = _service.Create(dto);
+
+            viewModel = _mapper.Map<TVModel>(dto);
+
+            return Json(new { success = true, redirectUrl = Url.Action("Details", new { id = viewModel.Id }) });
+
+
         }
    
         #region json format 

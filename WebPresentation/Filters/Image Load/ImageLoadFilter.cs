@@ -17,12 +17,9 @@ namespace WebPresentation.Filters.ImageLoad
             var imageUploaded = context.ActionArguments.Values.Where(p => p is IImageForm).FirstOrDefault();
           
             var imageService = context.HttpContext.RequestServices.GetService(typeof(IImageService));
-            if(
-                (((IImageForm)imageUploaded).ImageFile != null )
-                        &&
-                (((IImageForm)imageUploaded).ImageFile.Length != 0)){
+            if(imageUploaded is not null ){
                 var imagePath = ((IImageService)imageService).SaveImageAsync(((IImageForm)imageUploaded).ImageFile,context.Controller.GetType().Name).Result;
-
+                if(imagePath != "")
                 ((IImageForm)imageUploaded).ImageName = imagePath; // You can pass other information as needed
 
             }

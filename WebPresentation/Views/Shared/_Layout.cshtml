@@ -45,7 +45,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="Index" asp-controller="MedicalState">Medicines</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="Index" asp-controller="MedicalState">Medicines Cases</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-action="Index" asp-controller="Home">Home</a>
@@ -140,6 +140,13 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Content loaded via AJAX -->
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -150,11 +157,66 @@
     <script>
         $(document).ready(function () {
             // Load the Edit form in the modal
-            $('.btn-edit').on('click', function () {
-                var id = $(this).data('id');
+             $('.btn-edit').on('click', function () {
+        var id = $(this).data('id');
+        var controller = `@ViewData["Controller"]`;
+        $('#modal-edit').find('.modal-content').load(`/${controller}/Edit/` + id, function () {
+            $('#modal-edit').modal('show');
+        });
+    });
+
+    // Function to handle form submission
+    $(document).on('submit', '#modal-edit form', function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    // Redirect to the details page if successful
+
+                    window.location.href = response.redirectUrl;
+                } else {
+                    // Replace the modal content with the returned form including validation errors
+                    $('#modal-edit').find('.modal-content').html(response);
+                }
+            }
+        });
+    }); $(document).on('submit', '#modal-create form', function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    // Redirect to the details page if successful
+                    window.location.href = response.redirectUrl;
+                } else {
+                    // Replace the modal content with the returned form including validation errors
+                    $('#modal-create').find('.modal-content').html(response);
+                }
+            }
+        });
+    });
+
+                $('.btn-create').on('click', function () {
                 var controller = `@ViewData["Controller"]`;
-                $('#modal-edit').find('.modal-content').load(`/${controller}/Edit/` + id);
-                $('#modal-edit').modal('show');
+                $('#modal-create').find('.modal-content').load(`/${controller}/create/` );
+                $('#modal-create').modal('show');
             });
 
             $('.btn-delete').on('click', function () {

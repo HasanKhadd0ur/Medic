@@ -10,6 +10,8 @@ using WebPresentation.ViewModels;
 using AutoMapper;
 using System.Collections.Generic;
 using ApplicationDomain.Exceptions;
+using WebPresentation.Filters.ImageLoad;
+using WebPresentation.Filters.ModelStateValidation;
 
 namespace WebPresentation.Controllers
 {
@@ -38,26 +40,23 @@ namespace WebPresentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [StateValidationFilter]
+        [ImageLoadFilter]
         public override IActionResult Create(MedicalStateViewModel medicalState, int id)
         {
             if (ModelState.IsValid)
             {
                 var uId = GetUserId();
-                var p = _patientService.GetByUserId(uId).Result.Id;
+                var patientId = _patientService.GetByUserId(uId).Result.Id;
                 if (medicalState.PrescriptionTime == DateTime.MinValue )
                     medicalState.PrescriptionTime = DateTime.Now;
-                var n= ((IMedicalStateService)_service).AddToPateint(p,_mapper.Map<MedicalStateDTO>(medicalState));
+
+                var n= ((IMedicalStateService)_service)
+                            .AddToPateint(patientId, _mapper.Map<MedicalStateDTO>(medicalState));
                 
                 return RedirectToAction("Details", "MedicalState" , new { Id =n.Id });
             }
             return View(medicalState);
-        }
-        protected override Func<MedicalStateDTO, bool> GetCriteria()
-        {
-
-            var u = _patientService.GetByUserId(GetUserId()).Result.Id;
-            _criteria = p => p.PatientId == u;
-            return _criteria;
         }
 
         #region json 
@@ -103,7 +102,7 @@ namespace WebPresentation.Controllers
             MedicalStateMedicineDTO medicalStateMedicineModel = _mapper.Map<MedicalStateMedicineDTO>(medicalStateMedicine);
             try
             {
-                var medical = await _medicalStateService.GetDetails(medicalStateMedicine.MedicineId);
+                var medical = await _medicalStateService.GetDetails(medicalStateMedicine.MedicalStateId);
                 if (!_criteria(medical))
                     return Ok(new { message = "You try to Reomve a medicine for other patient and this is wrong , you shouldn't remove a medicine for others maybe this kill him", result = "faild" });
 
@@ -149,5 +148,13 @@ namespace WebPresentation.Controllers
         }
 
         #endregion json
+        protected override Func<MedicalStateDTO, bool> GetCriteria()
+        {
+
+            var u = _patientService.GetByUserId(GetUserId()).Result.Id;
+            _criteria = p => p.PatientId == u;
+            return _criteria;
+        }
+
     }
 }

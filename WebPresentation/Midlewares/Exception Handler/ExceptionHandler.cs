@@ -26,8 +26,15 @@ namespace WebPresentation.Midlewares
             catch (Exception ex)
             {
 
+                await HandleExceptionAsync(httpContext, ex);
             }
         }
+
+    private static Task HandleExceptionAsync(HttpContext context, Exception exception)  
+    {
+        context.Response.Redirect("/Home/Error");
+        return Task.CompletedTask;
+    }
 
     }
 }

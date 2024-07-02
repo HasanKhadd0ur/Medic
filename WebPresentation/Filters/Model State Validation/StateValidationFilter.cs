@@ -21,7 +21,7 @@ namespace WebPresentation.Filters.ModelStateValidation
                 {
                     var model = context.ActionArguments.Values.Where(p=> p is not int    ).FirstOrDefault();
                     var actionName = context.ActionDescriptor.RouteValues["action"];
-                    context.Result = controller.View(actionName, model);
+                    context.Result = controller.PartialView(actionName, model);
                     return;
                 }
                 else
