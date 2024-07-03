@@ -101,7 +101,7 @@ namespace WebPresentation.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public virtual  async Task<IActionResult> DeleteConfirmed(int id)
         {
             TDto DetailDto = await _service.GetDetails(id);
 

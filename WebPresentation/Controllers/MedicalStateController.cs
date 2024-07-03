@@ -53,10 +53,10 @@ namespace WebPresentation.Controllers
 
                 var n= ((IMedicalStateService)_service)
                             .AddToPateint(patientId, _mapper.Map<MedicalStateDTO>(medicalState));
-                
-                return RedirectToAction("Details", "MedicalState" , new { Id =n.Id });
+
+                return Json(new { success = true, redirectUrl = Url.Action("Details", new { id = medicalState.Id }) });
             }
-            return View(medicalState);
+            return PartialView(medicalState);
         }
 
         #region json 

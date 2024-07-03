@@ -45,6 +45,7 @@ namespace WebPresentation
             services.AddDbContext<MedicDbContext>(
                 options => {
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                    
                 });
 
             # endregion ADD DB Context            

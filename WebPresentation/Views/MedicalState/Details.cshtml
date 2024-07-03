@@ -52,50 +52,50 @@
                         <hr class="mt-0 ">
                         <div class="row p-4">
                             <div class="table-responsive">
-                            <table id="Ingredients_" class="table table-bordered table-hover">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
-                                        <th>Dosage</th>
-                                        <th>Manufacture Name</th>
-                                        <th>Manage</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cc">
-                                    @if (Model.Medicines.Count == 0)
-                                    {
+                                <table id="Ingredients_" class="table table-bordered table-hover">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Dosage</th>
+                                            <th>Manufacture Name</th>
+                                            <th>Manage</th>
                                         </tr>
+                                    </thead>
+                                    <tbody id="cc">
+                                        @if (Model.Medicines.Count == 0)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
 
-                                    }
-                                    @foreach (var ing in Model.Medicines)
-                                    {
-                                        <tr>
-                                            <td>@(a+=1)</td>
-                                            <td>@ing.TradeName</td>
-                                            <td>@ing.Description</td>
-                                            <td>@ing.Price.ToString("C")</td>
-                                            <td>@ing.Dosage</td>
-                                            <td>@ing.ManufactureName</td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName from this medical case?", @ing.Id)'>Delete</button>
-                                                <button class="btn btn-info btn-sm" onclick="DetailMedicine(@ing.Id)">Details</button>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        
+                                        }
+                                        @foreach (var ing in Model.Medicines)
+                                        {
+                                            <tr>
+                                                <td>@(a+=1)</td>
+                                                <td>@ing.TradeName</td>
+                                                <td>@ing.Description</td>
+                                                <td>@ing.Price.ToString("C")</td>
+                                                <td>@ing.Dosage</td>
+                                                <td>@ing.ManufactureName</td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.TradeName from this medical case?", @ing.Id)'>Delete</button>
+                                                    <button class="btn btn-info btn-sm" onclick="DetailMedicine(@ing.Id)">Details</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
                         <hr />
@@ -121,18 +121,21 @@
 </section>
 
 <section style="background-color: #f4f5f7;">
-    <div class="container  h-100">
+    <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-lg-10 mb-4 mb-lg-0">
-                <div class="card mb-3" style="border-radius: .5rem;">
-
-                    <div id="medicines-table">
+            <div class="col">
+                <div class="row g-0">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div id="medicines-table">
+                            <!-- Medicines table will be dynamically loaded here -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <div id="item-container">
     <div class="modal fade" id="item" tabindex="-1" aria-labelledby="label-" role="dialog"
          aria-hidden="true">
@@ -215,7 +218,7 @@
                   </tr>
 
                 </thead >
-                <tbody id="${tableName + "b"}"> 
+                <tbody id="${tableName + "b"}">
                 </tbody>
             </table>`;
 
@@ -333,7 +336,7 @@
 
                     updateMedicines();
 
-                    showToast(result.result, result.message);
+                    showToast(result.message, result.result);
                 } else {
                     console.error('Error:', response.statusText);
                     showToast('Failed to remove medicine', 'Error');

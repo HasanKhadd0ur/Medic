@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 using WebPresentation.ViewModel.Identity;
 using WebPresentation.ViewModels;
 
@@ -59,6 +60,20 @@ namespace WebPresentation.Controllers
                 return View(Input);
         }
 
+        public override async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            PatientDTO DetailDto = await _service.GetDetails(id);
+
+            if (DetailDto == null || !criteria(DetailDto))
+            {
+                return PartialView("PartialNotFound");
+            }
+            var r =await _userManager.DeleteAsync(DetailDto.User);
+            
+            _service.Delete(id);
+
+            return RedirectToAction("Index");
+        }
 
     }
 }
