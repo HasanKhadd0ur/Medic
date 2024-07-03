@@ -54,7 +54,7 @@ namespace WebPresentation.Controllers
                 var n= ((IMedicalStateService)_service)
                             .AddToPateint(patientId, _mapper.Map<MedicalStateDTO>(medicalState));
 
-                return Json(new { success = true, redirectUrl = Url.Action("Details", new { id = medicalState.Id }) });
+                return Json(new { success = true, redirectUrl = Url.Action("Details", new { id = n.Id }) });
             }
             return PartialView(medicalState);
         }
