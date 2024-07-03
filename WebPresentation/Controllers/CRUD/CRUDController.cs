@@ -21,7 +21,7 @@ namespace WebPresentation.Controllers
         protected readonly IMapper _mapper;
         protected readonly IService<TDto> _service;
         private Func<TDto, bool> _criteriaProtected;
-        protected Func<TDto, bool> _criteria {
+        protected Func<TDto, bool> criteria {
             get {
                 if (_criteriaProtected == null) {
                     _criteriaProtected = GetCriteria(); 
@@ -77,7 +77,7 @@ namespace WebPresentation.Controllers
                 TDto DetailDto = await _service.GetDetails((int)id);
                 if (DetailDto is null)
                     return View("NotFound");
-                if (_criteria(DetailDto))
+                if (criteria(DetailDto))
                 {
                     TVModel model = _mapper.Map<TVModel>(DetailDto);
                     return View(model);
@@ -92,7 +92,7 @@ namespace WebPresentation.Controllers
 
             TDto DetailDto = await _service.GetDetails(id);
 
-            if (DetailDto == null || !_criteria(DetailDto))
+            if (DetailDto == null || !criteria(DetailDto))
             {
                 return PartialView("PartialNotFound");
             }
@@ -105,7 +105,7 @@ namespace WebPresentation.Controllers
         {
             TDto DetailDto = await _service.GetDetails(id);
 
-            if (DetailDto == null || !_criteria(DetailDto))
+            if (DetailDto == null || !criteria(DetailDto))
             {
                 return PartialView("PartialNotFound");
             }
@@ -125,7 +125,7 @@ namespace WebPresentation.Controllers
             {
                 
                 TDto tModel = await _service.GetDetails((int)id);
-                if (tModel == null || !_criteria(tModel))
+                if (tModel == null || !criteria(tModel))
                 {
                     return PartialView("PartialNotFound");
                 }
@@ -149,13 +149,20 @@ namespace WebPresentation.Controllers
 
                 return PartialView("PartialNotFound");
             }
+            
             TDto dto ;
             if (ModelState.IsValid)
             {
+                
                 try
                 {
 
                     dto = _mapper.Map<TDto>(viewModel);
+                    if (dto == null || !criteria(dto))
+                    {
+                        return PartialView("PartialNotFound");
+                    }
+
                     dto = _service.Update(dto);
 
                 }
@@ -184,7 +191,7 @@ namespace WebPresentation.Controllers
         {
             TDto dto = _mapper.Map<TDto>(viewModel);
             
-            if (viewModel == null || !_criteria(dto))
+            if (viewModel == null || !criteria(dto))
             {
                 return PartialView(viewModel);
             }
@@ -211,7 +218,7 @@ namespace WebPresentation.Controllers
             else
             {
                 TDto model = await _service.GetDetails((int)id);
-                if (model is null || !_criteria(model))
+                if (model is null || !criteria(model))
                     return Ok(new { message = "No Data Found ", result = "Faild" });
 
                 return Ok(new { message = "Succed", result = model });

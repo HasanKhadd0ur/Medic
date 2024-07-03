@@ -17,6 +17,7 @@ using ApplicationDomain.Abstraction;
 using ApplicationDomain.Repositories;
 using ApplicationCore.DTOs;
 using ApplicationCore.Mapper;
+using WebPresentation.Midlewares;
 using System;
 using Microsoft.AspNetCore.Http;
 using ApplicationCore.Mappere;
@@ -165,11 +166,13 @@ namespace WebPresentation
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseMiddleware<ExceptionHandler>();
+                
+               // app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-          //  app.UseStatusCodePagesWithRedirects();
+          
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

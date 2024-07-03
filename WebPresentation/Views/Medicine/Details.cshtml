@@ -23,22 +23,22 @@
                             <button class="btn btn-danger btn-delete" data-id="@Model.Id">Delete</button>
                         </div>
                         <div class="col-8">
-                            <div class="card-body p-4">
-                                <h6>Information:</h6>
+                            <div class=" p-4">
+                                <h6 class="text-center">Information</h6>
                                 <hr class="mt-0 mb-4">
                                 <div class="row pt-1">
-                                    <div class="col mb-3">
+                                    <div class="col-12 mb-3">
                                         <h6>
                                             Description :     <span class="text-muted">@Model.Description</span>
                                         </h6>
                                     </div>
                                     <div class="col-12 row mb-3">
                                         
-                                            <h6 class="col">
+                                            <h6 class="col-6">
                                                 Type :     <span class="text-muted">@Model.MedicineType?.TypeName</span>
                                             </h6>
-                                        <h6 class="col text-muted">Dosage : <span class="text-muted">@Model.Dosage</span></h6>
-                                        <h6 class="col text-muted">Price : <span class="text-muted">@Model.Price</span></h6>
+                                        <h6 class="col-6">Dosage : <span class="text-muted">@Model.Dosage</span></h6>
+                                        <h6 class="col-6">Price : <span class="text-muted">@Model.Price</span></h6>
                                     </div>
                                 </div>
 
@@ -46,55 +46,58 @@
 
                         </div>
                         <div class="col-12 p-3">
-                            <h6>Ingredients : </h6>
-                            <hr class="mt-0 mb-4">
+                            <h6 class="text-center">Ingredients  </h6>
+                            <hr class="">
                             <div class="row pt-1 p-3">
-                                <table id="Ingredients_" class=" p-4 table table-bordered">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <td>#</td>
-                                            <td>Name</td>
-                                            <td>Description</td>
-                                            <td>Ratio</td>
-                                            <td>Manage</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.MedicineIngredients.Count == 0)
-                                        {
+                                <div class="table-responsive">
+                                    <table id="Ingredients_" class="table table-bordered">
+                                        <thead>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>#</td>
+                                                <td>Name</td>
+                                                <td>Description</td>
+                                                <td>Ratio</td>
+                                                <td>Manage</td>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.MedicineIngredients.Count == 0)
+                                            {
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
 
-                                        }
-                                        @foreach (var ing in Model.MedicineIngredients)
-                                        {
-                                            <tr class=" mb-3">
-                                                <td>@(a+=1)</td>
-                                                <td>@ing.Ingredient.Name</td>
-                                                <td>@ing.Ingredient.Description</td>
-                                                <td>@ing.Ratio</td>
-                                                <td>
-                                                    <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.Ingredient.Name From this medicine", "ReomveIngredient",@ing.IngredientId)'>Delete</button>
-                                                </td>
+                                            }
+                                            @foreach (var ing in Model.MedicineIngredients)
+                                            {
+                                                <tr class=" mb-3">
+                                                    <td>@(a+=1)</td>
+                                                    <td>@ing.Ingredient.Name</td>
+                                                    <td>@ing.Ingredient.Description</td>
+                                                    <td>@ing.Ratio</td>
+                                                    <td>
+                                                        <button class="btn btn-danger" ondblclick='DeleteConfirm("Delete Confirm", "Are you sure you want to delete @ing.Ingredient.Name From this medicine", "ReomveIngredient",@ing.IngredientId)'>Delete</button>
+                                                    </td>
 
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <hr />
                             <div class="row pt-1">
-                                <div class="col-6 mb-3">
-                                    <a asp-action="Index">Back to List</a>
+                                <div class="col-4 offset-1 mb-3">
+                                    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 
                                 </div>
 
-                                <div class="col-6 mb-3">
+                                <div class="col-4 mb-3">
                                     <button class="btn btn-primary" onclick="fetchAll()">Get All Ingredients </button>
 
                                 </div>
@@ -215,7 +218,7 @@
                     row.innerHTML = `
                     <td>${medicine.ingredient.name}</td>
                     <td>${medicine.ingredient.description}</td>
-                    ${ medicine.ratio}
+                    <td>${ medicine.ratio}</td>
                     <td>
 
                         <button
@@ -284,7 +287,7 @@
                 if (response.ok) {
                     let result = await response.json();
                     updateIngredients();
-                    showToast(result.message, result.result);
+                    showToast(result.result, result.message);
                 } else {
                     console.error('Error:', response.statusText);
                     showToast('Failed to add medicine', 'Error');
@@ -334,8 +337,9 @@
 
                 if (response.ok) {
                     let result = await response.json();
-                    showToast(result.message, result.result);
+  
                     updateIngredients();
+                    showToast(result.result, result.message);
 
 
                 } else {

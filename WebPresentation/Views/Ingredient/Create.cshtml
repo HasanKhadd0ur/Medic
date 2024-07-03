@@ -15,10 +15,10 @@
 </div>
 <div class="modal-body">
 
-    <div class="container py-5">
+    <div class="container ">
         <div class="row justify-content-center">
             <div class="col ">
-                <div class=" shadow-lg p-3 mb-5 bg-white rounded">
+                <div class=" p-3 bg-white rounded">
                     <div class="">
                         <hr />
                         <form asp-action="Create" method="post">
@@ -37,13 +37,12 @@
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                                <button type="submit" class="btn btn-primary mr-4 btn">Create</button>
+                                <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">Close</button>
+
                             </div>
                         </form>
                     </div>
-                </div>
-                <div class="text-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

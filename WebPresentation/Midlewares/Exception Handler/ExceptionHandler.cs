@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ApplicationDomain.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,12 @@ namespace WebPresentation.Midlewares
             {
                 await _next(httpContext);
             }
+            catch (DomainException ex)
+            {
+
+                httpContext.Response.Redirect("/Home/Error");
+            }
+
             catch (Exception ex)
             {
 
@@ -32,7 +39,8 @@ namespace WebPresentation.Midlewares
 
     private static Task HandleExceptionAsync(HttpContext context, Exception exception)  
     {
-        context.Response.Redirect("/Home/Error");
+            //log it then redirect 
+            context.Response.Redirect("/Home/Error");
         return Task.CompletedTask;
     }
 

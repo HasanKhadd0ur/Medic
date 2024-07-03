@@ -59,7 +59,7 @@ namespace WebPresentation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ImageLoadFilter]
-        public async Task<IActionResult> Edit(int id, [FromForm] PatientViewModel viewModel)
+        public IActionResult Edit(int id, [FromForm] PatientViewModel viewModel)
         {
             if (id != viewModel.Id)
             {
@@ -99,7 +99,7 @@ namespace WebPresentation.Controllers
         }
 
         [Authorize(Roles = "patient")]
-        public async Task<IActionResult> Details(int? id ) {
+        public async Task<IActionResult> Details() {
             var t = await getCurrentPatient();
             return View(t);
         

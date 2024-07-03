@@ -4,55 +4,142 @@
     ViewData["Title"] = "Edit";
 
 }
+<style>
+    .account-settings .user-profile {
+        margin: 0 0 1rem 0;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
 
-<section class="page-section">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <form asp-action="Edit" class="row g-3" enctype="multipart/form-data">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        .account-settings .user-profile .user-avatar {
+            margin: 0 0 1rem 0;
+        }
 
-                            <div class="col-md-6">
-                                <label asp-for="BIO" class="form-label">Patient Personal info</label>
-                                <input asp-for="BIO" class="form-control" />
-                                <span asp-validation-for="BIO" class="text-danger"></span>
+            .account-settings .user-profile .user-avatar img {
+                width: 90px;
+                height: 90px;
+                -webkit-border-radius: 100px;
+                -moz-border-radius: 100px;
+                border-radius: 100px;
+            }
+
+        .account-settings .user-profile h5.user-name {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .account-settings .user-profile h6.user-email {
+            margin: 0;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+    .account-settings .about {
+        margin: 1rem 0 0 0;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .card {
+
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 0;
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        border: 1px solid #596280;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        font-size: .825rem;
+    }
+</style>
+<section class="page-section ">
+    <form asp-action="Edit"  enctype="multipart/form-data">
+        <div class="container">
+            <div asp-validation-summary="ModelOnly" class="row gutters border-1">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="account-settings">
+                                <div class="user-profile">
+                                    <div class="user-avatar">
+                                        <img src="/img/@Model.User.Avatar" alt="@Model.User.FirstName">
+                                    </div>
+                                    <h5 class="user-name">@Model.User.FirstName @Model.User.LastName </h5>
+                                    <h6 class="user-email">@Model.User.Email </h6>
+                                </div>
+                                <div class="about">
+                                    <h5 class="mb-2 text-primary">About</h5>
+                                    <p>@Model.BIO</p>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-3 text-primary">Personal Details</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label asp-for="User.FirstName" class="form-label"></label>
+                                        <input asp-for="User.FirstName" class="form-control" />
+                                        <span asp-validation-for="User.FirstName" class="text-danger"></span>
 
-                            <div class="col-md-6">
-                                <label asp-for="User.FirstName" class="form-label"></label>
-                                <input asp-for="User.FirstName" class="form-control" />
-                                <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label asp-for="User.LastName" class="form-label"></label>
+                                        <input placeholder="@Model.User.LastName" asp-for="User.LastName" class="form-control" />
+                                        <span asp-validation-for="User.LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label asp-for="User.PhoneNumber" class="form-label"></label>
+                                        <input asp-for="User.PhoneNumber" class="form-control" />
+                                        <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="">
+                                        <label asp-for="ImageFile" class="form-label"></label>
+                                        <input asp-for="ImageFile" class="form-control" />
+                                    </div>
+                                </div>
                             </div>
-
-
-                            <div class="col-md-6">
-                                <label asp-for="User.LastName" class="form-label"></label>
-                                <input asp-for="User.LastName" class="form-control" />
-                                <span asp-validation-for="User.LastName" class="text-danger"></span>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-3 text-primary">More Info</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label asp-for="BIO" class="form-label"></label>
+                                        <textarea asp-for="BIO" rows="4" class="form-control " ></textarea>
+                                    </div>
+                                </div>
                             </div>
-
-
-                            <div class="col-12">
-                                <label asp-for="ImageFile" class="form-label">Image File</label>
-                                <input type="file" asp-for="ImageFile" class="form-control" />
-                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="text-right">
+                                        <a type="button" asp-action="Index" asp-controller="Home" class="btn btn-secondary">Cancel</a>
+                                        <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="col-12 mt-4">
-                                <input type="hidden" asp-for="Id" />
-                                <input type="hidden" asp-for="User.Id" />
-                                <input type="hidden" asp-for="UserId" />
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
 </section>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

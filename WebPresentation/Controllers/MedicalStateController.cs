@@ -75,7 +75,7 @@ namespace WebPresentation.Controllers
             try
             {
                 var medical = await _medicalStateService.GetDetails(medicalStateMedicine.MedicalStateId);
-                if(!_criteria(medical))
+                if(!criteria(medical))
                     return Ok(new { message = "You try to add a medicine for other patient and this is wrong , you shouldn't add a medicine for others", result = "faild" });
 
                 var medicalStateMedicineModel = _mapper.Map<MedicalStateMedicineDTO>(medicalStateMedicine);
@@ -103,7 +103,7 @@ namespace WebPresentation.Controllers
             try
             {
                 var medical = await _medicalStateService.GetDetails(medicalStateMedicine.MedicalStateId);
-                if (!_criteria(medical))
+                if (!criteria(medical))
                     return Ok(new { message = "You try to Reomve a medicine for other patient and this is wrong , you shouldn't remove a medicine for others maybe this kill him", result = "faild" });
 
                 _medicineService.RemoveFromMedicalState(medicalStateMedicineModel);
@@ -152,8 +152,7 @@ namespace WebPresentation.Controllers
         {
 
             var u = _patientService.GetByUserId(GetUserId()).Result.Id;
-            _criteria = p => p.PatientId == u;
-            return _criteria;
+            return p => p.PatientId == u; ;
         }
 
     }

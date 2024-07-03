@@ -7,13 +7,19 @@ namespace WebPresentation.ViewModels
 {
     public class MedicineViewModel : BaseViewModel , IImageForm
     {
+        [Required]
         [Display(Name ="Trade Name ")]
         public String TradeName { get; set; }
+        
+        [Required]
         [Display(Name = "Scintific Name ")]
         public String ScintificName { get; set; }
+
+        [Required]
         [Display(Name = "Manufacture Name ")]
         public String ManufactureName { get; set; }
 
+        [Required]
         [Display(Name = "Side Effect")]
         public String SideEffect { get; set; }
         public String Description { get; set; }

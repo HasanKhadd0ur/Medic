@@ -38,7 +38,7 @@ namespace WebPresentation.Controllers
             {
                 await _ingredientService.RemoveFromMedicine(medicineIngredientModel);
 
-                return Ok(new { message = "The Ingredient Removed Successfully", result = "add" });
+                return Ok(new { message = "add" , result = "The Ingredient Removed Successfully" });
             }
             catch (DomainException e)
             {
@@ -53,7 +53,7 @@ namespace WebPresentation.Controllers
             try
             {
                 await _ingredientService.AddToMedicine(medicineIngredientModel);
-                return Ok(new { message = "The Ingredient Added Successfully", result = "add" });
+                return Ok(new { message = "add" , result = "The Ingredient Added Successfully" });
 
             }
             catch (DomainException e ) {
